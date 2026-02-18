@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measurement and Evaluation in Education — M.Ed. Paper 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1510;
+    --ink-light: #3d2f1e;
+    --parchment: #faf6ef;
+    --parchment-dark: #f0e8d8;
+    --accent: #8b2515;
+    --accent-light: #c0392b;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --rule: #c8b89a;
+    --sidebar: #f5ede0;
+    --chapter-bg: #2c1810;
+    --code-bg: #1e1a14;
+    --note-bg: #fffbe6;
+    --note-border: #d4a017;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', 'Libre Baskerville', Georgia, serif;
+    background: var(--parchment);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* BOOK COVER HEADER */
+  .book-cover {
+    background: var(--chapter-bg);
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, rgba(180, 100, 30, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(120, 30, 10, 0.2) 0%, transparent 60%),
+      linear-gradient(180deg, #1a0d06 0%, #2c1810 40%, #1a0d06 100%);
+    color: var(--parchment);
+    padding: 80px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    top: 20px; bottom: 20px; left: 30px; right: 30px;
+    border: 1px solid rgba(212, 160, 23, 0.3);
+  }
+
+  .book-cover::after {
+    content: '';
+    position: absolute;
+    top: 26px; bottom: 26px; left: 36px; right: 36px;
+    border: 1px solid rgba(212, 160, 23, 0.15);
+  }
+
+  .book-subtitle-top {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+  }
+
+  .ornament {
+    color: var(--gold);
+    font-size: 24px;
+    letter-spacing: 12px;
+    margin: 16px 0;
+    opacity: 0.7;
+  }
+
+  .book-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 700;
+    color: var(--parchment);
+    letter-spacing: 2px;
+    line-height: 1.3;
+    margin: 10px 0;
+  }
+
+  .book-title span {
+    display: block;
+    font-size: 0.55em;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(250, 246, 239, 0.6);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .book-meta {
+    margin-top: 30px;
+    font-size: 13px;
+    color: rgba(212, 160, 23, 0.8);
+    letter-spacing: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* NAV / TOC SIDEBAR */
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 260px);
+  }
+
+  .toc {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    border-right: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule) transparent;
+  }
+
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 24px 16px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 7px 24px;
+    color: var(--ink-light);
+    text-decoration: none;
+    font-size: 13.5px;
+    line-height: 1.4;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .toc a:hover {
+    background: var(--parchment-dark);
+    border-left-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .toc .unit-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 16px 24px 4px;
+    border-top: 1px solid var(--rule);
+    margin-top: 8px;
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    flex: 1;
+    padding: 60px 80px 100px 70px;
+    max-width: 860px;
+  }
+
+  /* CHAPTER DIVIDERS */
+  .chapter-header {
+    background: linear-gradient(135deg, var(--chapter-bg) 0%, #3d1a0a 100%);
+    color: var(--parchment);
+    margin: 60px -70px 50px -70px;
+    padding: 40px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chapter-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .chapter-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+
+  .chapter-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+
+  .chapter-marks {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-top: 8px;
+    opacity: 0.8;
+  }
+
+  /* SECTION HEADINGS */
+  h2.section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px;
+    color: var(--accent);
+    margin: 44px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--parchment-dark);
+    position: relative;
+  }
+
+  h2.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 60px; height: 2px;
+    background: var(--accent);
+  }
+
+  h3.subsection {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    color: var(--ink-light);
+    margin: 32px 0 12px;
+    font-style: italic;
+  }
+
+  h4.sub-subsection {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 22px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  /* PARAGRAPHS */
+  p {
+    margin-bottom: 16px;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* LISTS */
+  ul, ol {
+    margin: 12px 0 16px 28px;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  /* DEFINITION BLOCK */
+  .definition {
+    background: var(--parchment-dark);
+    border-left: 4px solid var(--accent);
+    padding: 18px 24px;
+    margin: 24px 0;
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .definition .attribution {
+    display: block;
+    font-style: normal;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* IMPORTANT NOTE */
+  .note {
+    background: var(--note-bg);
+    border: 1px solid var(--note-border);
+    border-top: 3px solid var(--note-border);
+    padding: 16px 22px;
+    margin: 20px 0;
+    border-radius: 0 0 4px 4px;
+  }
+
+  .note-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  /* FORMULA */
+  .formula {
+    background: var(--code-bg);
+    color: #e8dcc8;
+    padding: 16px 24px;
+    margin: 18px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    border-radius: 4px;
+    border-left: 3px solid var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* TABLE */
+  .textbook-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14.5px;
+  }
+
+  .textbook-table th {
+    background: var(--chapter-bg);
+    color: var(--parchment);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Libre Baskerville', serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .textbook-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  .textbook-table tr:nth-child(even) td {
+    background: var(--parchment-dark);
+  }
+
+  .textbook-table tr:hover td {
+    background: rgba(139, 37, 21, 0.05);
+  }
+
+  .tick { color: #27ae60; font-weight: bold; }
+  .cross { color: #e74c3c; font-weight: bold; }
+
+  /* KEY POINTS BOX */
+  .key-points {
+    background: linear-gradient(135deg, #f0e8d8 0%, #faf6ef 100%);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 26px;
+    margin: 24px 0;
+  }
+
+  .key-points-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  /* CONCLUSION BLOCK */
+  .conclusion {
+    border-top: 2px solid var(--rule);
+    padding-top: 24px;
+    margin-top: 40px;
+  }
+
+  .conclusion-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  /* PAGE DIVIDER */
+  .page-rule {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rule), transparent);
+    margin: 50px 0;
+  }
+
+  /* INTRODUCTION BLOCK */
+  .intro-drop {
+    position: relative;
+    padding: 24px 0 24px 0;
+  }
+
+  .intro-drop p:first-child::first-letter {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 64px;
+    float: left;
+    line-height: 0.75;
+    margin-right: 8px;
+    margin-top: 8px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .toc { display: none; }
+    .main-content { padding: 40px 24px 80px; }
+    .chapter-header { margin: 40px -24px 36px; padding: 30px 24px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .toc { display: none; }
+    .book-cover { page-break-after: always; }
+    .chapter-header { page-break-before: always; }
+  }
+
+  .example-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: var(--parchment-dark);
+    border: 1px solid var(--rule);
+    padding: 2px 8px;
+    border-radius: 2px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  .hierarchy-chain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: var(--parchment-dark);
+    border: 1px solid var(--rule);
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  .chain-item {
+    background: var(--chapter-bg);
+    color: var(--parchment);
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-size: 12px;
+  }
+
+  .chain-arrow {
+    color: var(--gold);
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- BOOK COVER -->
+<div class="book-cover">
+  <div class="book-subtitle-top">Master of Education · Paper III · EDN020305C</div>
+  <div class="ornament">❧ ✦ ❧</div>
+  <h1 class="book-title">
+    Measurement and Evaluation<br>in Education
+    <span>A Complete Study Guide for M.Ed. Examination</span>
+  </h1>
+  <div class="ornament">— ✦ —</div>
+  <div class="book-meta">Units I – V &nbsp;·&nbsp; Exam-Ready Answers &nbsp;·&nbsp; Detailed Analysis</div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc">
+    <div class="toc-title">Contents</div>
+    <div class="unit-label">Unit I — Measurement</div>
+    <a href="#u1-concept">Concept of Measurement (25M)</a>
+    <a href="#u1-scales">Scales of Measurement (30M)</a>
+    <a href="#u1-errors">Sources of Errors (15M)</a>
+    <a href="#u1-types">Types of Measurement (15M)</a>
+    <a href="#u1-evaluation">Evaluation (30M)</a>
+    <a href="#u1-principles">Principles of Evaluation (20M)</a>
+    <a href="#u1-typeeval">Types of Evaluation (30M)</a>
+    <a href="#u1-relation">Measurement vs Evaluation (15M)</a>
+    <div class="unit-label">Unit II — Test Construction</div>
+    <a href="#u2-construction">Test Construction (30M)</a>
+    <a href="#u2-criteria">Criteria of Good Test (20M)</a>
+    <a href="#u2-teachervsstd">Teacher-Made vs Standardized (15M)</a>
+    <a href="#u2-item">Item Analysis (20M)</a>
+    <a href="#u2-validity">Validity & Reliability (15M)</a>
+    <a href="#u2-types">Types of Validity & Reliability (20M)</a>
+    <a href="#u2-factors">Factors Affecting (15M)</a>
+    <a href="#u2-relation">Relationship (15M)</a>
+    <a href="#u2-norms">Meaning of Norms (15M)</a>
+    <a href="#u2-typesnorms">Types of Norms (20M)</a>
+    <div class="unit-label">Unit III — Achievement</div>
+    <a href="#u3-achievement">Achievement Test (20M)</a>
+    <a href="#u3-bloom">Bloom's Taxonomy (20M)</a>
+    <a href="#u3-construction">Construction (20M)</a>
+    <a href="#u3-types">Types of Achievement Tests (20M)</a>
+    <a href="#u3-interest">Measurement of Interest (20M)</a>
+    <a href="#u3-kuder">Kuder Inventories (20M)</a>
+    <div class="unit-label">Unit IV — Personality</div>
+    <a href="#u4-personality">Concept of Personality (20M)</a>
+    <a href="#u4-types">Types of Personality Tests (20M)</a>
+    <a href="#u4-uses">Uses of Personality Tests (10M)</a>
+    <a href="#u4-intelligence">Measurement of Intelligence (20M)</a>
+    <a href="#u4-uses-intel">Uses of Intelligence Measurement (10M)</a>
+    <a href="#u4-types-intel">Types of Intelligence Tests (20M)</a>
+    <a href="#u4-binet">Binet-Simon & Stanford-Binet (20M)</a>
+    <a href="#u4-wechsler">Wechsler Scale (20M)</a>
+    <div class="unit-label">Unit V — Aptitude & Attitude</div>
+    <a href="#u5-aptitude">Aptitude Test (20M)</a>
+    <a href="#u5-types">Types of Aptitude Tests (20M)</a>
+    <a href="#u5-uses">Uses of Aptitude Tests (15M)</a>
+    <a href="#u5-attitude">Concept of Attitude (10M)</a>
+    <a href="#u5-creative">Creative Thinking (15M)</a>
+    <a href="#u5-levels">Creative Thinking Levels (15M)</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- UNIT I -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chapter-header" id="unit1">
+      <div class="chapter-number">Unit I</div>
+      <h2 class="chapter-title">Concept, Importance and Functions of Measurement and Evaluation</h2>
+    </div>
+
+    <!-- Q1 -->
+    <section id="u1-concept">
+      <h2 class="section-title">Concept, Importance and Functions of Measurement</h2>
+      <div class="chapter-marks">25 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <div class="intro-drop">
+        <p>Measurement is a fundamental concept in science, social sciences, and education. In modern education systems, scientific decision-making depends largely on proper measurement of learning outcomes, abilities, attitudes, and behaviours. Without measurement, evaluation becomes vague and subjective.</p>
+      </div>
+
+      <h3 class="subsection">I. Concept of Measurement</h3>
+
+      <h4 class="sub-subsection">(A) General Concept of Measurement</h4>
+      <p>In general terms, measurement means the process of assigning numbers to objects or events according to definite rules.</p>
+      <div class="definition">
+        "Measurement is the process of obtaining a numerical description of the degree to which an individual possesses a particular characteristic."
+        <span class="attribution">— Norman E. Gronlund</span>
+      </div>
+      <p>Thus, measurement is quantitative, follows specific rules, provides numerical data, and describes the extent of a trait or attribute.</p>
+      <div class="note">
+        <div class="note-label">Examples</div>
+        Height in centimeters · Weight in kilograms · Temperature in degrees
+      </div>
+
+      <h4 class="sub-subsection">(B) Concept of Measurement in Education</h4>
+      <p>In education, measurement refers to the systematic assignment of numbers to learners' abilities, achievements, interests, intelligence, aptitude, attitudes, or personality traits according to established procedures. We measure: Academic achievement, Intelligence, Creativity, Attitude, Personality, and Skills and competencies.</p>
+      <p>Educational measurement is <em>indirect</em> because psychological traits cannot be measured directly like height or weight. They are inferred through tests and tools. Thus, educational measurement is systematic, objective, quantitative, and based on tools like tests, scales, and inventories.</p>
+
+      <h3 class="subsection">II. Importance of Measurement</h3>
+
+      <h4 class="sub-subsection">(A) General Importance</h4>
+      <ul>
+        <li><strong>Scientific Decision Making:</strong> Measurement provides objective data for making rational decisions.</li>
+        <li><strong>Precision and Accuracy:</strong> It reduces guesswork and subjectivity.</li>
+        <li><strong>Comparison:</strong> Helps compare individuals, groups, or performance levels.</li>
+        <li><strong>Standardization:</strong> Establishes uniform criteria for assessment.</li>
+      </ul>
+
+      <h4 class="sub-subsection">(B) Importance in Education</h4>
+      <ul>
+        <li><strong>Assessment of Learning:</strong> Helps determine the extent to which instructional objectives are achieved.</li>
+        <li><strong>Basis of Evaluation:</strong> Measurement provides the quantitative data upon which evaluation is based.</li>
+        <li><strong>Diagnosis of Strengths and Weaknesses:</strong> Identifies learning gaps and areas needing improvement.</li>
+        <li><strong>Guidance and Counselling:</strong> Intelligence, aptitude, and interest tests help in educational and vocational guidance.</li>
+        <li><strong>Promotion and Certification:</strong> Determines pass, fail, grading, ranking.</li>
+        <li><strong>Curriculum Improvement:</strong> Results indicate whether teaching methods and curriculum are effective.</li>
+        <li><strong>Research Purposes:</strong> Educational research depends on measurable variables.</li>
+      </ul>
+
+      <h3 class="subsection">III. Functions of Measurement</h3>
+      <ul>
+        <li><strong>Quantification Function:</strong> Converts qualitative attributes (like intelligence, attitude) into quantitative data — e.g., Marks, scores, IQ values.</li>
+        <li><strong>Comparative Function:</strong> Allows comparison between students, between groups, and across time.</li>
+        <li><strong>Diagnostic Function:</strong> Helps identify learning difficulties, conceptual misunderstandings, and individual differences.</li>
+        <li><strong>Predictive Function:</strong> Can predict future academic success, vocational suitability, and learning potential.</li>
+        <li><strong>Placement Function:</strong> Used for section division, ability grouping, and remedial or advanced placement.</li>
+        <li><strong>Selection Function:</strong> Used in competitive examinations, recruitment, and admission processes.</li>
+        <li><strong>Research Function:</strong> Provides measurable data for hypothesis testing and statistical analysis.</li>
+      </ul>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Measurement is the foundation of modern educational evaluation. It transforms abstract psychological traits into quantifiable data, ensuring objectivity, fairness, and scientific decision-making. However, measurement alone is not evaluation; it merely provides numerical data upon which value judgments are made.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q2 Scales of Measurement -->
+    <section id="u1-scales">
+      <h2 class="section-title">Scales of Measurement: Nominal, Ordinal, Interval and Ratio</h2>
+      <div class="chapter-marks">30 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Measurement involves assigning numbers to objects or attributes according to certain rules. The meaning of these numbers depends upon the type of scale used. The classification of scales of measurement was systematically presented by <strong>Stanley Smith Stevens in 1946</strong>. He identified four fundamental levels of measurement: Nominal, Ordinal, Interval, and Ratio. Understanding these scales is essential in educational research because the type of scale determines the statistical techniques that can be applied.</p>
+
+      <h3 class="subsection">2. Meaning of Scale of Measurement</h3>
+      <p>A scale of measurement refers to the system or rule according to which numbers are assigned to objects or characteristics. Each higher scale possesses the properties of the lower one and adds new properties.</p>
+
+      <h3 class="subsection">3. Types of Scales of Measurement</h3>
+
+      <h4 class="sub-subsection">I. Nominal Scale</h4>
+      <p>The nominal scale is the simplest level of measurement. It is used for <em>classification or labeling only</em>. Numbers assigned are merely names or categories — they do not indicate quantity or order.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Used for classification · No order or ranking · No magnitude · Mutually exclusive categories</li>
+        <li><strong>Examples (General):</strong> Gender (1=Male, 2=Female), Religion, Blood group</li>
+        <li><strong>Examples (Educational):</strong> Stream (Arts/Science/Commerce), School type, Medium of instruction</li>
+        <li><strong>Statistical Operations:</strong> Frequency, Percentage, Mode, Chi-square test</li>
+        <li><strong>Limitation:</strong> No ranking or comparison of magnitude is possible.</li>
+      </ul>
+
+      <h4 class="sub-subsection">II. Ordinal Scale</h4>
+      <p>The ordinal scale indicates <em>ranking or order</em>, but does not show the exact magnitude of difference between ranks.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Classification + ranking · Order is meaningful · Differences between ranks are not equal · No true zero</li>
+        <li><strong>Examples (General):</strong> Position in race (1st, 2nd, 3rd), Socio-economic status</li>
+        <li><strong>Examples (Educational):</strong> Class rank, Grade categories (A, B, C), Merit lists</li>
+        <li><strong>Statistical Operations:</strong> Median, Percentile, Rank correlation (Spearman)</li>
+        <li><strong>Limitation:</strong> Equal differences between ranks cannot be assumed.</li>
+      </ul>
+
+      <h4 class="sub-subsection">III. Interval Scale</h4>
+      <p>The interval scale not only ranks objects but also ensures <em>equal intervals between units</em>. However, it does not have a true zero.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Classification + Ranking + Equal intervals + No absolute zero</li>
+        <li><strong>Examples (General):</strong> Temperature in Celsius/Fahrenheit, Calendar years</li>
+        <li><strong>Examples (Educational):</strong> IQ scores, Standardized test scores, Most educational achievement tests</li>
+        <li><strong>Statistical Operations:</strong> Mean, Standard deviation, Correlation, t-test, ANOVA</li>
+        <li><strong>Limitation:</strong> No true zero; ratio comparison is not meaningful.</li>
+      </ul>
+
+      <h4 class="sub-subsection">IV. Ratio Scale</h4>
+      <p>The ratio scale has all properties of interval scale plus a <em>true zero point</em>. Zero indicates complete absence of the attribute.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Classification + Ranking + Equal intervals + True zero + Ratio comparison possible</li>
+        <li><strong>Examples (General):</strong> Height, Weight, Age, Time</li>
+        <li><strong>Examples (Educational):</strong> Time taken to complete a test, Number of correct answers, Attendance days</li>
+        <li><strong>Statistical Operations:</strong> All statistical techniques including Mean, SD, Correlation, Regression, Parametric tests</li>
+      </ul>
+
+      <h3 class="subsection">4. Hierarchical Nature of Scales</h3>
+      <div class="hierarchy-chain">
+        <div class="chain-item">Nominal</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Ordinal</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Interval</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Ratio</div>
+      </div>
+      <p>Properties added step by step: (1) Classification → (2) Ranking → (3) Equal intervals → (4) Absolute zero</p>
+
+      <h3 class="subsection">5. Comparative Table</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Scale</th><th>Classification</th><th>Ranking</th><th>Equal Intervals</th><th>True Zero</th></tr></thead>
+        <tbody>
+          <tr><td>Nominal</td><td class="tick">✔</td><td class="cross">✘</td><td class="cross">✘</td><td class="cross">✘</td></tr>
+          <tr><td>Ordinal</td><td class="tick">✔</td><td class="tick">✔</td><td class="cross">✘</td><td class="cross">✘</td></tr>
+          <tr><td>Interval</td><td class="tick">✔</td><td class="tick">✔</td><td class="tick">✔</td><td class="cross">✘</td></tr>
+          <tr><td>Ratio</td><td class="tick">✔</td><td class="tick">✔</td><td class="tick">✔</td><td class="tick">✔</td></tr>
+        </tbody>
+      </table>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>The four scales — Nominal, Ordinal, Interval, and Ratio — form the foundation of educational measurement. Proposed by Stanley Smith Stevens, these scales differ in their properties and statistical applications. Proper understanding ensures scientific accuracy, appropriate data analysis, and meaningful interpretation of results.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q3 Sources of Errors -->
+    <section id="u1-errors">
+      <h2 class="section-title">Sources of Errors in Measurement</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Measurement in education involves assigning numbers to psychological attributes such as intelligence, achievement, aptitude, and attitude. However, no measurement is perfectly accurate. Every measurement contains some degree of error. These errors affect the reliability and validity of test results. Understanding the sources of error helps improve the accuracy of educational measurement.</p>
+
+      <h3 class="subsection">2. Meaning of Error in Measurement</h3>
+      <p>An error in measurement refers to the difference between the observed score and the true score.</p>
+      <div class="formula">Observed Score = True Score + Error</div>
+      <p>Error does not necessarily mean a mistake; it refers to any factor that distorts the true measurement of an individual's ability or trait.</p>
+
+      <h3 class="subsection">3. Sources of Errors in Measurement</h3>
+
+      <h4 class="sub-subsection">I. Errors Due to the Test (Instrumental Errors)</h4>
+      <p>These occur because of flaws in the test itself: Ambiguous Questions, Poor Test Construction, Low Reliability, Inadequate Sampling of Content, and Defective Scoring Key. Proper test construction reduces such errors.</p>
+
+      <h4 class="sub-subsection">II. Errors Due to the Examiner (Scorer Errors)</h4>
+      <p>These arise from the person administering or scoring the test: Personal Bias, Halo Effect, Leniency or Severity Error, and Inconsistent Scoring. Standardized scoring procedures reduce examiner errors.</p>
+
+      <h4 class="sub-subsection">III. Errors Due to the Examinee (Student Errors)</h4>
+      <p>These errors are caused by the learner's condition: Physical Condition (illness, fatigue), Emotional State (anxiety, fear), Guessing, Lack of Motivation, and Misinterpretation of Questions. Proper guidance and a supportive environment minimize such errors.</p>
+
+      <h4 class="sub-subsection">IV. Environmental Errors</h4>
+      <p>These arise from testing conditions — Noise and Disturbance, Poor Lighting or Ventilation, Uncomfortable Seating, and Time Pressure. Such factors interfere with true performance.</p>
+
+      <h4 class="sub-subsection">V. Administrative Errors</h4>
+      <p>These include improper instructions, mistakes in timing, printing errors, and wrong distribution of question papers. These errors can seriously distort test results.</p>
+
+      <h3 class="subsection">4. Types of Errors (Conceptual Classification)</h3>
+      <ul>
+        <li><strong>Random Errors:</strong> Unpredictable, occur by chance (e.g., temporary illness, mood change). Random errors affect <em>reliability</em>.</li>
+        <li><strong>Systematic Errors:</strong> Consistent and directional (e.g., biased scoring, faulty instrument). Systematic errors affect <em>validity</em>.</li>
+      </ul>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Measurement in education is not free from error. Errors may arise from the test, examiner, examinee, environment, or administration. Identifying and minimizing these sources is essential for ensuring accurate, reliable, and valid educational measurement.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q4 Types of Measurement -->
+    <section id="u1-types">
+      <h2 class="section-title">Types of Measurement</h2>
+      <div class="chapter-marks">15–20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Measurement is the process of assigning numbers to characteristics or attributes according to certain rules. Measurement can be classified into different types based on the nature of attributes measured, method used, and interpretation of scores.</p>
+
+      <h3 class="subsection">2. Major Types of Measurement</h3>
+
+      <h4 class="sub-subsection">I. Direct and Indirect Measurement</h4>
+      <p><strong>Direct Measurement</strong> refers to measuring an attribute directly using a standard unit (e.g., height in cm, weight in kg). In education, very few characteristics are directly measurable.</p>
+      <p><strong>Indirect Measurement:</strong> Most educational and psychological traits are measured indirectly — intelligence via IQ tests, attitude via scales, achievement via written examinations. Educational measurement is mainly indirect in nature.</p>
+
+      <h4 class="sub-subsection">II. Absolute and Relative Measurement</h4>
+      <p><strong>Absolute Measurement</strong> expresses performance in terms of a fixed standard (e.g., scoring 45 out of 100). Performance is judged against a predetermined criterion.</p>
+      <p><strong>Relative Measurement</strong> compares an individual's performance with others (e.g., class rank, percentile score). Competitive exams mostly use relative measurement.</p>
+
+      <h4 class="sub-subsection">III. Objective and Subjective Measurement</h4>
+      <p><strong>Objective Measurement</strong> is free from examiner bias, with definite and standardized scoring (MCQs, True/False, Matching). Advantages: High reliability, less examiner error.</p>
+      <p><strong>Subjective Measurement</strong> depends on examiner judgment (essay-type, oral, practical exams). Limitations: Prone to bias, lower reliability. Balanced testing should include both types.</p>
+
+      <h4 class="sub-subsection">IV. Norm-Referenced and Criterion-Referenced Measurement</h4>
+      <p><strong>Norm-Referenced Measurement</strong> interprets performance in comparison to a group. Used in competitive selection.</p>
+      <p><strong>Criterion-Referenced Measurement</strong> compares performance with a predetermined standard. Focuses on achievement of objectives rather than comparison.</p>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Measurement in education is primarily indirect and involves various types such as direct and indirect, absolute and relative, objective and subjective, and norm-referenced and criterion-referenced measurement. Proper understanding is essential for scientific and fair assessment of learners' performance.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q5 Evaluation -->
+    <section id="u1-evaluation">
+      <h2 class="section-title">Meaning, Importance and Functions of Evaluation</h2>
+      <div class="chapter-marks">30 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>In every field of human activity, judgments are made about the worth, quality, or effectiveness of a process or product. In education, such judgments are systematic and scientific. Evaluation plays a crucial role in determining the success of teaching-learning processes and educational programmes. Evaluation is broader than measurement and includes both quantitative and qualitative aspects.</p>
+
+      <h3 class="subsection">2. Meaning of Evaluation</h3>
+
+      <h4 class="sub-subsection">(A) General Meaning</h4>
+      <p>In general terms, evaluation refers to the process of making value judgments about the worth or quality of an object, person, programme, or performance. It involves collecting information, interpreting data, making judgments, and taking decisions. Unlike measurement, evaluation includes qualitative judgment.</p>
+
+      <h4 class="sub-subsection">(B) Meaning in Education</h4>
+      <div class="definition">
+        "Evaluation is the process of determining to what extent educational objectives are being realized."
+        <span class="attribution">— Ralph W. Tyler</span>
+      </div>
+      <div class="definition">
+        "Evaluation is a systematic process of determining the extent to which instructional objectives are achieved by pupils."
+        <span class="attribution">— Norman E. Gronlund</span>
+      </div>
+      <p>Educational evaluation includes: (1) Formulation of objectives, (2) Measurement of performance, (3) Interpretation of results, (4) Judgment and decision making.</p>
+
+      <h3 class="subsection">3. Characteristics of Evaluation</h3>
+      <ul>
+        <li>Continuous and comprehensive</li>
+        <li>Systematic and planned</li>
+        <li>Includes both quantitative and qualitative aspects</li>
+        <li>Objective-based and leads to decision-making</li>
+        <li>Broader than measurement</li>
+      </ul>
+
+      <h3 class="subsection">4. Importance of Evaluation</h3>
+
+      <h4 class="sub-subsection">(A) General Importance</h4>
+      <ul>
+        <li><strong>Decision Making:</strong> Helps in making informed decisions.</li>
+        <li><strong>Judgment of Worth:</strong> Determines quality, success, or failure.</li>
+        <li><strong>Improvement and Development:</strong> Identifies strengths and weaknesses.</li>
+        <li><strong>Accountability:</strong> Ensures responsibility in organizations.</li>
+        <li><strong>Planning and Policy Formation:</strong> Provides feedback for future planning.</li>
+      </ul>
+
+      <h4 class="sub-subsection">(B) Importance in Education</h4>
+      <ul>
+        <li>Assessment of Learning Outcomes</li>
+        <li>Improvement of Teaching-Learning Process</li>
+        <li>Curriculum Revision</li>
+        <li>Guidance and Counseling</li>
+        <li>Promotion and Certification</li>
+        <li>Diagnosis and Remediation</li>
+        <li>Motivation for Students</li>
+        <li>Educational Research</li>
+      </ul>
+
+      <h3 class="subsection">5. Functions of Evaluation</h3>
+      <ol>
+        <li><strong>Diagnostic Function:</strong> Identifies strengths and weaknesses of learners; helps in planning remedial measures.</li>
+        <li><strong>Formative Function:</strong> Provides continuous feedback during instruction; improves teaching strategies.</li>
+        <li><strong>Summative Function:</strong> Judges overall achievement at the end of a course.</li>
+        <li><strong>Placement Function:</strong> Helps in grouping students according to ability level.</li>
+        <li><strong>Predictive Function:</strong> Predicts future performance and success.</li>
+        <li><strong>Administrative Function:</strong> Helps in promotion decisions, certification, scholarship selection, and recruitment.</li>
+        <li><strong>Motivational Function:</strong> Encourages students to work harder.</li>
+        <li><strong>Guidance Function:</strong> Assists in career planning and subject selection.</li>
+        <li><strong>Accountability Function:</strong> Ensures that institutions and teachers meet educational standards.</li>
+      </ol>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Evaluation is an essential component of modern education. It is a systematic process that goes beyond measurement by including interpretation and value judgment. It ensures that educational objectives are achieved effectively and helps in improving teaching-learning processes, curriculum, and educational policies.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q6 Principles -->
+    <section id="u1-principles">
+      <h2 class="section-title">Principles of Evaluation</h2>
+      <div class="chapter-marks">15–20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Evaluation is a systematic process of determining the extent to which educational objectives are achieved. For evaluation to be effective, fair, and scientific, it must follow certain guiding principles. These principles ensure reliability, validity, objectivity, and educational usefulness.</p>
+
+      <h3 class="subsection">2. Principles of Evaluation</h3>
+      <ol>
+        <li><strong>Principle of Clarity of Objectives:</strong> Evaluation must be based on clearly defined, specific and measurable educational objectives. Without clear objectives, evaluation becomes vague and meaningless.</li>
+        <li><strong>Principle of Comprehensiveness:</strong> Evaluation should assess the Cognitive domain (knowledge), Affective domain (attitude, values), and Psychomotor domain (skills). Only testing memory is incomplete evaluation.</li>
+        <li><strong>Principle of Continuity:</strong> Evaluation should be a continuous process including formative evaluation, summative evaluation, and periodic assessments.</li>
+        <li><strong>Principle of Validity:</strong> Evaluation must measure what it is intended to measure. A mathematics test should measure mathematical ability, not language skills.</li>
+        <li><strong>Principle of Reliability:</strong> Evaluation results should be consistent. If the same test is administered again under similar conditions, the results should be similar.</li>
+        <li><strong>Principle of Objectivity:</strong> Evaluation should be free from examiner bias using clear scoring schemes and preferring objective-type questions where suitable.</li>
+        <li><strong>Principle of Practicality:</strong> Evaluation should be feasible in terms of Time, Cost, Effort, and Administrative convenience.</li>
+        <li><strong>Principle of Fairness:</strong> Evaluation should provide equal opportunity to all learners — no discrimination, same instructions, equal testing conditions.</li>
+        <li><strong>Principle of Usefulness:</strong> Evaluation should serve a purpose — improving teaching, diagnosing learning difficulties, guiding students, and making decisions.</li>
+        <li><strong>Principle of Diagnostic Value:</strong> Evaluation should help identify weak areas, learning gaps, and individual differences to support remedial teaching.</li>
+        <li><strong>Principle of Cooperation:</strong> Evaluation should involve cooperation among teachers, students, and administrators. Students should be aware of evaluation criteria.</li>
+      </ol>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>To make evaluation effective, it must follow principles such as clarity of objectives, validity, reliability, objectivity, continuity, comprehensiveness, fairness, and usefulness. Adhering to these principles ensures that evaluation becomes a meaningful tool for improving teaching-learning processes and achieving educational goals.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q7 Types of Evaluation -->
+    <section id="u1-typeeval">
+      <h2 class="section-title">Types of Evaluation: Formative &amp; Summative; Norm-Referenced &amp; Criterion-Referenced</h2>
+      <div class="chapter-marks">30 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Evaluation is a systematic process of determining the extent to which educational objectives are achieved. In education, evaluation may be classified based on purpose, timing, and method of interpretation of results.</p>
+
+      <div class="chapter-header" style="margin: 30px -70px 24px; padding: 20px 70px;">
+        <div class="chapter-number">Part I</div>
+        <h2 class="chapter-title" style="font-size:20px;">Formative and Summative Evaluation</h2>
+      </div>
+
+      <h3 class="subsection">1. Formative Evaluation</h3>
+      <p>Formative evaluation refers to evaluation conducted <em>during the instructional process</em> to monitor student progress and provide continuous feedback for improvement. The concept was strongly developed by <strong>Benjamin Bloom</strong>.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Conducted during instruction · Continuous and diagnostic · Focused on improvement · Provides feedback to teachers and students</li>
+        <li><strong>Examples:</strong> Unit tests, Class quizzes, Assignments, Oral questioning, Classroom observation</li>
+        <li><strong>Functions:</strong> Identifies learning difficulties · Provides corrective measures · Improves teaching methods · Encourages student participation</li>
+      </ul>
+
+      <h3 class="subsection">2. Summative Evaluation</h3>
+      <p>Summative evaluation is conducted <em>at the end of a course</em>, term, or programme to determine the overall achievement of learners.</p>
+      <ul>
+        <li><strong>Characteristics:</strong> Conducted after instruction · Judgmental in nature · Used for grading and certification · Evaluates total performance</li>
+        <li><strong>Examples:</strong> Final examinations, Board examinations, Term-end assessments, Annual exams</li>
+        <li><strong>Functions:</strong> Determines pass or fail · Provides grades or certificates · Used for promotion decisions</li>
+      </ul>
+
+      <h3 class="subsection">Difference: Formative vs Summative</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Formative Evaluation</th><th>Summative Evaluation</th></tr></thead>
+        <tbody>
+          <tr><td>Time</td><td>During instruction</td><td>End of instruction</td></tr>
+          <tr><td>Purpose</td><td>Improvement</td><td>Judgment</td></tr>
+          <tr><td>Nature</td><td>Diagnostic</td><td>Certifying</td></tr>
+          <tr><td>Frequency</td><td>Continuous</td><td>Periodic</td></tr>
+          <tr><td>Feedback</td><td>Immediate</td><td>Usually delayed</td></tr>
+          <tr><td>Focus</td><td>Process</td><td>Product</td></tr>
+        </tbody>
+      </table>
+
+      <div class="chapter-header" style="margin: 30px -70px 24px; padding: 20px 70px;">
+        <div class="chapter-number">Part II</div>
+        <h2 class="chapter-title" style="font-size:20px;">Norm-Referenced and Criterion-Referenced Evaluation</h2>
+      </div>
+
+      <h3 class="subsection">3. Norm-Referenced Evaluation</h3>
+      <p>Norm-referenced evaluation interprets a student's performance in comparison with the performance of a group (norm group). Based on relative performance, used for ranking, emphasizes comparison. Examples: Competitive exams, Percentile ranks, Class ranking.</p>
+
+      <h3 class="subsection">4. Criterion-Referenced Evaluation</h3>
+      <p>Criterion-referenced evaluation judges a student's performance against a predetermined standard or criterion. Based on mastery of objectives, no comparison with others, focused on achievement of specific skills. Examples: Pass if 40% marks obtained, Driving test, Mastery learning.</p>
+
+      <h3 class="subsection">Difference: Norm-Referenced vs Criterion-Referenced</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Norm-Referenced</th><th>Criterion-Referenced</th></tr></thead>
+        <tbody>
+          <tr><td>Comparison</td><td>Compared with group</td><td>Compared with standard</td></tr>
+          <tr><td>Purpose</td><td>Ranking</td><td>Mastery</td></tr>
+          <tr><td>Focus</td><td>Relative performance</td><td>Absolute performance</td></tr>
+          <tr><td>Outcome</td><td>Limited success</td><td>All may succeed</td></tr>
+          <tr><td>Use</td><td>Competitive exams</td><td>Classroom assessment</td></tr>
+        </tbody>
+      </table>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Evaluation in education can be classified into formative and summative based on timing and purpose, and into norm-referenced and criterion-referenced based on interpretation of results. A balanced approach ensures effective and scientific educational assessment.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- Q8 Relation & Differences -->
+    <section id="u1-relation">
+      <h2 class="section-title">Relation and Differences Between Measurement and Evaluation</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Measurement and evaluation are closely related concepts in education. Measurement provides quantitative data, whereas evaluation involves value judgment based on that data.</p>
+
+      <h3 class="subsection">2. Meaning of Measurement</h3>
+      <div class="definition">
+        "Measurement is the process of obtaining a numerical description of the degree to which an individual possesses a particular characteristic."
+        <span class="attribution">— Norman E. Gronlund</span>
+      </div>
+      <p><span class="example-tag">Example</span> A student scores 70 out of 100 in Mathematics — this is measurement because it gives a numerical score.</p>
+
+      <h3 class="subsection">3. Meaning of Evaluation</h3>
+      <div class="definition">
+        "Evaluation is the process of determining the extent to which educational objectives are being realized."
+        <span class="attribution">— Ralph W. Tyler</span>
+      </div>
+      <p><span class="example-tag">Example</span> After scoring 70/100, the teacher decides the student has achieved "Good Performance" — this judgment is evaluation.</p>
+
+      <h3 class="subsection">4. Relationship Between Measurement and Evaluation</h3>
+      <div class="hierarchy-chain">
+        <div class="chain-item">Measurement</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Data Collection</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Interpretation</div><div class="chain-arrow">→</div>
+        <div class="chain-item">Evaluation</div>
+      </div>
+      <p>Measurement is the foundation, while evaluation is the broader process that includes interpretation and judgment. Without measurement, evaluation may become subjective.</p>
+
+      <h3 class="subsection">5. Differences</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Measurement</th><th>Evaluation</th></tr></thead>
+        <tbody>
+          <tr><td>Meaning</td><td>Assigning numbers to attributes</td><td>Making value judgments</td></tr>
+          <tr><td>Nature</td><td>Quantitative</td><td>Quantitative + Qualitative</td></tr>
+          <tr><td>Scope</td><td>Narrow</td><td>Broad</td></tr>
+          <tr><td>Purpose</td><td>Describe performance</td><td>Judge worth or effectiveness</td></tr>
+          <tr><td>Outcome</td><td>Numerical score</td><td>Decision or judgment</td></tr>
+          <tr><td>Example</td><td>80 marks</td><td>Grade A / Excellent</td></tr>
+          <tr><td>Dependency</td><td>Does not require evaluation</td><td>Requires measurement</td></tr>
+          <tr><td>Objectivity</td><td>Mostly objective</td><td>May include subjective judgment</td></tr>
+        </tbody>
+      </table>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Measurement assigns numerical values to learner performance, whereas evaluation interprets those values to make judgments about achievement. Measurement is narrower and forms the basis of evaluation, while evaluation is broader and includes qualitative aspects. Both are essential for effective educational assessment and decision-making.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- UNIT II -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chapter-header" id="unit2">
+      <div class="chapter-number">Unit II</div>
+      <h2 class="chapter-title">Test Construction and Standardization</h2>
+    </div>
+
+    <section id="u2-construction">
+      <h2 class="section-title">Test Construction and Standardization: Meaning, Nature, Steps</h2>
+      <div class="chapter-marks">30 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>A test is a systematic tool designed to measure knowledge, skills, abilities, or psychological traits. The quality of decisions depends on the quality of tests used. Therefore, test construction and standardization are scientific processes that ensure reliability, validity, and fairness in assessment.</p>
+
+      <h3 class="subsection">2. Meaning of Test Construction</h3>
+      <p>Test construction refers to the systematic process of planning, preparing, and organizing test items to measure specific learning outcomes or psychological traits. It includes defining objectives, preparing test blueprint, writing items, assembling the test, and scoring and analyzing results.</p>
+
+      <h3 class="subsection">3. Meaning of Standardization</h3>
+      <p>Standardization is the process of establishing uniform procedures for administering, scoring, and interpreting a test. A standardized test is administered under uniform conditions, scored with fixed procedures, and based on established norms. Standardization ensures fairness and comparability of scores.</p>
+
+      <h3 class="subsection">4. Nature of Test Construction and Standardization</h3>
+      <p>It is Scientific and Systematic, Objective-based, Statistical in nature, a Continuous process, Empirical (based on data), and Concerned with validity and reliability.</p>
+
+      <h3 class="subsection">5. Steps in Test Construction</h3>
+      <ol>
+        <li><strong>Step 1 — Planning the Test:</strong> Define purpose, identify learning objectives, determine content areas, decide length and type of items.</li>
+        <li><strong>Step 2 — Preparation of Blueprint (Table of Specification):</strong> Ensures balanced representation of content areas, objectives, marks distribution, and types of questions. Prevents overemphasis on one area.</li>
+        <li><strong>Step 3 — Writing Test Items:</strong> Items must be clear, unambiguous, relevant to objectives, free from bias, and of appropriate difficulty. Types include MCQ, True/False, Matching, Short answer, Essay.</li>
+        <li><strong>Step 4 — Arrangement of Items:</strong> Arrange from easy to difficult, provide clear instructions, ensure proper layout.</li>
+        <li><strong>Step 5 — Preparing Scoring Scheme:</strong> Develop marking key, prepare scoring rubric, define weightage.</li>
+        <li><strong>Step 6 — Try-Out (Pilot Testing):</strong> Administer to a small sample to detect defects, check clarity, estimate time, and identify difficult or ambiguous items.</li>
+        <li><strong>Step 7 — Item Analysis:</strong> Statistically determine Difficulty Index, Discrimination Index, and Effectiveness of Distractors. Poor items are revised or removed.</li>
+        <li><strong>Step 8 — Final Draft Preparation:</strong> Based on analysis, the final form of the test is prepared.</li>
+      </ol>
+
+      <h3 class="subsection">6. Steps in Test Standardization</h3>
+      <ol>
+        <li>Selection of Representative Sample</li>
+        <li>Uniform Administration under identical conditions</li>
+        <li>Scoring Procedure Standardization with uniform instructions</li>
+        <li>Establishing Reliability (Test-retest, Split-half, Parallel forms)</li>
+        <li>Establishing Validity (Content, Construct, Criterion-related)</li>
+        <li>Development of Norms (Percentiles, Standard scores, Z-scores, T-scores)</li>
+        <li>Preparation of Manual containing Purpose, Administration instructions, Scoring procedure, Norms, and Reliability/Validity data</li>
+      </ol>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Test construction and standardization are systematic and scientific processes essential for ensuring the quality of educational measurement. While test construction focuses on preparing appropriate items and structure, standardization ensures uniformity, reliability, validity, and norm development.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-criteria">
+      <h2 class="section-title">Criteria of a Good Test</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>A test is a systematic tool used to measure knowledge, skills, abilities, or psychological traits. A good test must satisfy certain essential criteria to ensure that the results obtained are accurate, fair, and meaningful.</p>
+
+      <h3 class="subsection">2. Criteria of a Good Test</h3>
+      <ol>
+        <li><strong>Validity:</strong> The most important characteristic. Refers to the extent to which a test measures what it intends to measure. Types: Content validity, Construct validity, Criterion-related validity.</li>
+        <li><strong>Reliability:</strong> The consistency or stability of test scores. A reliable test minimizes random errors. Methods: Test-retest, Split-half method, Parallel forms. Reliability is necessary but not sufficient for validity.</li>
+        <li><strong>Objectivity:</strong> Freedom from personal bias in scoring and interpretation. Clear scoring key, definite marking scheme, uniform administration.</li>
+        <li><strong>Practicability (Usability):</strong> Practical in terms of time, cost, ease of administration, scoring, and interpretation.</li>
+        <li><strong>Comprehensiveness:</strong> Should cover the entire content area and all learning objectives including Knowledge, Understanding, Application, and Skills.</li>
+        <li><strong>Discriminating Power:</strong> Must distinguish between high and low achievers. Items should have a proper discrimination index.</li>
+        <li><strong>Clarity:</strong> Questions must be clear, simple, unambiguous, and free from confusing language.</li>
+        <li><strong>Standardization:</strong> Should have uniform administration procedure, established norms, and defined scoring method.</li>
+      </ol>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>A good test must possess essential characteristics such as validity, reliability, objectivity, practicability, comprehensiveness, and discriminating power. Among these, validity is the most important. Only when these criteria are satisfied can a test serve as an effective tool for educational measurement and evaluation.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-teachervsstd">
+      <h2 class="section-title">Teacher-Made Test vs. Standardized Test</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>Tests may be classified as Teacher-Made Tests and Standardized Tests depending upon their method of construction and standardization. Both serve different purposes in education.</p>
+
+      <h3 class="subsection">2. Meaning</h3>
+      <p><strong>Teacher-Made Test</strong> (classroom test) is prepared by a teacher to measure the achievement of students in a particular subject or unit. Constructed by classroom teacher, based on specific syllabus taught, used for internal assessment, limited scope. Examples: Unit test, Monthly test, Terminal examination.</p>
+      <p><strong>Standardized Test</strong> is constructed by experts following scientific procedures. Includes Try-out, Item analysis, Establishment of reliability and validity, and Development of norms. Examples: Intelligence tests, Aptitude tests, National-level competitive exams.</p>
+
+      <h3 class="subsection">3. Differences</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Teacher-Made Test</th><th>Standardized Test</th></tr></thead>
+        <tbody>
+          <tr><td>Construction</td><td>Prepared by teacher</td><td>Prepared by experts</td></tr>
+          <tr><td>Scientific Procedure</td><td>Limited or informal</td><td>Follows scientific steps</td></tr>
+          <tr><td>Standardization</td><td>Usually not standardized</td><td>Fully standardized</td></tr>
+          <tr><td>Validity &amp; Reliability</td><td>Rarely established statistically</td><td>Scientifically established</td></tr>
+          <tr><td>Norms</td><td>No norms</td><td>Norms available</td></tr>
+          <tr><td>Scope</td><td>Limited to specific class/content</td><td>Wider applicability</td></tr>
+          <tr><td>Purpose</td><td>Classroom assessment</td><td>Selection, comparison, diagnosis</td></tr>
+          <tr><td>Cost</td><td>Inexpensive</td><td>Expensive to develop</td></tr>
+        </tbody>
+      </table>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Teacher-made tests are flexible and suitable for classroom assessment, whereas standardized tests are scientifically developed and suitable for large-scale measurement and comparison. A balanced use of both enhances the effectiveness of educational evaluation.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-item">
+      <h2 class="section-title">Item Analysis and Selection of Test Items</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>The quality of a test depends on the quality of its items. After preparing a preliminary draft, it is essential to analyze each item statistically. This process is known as <em>item analysis</em>.</p>
+
+      <h3 class="subsection">2. Meaning of Item Analysis</h3>
+      <p>Item analysis is the statistical procedure used to examine the quality and effectiveness of individual test items after a try-out. It determines difficulty level of items, discriminating power, and effectiveness of distractors.</p>
+
+      <h3 class="subsection">3. Procedure of Item Analysis</h3>
+      <ol>
+        <li>Administer the test to a sample group</li>
+        <li>Score the answer sheets</li>
+        <li>Arrange scores in descending order</li>
+        <li>Select upper and lower groups (usually top 27% and bottom 27%)</li>
+        <li>Calculate difficulty index and discrimination index</li>
+      </ol>
+
+      <h3 class="subsection">4. Components of Item Analysis</h3>
+
+      <h4 class="sub-subsection">1. Difficulty Index (P-value)</h4>
+      <p>Indicates the proportion of students who answered an item correctly.</p>
+      <div class="formula">P = (Number of students answering correctly / Total students) × 100</div>
+      <p>High P-value → Easy item · Low P-value → Difficult item · Ideal difficulty level: 30% to 70%</p>
+
+      <h4 class="sub-subsection">2. Discrimination Index (D-value)</h4>
+      <p>Shows how well an item differentiates between high achievers and low achievers.</p>
+      <div class="formula">D = (Correct answers in upper group – Correct answers in lower group) / Number of students in one group</div>
+      <p>High positive value → Good item · Zero value → Poor item · Negative value → Defective item · Good discrimination: above 0.30.</p>
+
+      <h4 class="sub-subsection">3. Distractor Analysis</h4>
+      <p>In MCQ items, incorrect options are called distractors. A good distractor should attract some students, should not be obviously wrong, and should differentiate weaker students.</p>
+
+      <h3 class="subsection">5. Selection of Test Items</h3>
+      <p>After item analysis: Retain items with moderate difficulty, retain items with high discrimination, revise or discard defective items, ensure content balance, maintain reliability and validity. Selected items are assembled into the final form of the test.</p>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Item analysis is a systematic statistical technique used to evaluate the quality of individual test items. By examining difficulty index, discrimination index, and distractor effectiveness, poor items can be revised or eliminated, resulting in a reliable, valid, and effective test.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-validity">
+      <h2 class="section-title">Validity and Reliability of Test</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">2. Validity of a Test</h3>
+      <p><strong>Validity</strong> refers to the extent to which a test measures what it intends to measure.</p>
+      <div class="definition">
+        "Validity is the extent to which a test measures what it claims to measure."
+        <span class="attribution">— Norman E. Gronlund</span>
+      </div>
+      <ul>
+        <li><strong>Content Validity:</strong> Ensures the test covers the entire content area and objectives. Established through Blueprint and Expert judgment.</li>
+        <li><strong>Construct Validity:</strong> Determines whether the test measures a theoretical trait. Used mainly in psychological testing.</li>
+        <li><strong>Criterion-Related Validity:</strong> Measures how well test scores correlate with an external criterion. Types: Predictive validity (future performance) and Concurrent validity (present performance).</li>
+      </ul>
+
+      <h3 class="subsection">3. Reliability of a Test</h3>
+      <p><strong>Reliability</strong> refers to the consistency or stability of test scores. If the same test is administered again under similar conditions, it should produce similar results.</p>
+      <ul>
+        <li><strong>Test-Retest Method:</strong> Same test twice to same group.</li>
+        <li><strong>Split-Half Method:</strong> Dividing the test into two equal halves and correlating scores.</li>
+        <li><strong>Parallel Forms Method:</strong> Two equivalent forms of a test.</li>
+      </ul>
+
+      <h3 class="subsection">4. Difference &amp; Relationship</h3>
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Validity</th><th>Reliability</th></tr></thead>
+        <tbody>
+          <tr><td>Meaning</td><td>Accuracy of measurement</td><td>Consistency of measurement</td></tr>
+          <tr><td>Concerned with</td><td>Measuring the right thing</td><td>Measuring consistently</td></tr>
+          <tr><td>Relation</td><td>A valid test must be reliable</td><td>A reliable test may not be valid</td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <div class="note-label">Key Insight</div>
+        A weighing machine that always shows 5 kg extra weight is reliable (consistent) but not valid (accurate). Thus, reliability is necessary but not sufficient for validity.
+      </div>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Validity and reliability are essential qualities of a good test. Validity ensures accuracy in measuring intended objectives, while reliability ensures consistency of results. A scientifically constructed test must possess both characteristics to make meaningful and fair educational decisions.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-types">
+      <h2 class="section-title">Types and Methods of Validity and Reliability</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">3. Types and Methods of Validity</h3>
+      <ol>
+        <li><strong>Content Validity:</strong> Established by preparing a blueprint (Table of Specification) and Expert judgment. Used mainly in achievement tests.</li>
+        <li><strong>Construct Validity:</strong> Established by Factor analysis, Correlation with similar tests, and Theoretical analysis. Used mainly in psychological testing.</li>
+        <li><strong>Criterion-Related Validity:</strong>
+          <ul>
+            <li><em>Predictive Validity:</em> Correlating test scores with future performance. E.g., entrance test predicting university performance.</li>
+            <li><em>Concurrent Validity:</em> Correlating test scores with present performance.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3 class="subsection">5. Methods of Estimating Reliability</h3>
+      <ol>
+        <li><strong>Test-Retest Method:</strong> Same test administered twice to same group. Measures stability over time. Limitation: Memory effect.</li>
+        <li><strong>Parallel Forms Method:</strong> Two equivalent forms of the same test administered. Measures equivalence. Limitation: Difficult to construct equivalent forms.</li>
+        <li><strong>Split-Half Method:</strong> Test divided into two halves (odd-even method). Reliability adjusted using Spearman-Brown formula. Measures internal consistency.</li>
+        <li><strong>Kuder-Richardson (KR-20 / KR-21) Method:</strong> Used for objective-type tests with right/wrong answers. Measures internal consistency statistically.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-factors">
+      <h2 class="section-title">Factors Affecting Validity and Reliability</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">2. Factors Affecting Validity</h3>
+      <ul>
+        <li><strong>Unclear Objectives:</strong> If not clearly defined, the test may not measure intended learning outcomes.</li>
+        <li><strong>Poor Content Sampling:</strong> Overemphasis on one unit while neglecting others affects content validity.</li>
+        <li><strong>Ambiguous or Defective Items:</strong> Confusing language, double-barreled questions, and irrelevant content distort measurement.</li>
+        <li><strong>Inadequate Test Length:</strong> Very short tests may fail to cover all objectives.</li>
+        <li><strong>Examiner Bias:</strong> Subjective scoring, favoritism, or halo effect reduces validity.</li>
+        <li><strong>Improper Test Administration:</strong> Noise, unclear instructions, and time pressure can affect performance.</li>
+        <li><strong>Student Factors:</strong> Anxiety, fatigue, illness, lack of motivation may prevent true performance from being reflected.</li>
+      </ul>
+
+      <h3 class="subsection">3. Factors Affecting Reliability</h3>
+      <ul>
+        <li><strong>Length of the Test:</strong> Longer tests generally have higher reliability.</li>
+        <li><strong>Homogeneity of Items:</strong> Items measuring similar traits increase reliability.</li>
+        <li><strong>Clarity of Instructions:</strong> Unclear directions create inconsistent responses.</li>
+        <li><strong>Difficulty Level of Items:</strong> Moderate difficulty improves reliability.</li>
+        <li><strong>Scoring Objectivity:</strong> Subjective scoring reduces reliability.</li>
+        <li><strong>Testing Conditions:</strong> Variations in environment, timing, or supervision affect consistency.</li>
+        <li><strong>Guessing:</strong> In objective tests, guessing may artificially increase scores.</li>
+      </ul>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-relation">
+      <h2 class="section-title">Relationship Between Validity and Reliability</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">4. Relationship</h3>
+      <ol>
+        <li><strong>Reliability is Necessary for Validity:</strong> A test cannot be valid unless it is reliable. No reliability → No validity.</li>
+        <li><strong>Reliability Alone Does Not Ensure Validity:</strong> A test may be reliable but not valid. A test may consistently measure memory instead of intelligence — reliable but not valid.</li>
+        <li><strong>Validity Depends on Reliability:</strong> The maximum validity coefficient cannot exceed the square root of reliability. Improving reliability generally increases validity.</li>
+        <li><strong>Conceptual Relationship:</strong> Reliability → Consistency; Validity → Accuracy. Consistency is a prerequisite for accuracy. All valid tests are reliable, but not all reliable tests are valid.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-norms">
+      <h2 class="section-title">Meaning and Significance of Norms</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Norms</h3>
+      <p>Norms are statistical standards derived from the scores of a representative group, used as a reference point for interpreting individual test scores. Norms tell us how an individual performs relative to others — they convert raw scores into meaningful comparative scores.</p>
+
+      <h3 class="subsection">4. Significance of Norms in Education</h3>
+      <ul>
+        <li><strong>Interpretation of Scores:</strong> Raw scores have limited meaning. A score of 70 may be high in one test but average in another.</li>
+        <li><strong>Comparison Among Individuals:</strong> Allows comparison between students, different schools, and different regions.</li>
+        <li><strong>Ranking and Selection:</strong> Useful in competitive examinations, admission processes, scholarship selection.</li>
+        <li><strong>Guidance and Counseling:</strong> Helps identify high achievers, below-average learners, and students needing remedial help.</li>
+        <li><strong>Standardization of Tests:</strong> Norms provide a reference group for score interpretation.</li>
+        <li><strong>Research Purposes:</strong> Enable researchers to compare groups scientifically.</li>
+      </ul>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u2-typesnorms">
+      <h2 class="section-title">Types of Norms and Their Uses</h2>
+      <div class="chapter-marks">15–20 Marks</div>
+
+      <h3 class="subsection">3. Types of Norms</h3>
+
+      <h4 class="sub-subsection">1. Percentile Norms</h4>
+      <p>Express an individual's position in relation to a group in percentage terms. A student at the 60th percentile scored higher than 60% of the group. Uses: Ranking students, Competitive exams, Easy interpretation for teachers and parents.</p>
+
+      <h4 class="sub-subsection">2. Standard Score Norms</h4>
+      <p>Show how far an individual score deviates from the group mean:</p>
+      <ul>
+        <li><strong>Z-Scores:</strong> Mean=0, SD=1. Shows how many standard deviations a score is above or below the mean. Used in statistical analysis and research.</li>
+        <li><strong>T-Scores:</strong> Mean=50, SD=10. Converted from Z-scores to avoid negative values. Widely used in psychological and intelligence testing.</li>
+        <li><strong>Deviation IQ:</strong> Mean=100, SD=15. Used in intelligence testing.</li>
+      </ul>
+
+      <h4 class="sub-subsection">3. Age Norms</h4>
+      <p>Compare a child's performance with the average performance of children of the same age. A mental age of 10 years for a 9-year-old indicates above-average performance. Uses: Intelligence testing, Identifying gifted or slow learners, Developmental assessment.</p>
+
+      <h4 class="sub-subsection">4. Grade Norms</h4>
+      <p>Compare a student's performance with the average performance of students in a particular grade level. A Grade 5 student performing at Grade 7 level shows advanced achievement. Uses: Academic achievement tests, Diagnosing learning level, Planning remedial instruction.</p>
+
+      <h4 class="sub-subsection">5. Stanine Norms</h4>
+      <p>Stanine (standard nine) divides scores into nine categories ranging from 1 (Very low) to 9 (Very high). Uses: Simplifying interpretation, Reporting standardized test scores, Quick classification.</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- UNIT III -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chapter-header" id="unit3">
+      <div class="chapter-number">Unit III</div>
+      <h2 class="chapter-title">Measurement of Educational Achievement</h2>
+    </div>
+
+    <section id="u3-achievement">
+      <h2 class="section-title">Meaning and Functions of Achievement Test</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Achievement Test</h3>
+      <p>An achievement test is a test designed to measure the extent of learning or proficiency attained by a student in a particular subject or area of instruction.</p>
+      <div class="definition">
+        "An achievement test measures the amount of knowledge or skill that an individual has acquired after instruction."
+        <span class="attribution">— E. L. Thorndike</span>
+      </div>
+
+      <h3 class="subsection">4. Functions of Achievement Test</h3>
+      <ol>
+        <li><strong>Assessment of Learning Outcomes:</strong> Measures the extent to which students have achieved educational objectives.</li>
+        <li><strong>Grading and Certification:</strong> Assigning grades, promotion, awarding certificates, declaring pass or fail.</li>
+        <li><strong>Diagnosis of Learning Difficulties:</strong> Identifies weak areas, conceptual misunderstandings, and individual learning gaps — supports remedial teaching.</li>
+        <li><strong>Improvement of Teaching:</strong> Provides feedback regarding effectiveness of teaching methods and instructional materials.</li>
+        <li><strong>Guidance and Counseling:</strong> Helps in subject selection, career planning, identifying talents and weaknesses.</li>
+        <li><strong>Motivation of Students:</strong> Encourages students to study regularly and improve performance.</li>
+        <li><strong>Curriculum Evaluation:</strong> Indicates whether curriculum objectives are realistic and instructional strategies are effective.</li>
+        <li><strong>Selection and Placement:</strong> Helps in admission decisions and placement in different ability groups.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u3-bloom">
+      <h2 class="section-title">Objectives of Achievement Test Based on Bloom's Taxonomy</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>A systematic classification of educational objectives was developed by <strong>Benjamin Bloom and his associates in 1956</strong>. Bloom classified objectives into three domains: Cognitive, Affective, and Psychomotor. Achievement tests mainly focus on the cognitive domain.</p>
+
+      <h3 class="subsection">3. Bloom's Taxonomy — Cognitive Domain</h3>
+
+      <ol>
+        <li><strong>Knowledge (Remembering):</strong> The lowest level — recall or recognition of facts, terms, definitions, formulas. Example: Define democracy. Tests: Objective type questions, Fill in the blanks, True/False.</li>
+        <li><strong>Comprehension (Understanding):</strong> Understanding the meaning of information — explain ideas, interpret, summarize. Example: Explain the water cycle. Tests: Short-answer questions.</li>
+        <li><strong>Application:</strong> Using learned knowledge in new situations. Example: Solve a mathematical problem using a formula. Tests: Word problems and case-based questions.</li>
+        <li><strong>Analysis:</strong> Breaking information into parts — compare, differentiate, identify causes and effects. Example: Analyze the reasons for a historical event. Tests: Essay-type questions.</li>
+        <li><strong>Synthesis (Creating):</strong> Combining elements to form a new pattern. Example: Write a research proposal, Design an experiment. Tests: Creative and project-based tasks.</li>
+        <li><strong>Evaluation (Judging):</strong> The highest level — making judgments based on criteria. Example: Critically evaluate a policy. Tests: Essay questions and critical thinking tasks.</li>
+      </ol>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>A well-constructed achievement test should assess all levels of Bloom's Taxonomy to ensure meaningful and comprehensive measurement of learning outcomes. It should measure not just memory but understanding and reasoning, thereby promoting higher-order thinking.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u3-construction">
+      <h2 class="section-title">Construction of an Achievement Test</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">3. Steps in Construction of an Achievement Test</h3>
+      <ol>
+        <li><strong>Planning the Test:</strong> Determining objectives (based on Bloom's Taxonomy), Identifying content areas, Deciding weightage to content areas and objectives, Fixing total marks, time limit, and type of test.</li>
+        <li><strong>Preparation of Blueprint (Table of Specifications):</strong> A three-dimensional chart showing Content areas, Objectives, and Types of questions. Ensures no overemphasis on a single topic. Improves content validity.</li>
+        <li><strong>Writing Test Items:</strong> Questions must be clear and unambiguous, avoiding tricky or misleading items. Types: MCQ, True/False, Short answer, Essay type.</li>
+        <li><strong>Review and Editing:</strong> Check for language errors, examine difficulty level, review by subject experts. Remove ambiguous or faulty items.</li>
+        <li><strong>Preparation of Scoring Key and Marking Scheme:</strong> Ensures objectivity and consistency in scoring.</li>
+        <li><strong>Try-out (Pilot Testing):</strong> Administered to a small group to identify weak items, estimate difficulty, and check clarity.</li>
+        <li><strong>Item Analysis:</strong> Analyze items for Difficulty index and Discrimination index. Poor items are modified, rewritten, or eliminated.</li>
+        <li><strong>Finalization of the Test:</strong> Select best items, arrange in logical order, print final test, prepare final scoring procedure.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u3-types">
+      <h2 class="section-title">Types of Educational Achievement Tests</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">A. On the Basis of Standardization</h3>
+      <ul>
+        <li><strong>Teacher-Made Achievement Test:</strong> Constructed by classroom teachers; limited content coverage, not standardized. Examples: Unit test, Monthly test, Class test.</li>
+        <li><strong>Standardized Achievement Test:</strong> Constructed by experts with high validity and reliability; norms are established. Examples: Board examinations, National-level achievement surveys.</li>
+      </ul>
+
+      <h3 class="subsection">B. On the Basis of Purpose</h3>
+      <ul>
+        <li><strong>Diagnostic Achievement Test:</strong> Used to identify specific learning difficulties and plan remedial teaching.</li>
+        <li><strong>Prognostic Achievement Test:</strong> Used to predict future performance. Example: Entrance examinations.</li>
+        <li><strong>Survey Achievement Test:</strong> Measures general level of achievement in a large group. Example: State or national achievement surveys.</li>
+      </ul>
+
+      <h3 class="subsection">C. On the Basis of Interpretation</h3>
+      <ul>
+        <li><strong>Norm-Referenced Achievement Test:</strong> Performance interpreted relative to others. Used for Ranking and Selection.</li>
+        <li><strong>Criterion-Referenced Achievement Test:</strong> Performance compared with a predetermined standard. Used for Mastery learning.</li>
+      </ul>
+
+      <h3 class="subsection">D. On the Basis of Nature of Questions</h3>
+      <ul>
+        <li><strong>Objective Type Test:</strong> MCQ, True/False, Matching, Fill in the blanks. Advantages: Objective scoring, high reliability.</li>
+        <li><strong>Essay Type Test:</strong> Long descriptive answers measuring organization, expression, and critical thinking.</li>
+        <li><strong>Short Answer Test:</strong> Brief answers measuring comprehension and application.</li>
+      </ul>
+
+      <h3 class="subsection">E. On the Basis of Administration</h3>
+      <p>Oral Test, Written Test, and Practical Test. Practical tests are common in Science, Engineering, and Vocational subjects.</p>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u3-interest">
+      <h2 class="section-title">Measurement of Interest</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Interest</h3>
+      <div class="definition">
+        "Interest is a mental disposition towards an object or activity."
+        <span class="attribution">— James Drever</span>
+      </div>
+
+      <h3 class="subsection">5. Methods/Tools for Measuring Interest</h3>
+      <ul>
+        <li><strong>Observation Method:</strong> Teacher observes student participation, choice of activities, engagement level. Limitation: Subjective.</li>
+        <li><strong>Interview Method:</strong> Students asked about hobbies, preferred subjects, career aspirations. Limitation: Responses may be biased.</li>
+        <li><strong>Questionnaire Method:</strong> Structured questions regarding preferences. Easy to administer and suitable for large groups.</li>
+        <li><strong>Interest Inventories:</strong> Standardized tools — notably <strong>Kuder Interest Inventory</strong> (G. F. Kuder) and Edward Strong's Strong Vocational Interest Blank.</li>
+      </ul>
+
+      <h3 class="subsection">6. Importance of Measuring Interest</h3>
+      <ul>
+        <li>Educational Guidance — helps students choose suitable subjects</li>
+        <li>Vocational Guidance — assists in career selection</li>
+        <li>Reducing Dropouts — students placed according to interest perform better</li>
+        <li>Motivation Enhancement — interest increases learning effectiveness</li>
+        <li>Personality Development — encourages engagement in meaningful activities</li>
+      </ul>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u3-kuder">
+      <h2 class="section-title">Interest Inventory — Kuder Interest Inventories</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">3. Kuder Interest Inventories</h3>
+      <p>The Kuder Interest Inventory was developed by <strong>G. Frederic Kuder</strong> to assess vocational preferences based on individuals' likes and dislikes for different activities.</p>
+
+      <h3 class="subsection">4. Types of Kuder Interest Inventories</h3>
+      <ul>
+        <li><strong>Kuder Preference Record – Vocational (KPR-V):</strong> Designed for high school and college students; measures vocational interests.</li>
+        <li><strong>Kuder Preference Record – Personal (KPR-P):</strong> Measures personal and social interests.</li>
+        <li><strong>Kuder Occupational Interest Survey (KOIS):</strong> Matches individual interests with occupational groups.</li>
+      </ul>
+
+      <h3 class="subsection">5. Structure</h3>
+      <p>The Kuder inventory contains multiple-choice items where each item presents three activities. The individual must choose the Most preferred activity and the Least preferred activity. This forced-choice technique reduces socially desirable responses.</p>
+
+      <h3 class="subsection">6. Areas of Interest Measured</h3>
+      <p>Outdoor · Mechanical · Computational · Scientific · Persuasive · Artistic · Literary · Musical · Social service · Clerical</p>
+
+      <div class="key-points">
+        <div class="key-points-title">Uses of Kuder Interest Inventories</div>
+        <ul>
+          <li>Vocational Guidance — helps students select suitable careers</li>
+          <li>Educational Planning — assists in choosing academic subjects</li>
+          <li>Counseling — used by guidance counselors</li>
+          <li>Self-Understanding — helps individuals understand their own interests</li>
+        </ul>
+      </div>
+
+      <p><strong>Merits:</strong> Standardized and reliable, easy administration, objective scoring, covers wide range of interest areas.</p>
+      <p><strong>Limitations:</strong> Interests may change over time, does not measure ability, cultural factors may influence responses.</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- UNIT IV -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chapter-header" id="unit4">
+      <div class="chapter-number">Unit IV</div>
+      <h2 class="chapter-title">Measurement of Personality and Intelligence</h2>
+    </div>
+
+    <section id="u4-personality">
+      <h2 class="section-title">Concept of Personality Measurement</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Personality</h3>
+      <div class="definition">
+        "Personality is the dynamic organization within the individual of those psychophysical systems that determine his unique adjustment to the environment."
+        <span class="attribution">— Gordon Allport</span>
+      </div>
+
+      <h3 class="subsection">3. Meaning of Personality Measurement</h3>
+      <p>Personality measurement refers to the systematic assessment of personality traits, characteristics, and behavioral patterns using scientific tools and techniques. Since personality is abstract, it cannot be measured directly; it is assessed through observable behavior and responses.</p>
+
+      <h3 class="subsection">5. Need and Importance</h3>
+      <ul>
+        <li>Educational Guidance — helps teachers understand students' behavior</li>
+        <li>Vocational Guidance — assists in career selection based on personality traits</li>
+        <li>Counseling — useful in diagnosing emotional and behavioral problems</li>
+        <li>Selection and Placement — used in employment and recruitment</li>
+        <li>Research Purposes — helps in psychological and educational research</li>
+      </ul>
+
+      <h3 class="subsection">6. Principles of Personality Measurement</h3>
+      <p>Objectivity · Reliability · Validity · Standardization · Ethical Consideration (respect confidentiality)</p>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-types">
+      <h2 class="section-title">Types of Personality Measurement</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">I. Subjective Techniques</h3>
+      <p>Depend on personal judgment, opinions, and self-reports. Methods: Interview, Questionnaire, Rating Scale, Autobiography. Merits: Easy to administer, time-saving. Limitations: Subject to bias, social desirability responses.</p>
+
+      <h3 class="subsection">II. Objective Techniques</h3>
+      <p>Standardized personality tests with fixed scoring procedures providing quantitative results.</p>
+      <ul>
+        <li><strong>Minnesota Multiphasic Personality Inventory (MMPI):</strong> Developed by Starke R. Hathaway and J. C. McKinley. Used for assessing abnormal personality traits.</li>
+        <li><strong>16 Personality Factor Questionnaire (16PF):</strong> Developed by Raymond Cattell. Measures 16 personality traits.</li>
+      </ul>
+      <p>Merits: High reliability and validity, objective scoring. Limitations: Requires expert administration, expensive.</p>
+
+      <h3 class="subsection">III. Projective Techniques</h3>
+      <p>Based on the idea that individuals project their unconscious feelings and desires onto ambiguous stimuli. Based on psychoanalytic theory.</p>
+      <ul>
+        <li><strong>Rorschach Inkblot Test:</strong> Developed by Hermann Rorschach. Uses inkblots to analyze personality.</li>
+        <li><strong>Thematic Apperception Test (TAT):</strong> Developed by Henry A. Murray. Individuals create stories based on pictures.</li>
+        <li><strong>Sentence Completion Test:</strong> Individuals complete unfinished sentences.</li>
+      </ul>
+      <p>Merits: Reveals hidden emotions, useful in clinical settings. Limitations: Subjective scoring, requires trained psychologist.</p>
+
+      <h3 class="subsection">IV. Situational Techniques</h3>
+      <p>Assess personality by observing behavior in real or artificial situations. Examples: Role-playing, Group discussion, Leadership tasks, Assessment centers. Used in Job selection, Military recruitment, Leadership training. Merits: Observes actual behavior, practical and realistic.</p>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Personality measurement is carried out through subjective, objective, projective, and situational techniques. A combination of methods ensures comprehensive understanding of personality.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-uses">
+      <h2 class="section-title">Uses of Personality Test</h2>
+      <div class="chapter-marks">10 Marks</div>
+
+      <ol>
+        <li><strong>Educational Guidance:</strong> Helps teachers understand students' emotional stability, adjustment level, and social behavior — improving classroom management.</li>
+        <li><strong>Vocational Guidance:</strong> Helps in career selection and matching individuals with suitable occupations.</li>
+        <li><strong>Counseling and Therapy:</strong> Used by psychologists to diagnose emotional problems and plan therapeutic interventions.</li>
+        <li><strong>Selection and Recruitment:</strong> Organizations use personality tests for employee selection, leadership identification, and placement decisions.</li>
+        <li><strong>Understanding Individual Differences:</strong> Helps in studying individual differences and promoting self-awareness.</li>
+        <li><strong>Research Purposes:</strong> Used in psychological and educational research to study personality traits and behavior patterns.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-intelligence">
+      <h2 class="section-title">Concept of Measurement of Intelligence</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Intelligence</h3>
+      <div class="definition">
+        "Intelligence is the ability to judge well, understand well, and reason well."
+        <span class="attribution">— Alfred Binet</span>
+      </div>
+      <div class="definition">
+        "Intelligence is the aggregate or global capacity of the individual to act purposefully, think rationally, and deal effectively with the environment."
+        <span class="attribution">— David Wechsler</span>
+      </div>
+
+      <h3 class="subsection">5. Methods of Measuring Intelligence</h3>
+      <ul>
+        <li>Individual Intelligence Tests (e.g., Alfred Binet–Simon Test)</li>
+        <li>Group Intelligence Tests</li>
+        <li>Verbal and Non-Verbal Tests</li>
+        <li>Performance Tests</li>
+      </ul>
+
+      <h3 class="subsection">6. Importance of Measuring Intelligence</h3>
+      <ul>
+        <li>Educational Guidance — identifies gifted and slow learners</li>
+        <li>Vocational Guidance — assists in selecting suitable careers</li>
+        <li>Classification of Students — ability grouping</li>
+        <li>Diagnosis of Learning Problems — identifies intellectual disabilities</li>
+        <li>Research Purposes</li>
+      </ul>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-uses-intel">
+      <h2 class="section-title">Uses of Intelligence Measurement</h2>
+      <div class="chapter-marks">10 Marks</div>
+
+      <ol>
+        <li><strong>Educational Classification:</strong> Grouping students, identifying gifted/average/slow learners, organizing special education programs.</li>
+        <li><strong>Identification of Gifted and Intellectually Disabled Children:</strong> IQ-based enrichment programs or special education support.</li>
+        <li><strong>Educational Guidance:</strong> Helps teachers understand learning capacity and plan suitable teaching strategies.</li>
+        <li><strong>Vocational Guidance:</strong> Career counseling, matching intellectual ability with job requirements.</li>
+        <li><strong>Diagnosis of Learning Problems:</strong> Low achievement may be due to intellectual limitations or specific learning difficulties.</li>
+        <li><strong>Selection and Placement:</strong> Admission procedures, military recruitment, competitive examinations.</li>
+        <li><strong>Research Purposes:</strong> Psychological studies, studying individual differences.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-types-intel">
+      <h2 class="section-title">Types of Intelligence Tests</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">I. On the Basis of Administration</h3>
+      <ul>
+        <li><strong>Individual Intelligence Tests:</strong> Administered to one person at a time. Examples: Alfred Binet–Simon Test, David Wechsler Intelligence Scales. Detailed assessment, requires trained examiner. Used in clinical diagnosis and special education.</li>
+        <li><strong>Group Intelligence Tests:</strong> Administered to a large group simultaneously. Economical, time-saving, easy scoring. Used in school admissions, military selection, competitive exams.</li>
+      </ul>
+
+      <h3 class="subsection">II. On the Basis of Content</h3>
+      <ul>
+        <li><strong>Verbal Intelligence Tests:</strong> Use language-based questions (vocabulary, analogies, arithmetic reasoning). Limitation: Not suitable for illiterate individuals.</li>
+        <li><strong>Non-Verbal Intelligence Tests:</strong> Use pictures, symbols, diagrams — do not require language skills. Useful for children and illiterate individuals.</li>
+        <li><strong>Performance Tests:</strong> Require manipulation of objects; measure practical problem-solving. Suitable for hearing-impaired or language-deficient individuals.</li>
+      </ul>
+
+      <h3 class="subsection">III. On the Basis of Purpose</h3>
+      <ul>
+        <li><strong>Culture-Fair Tests:</strong> Designed to minimize cultural bias. Example: Raymond Cattell's Culture Fair Intelligence Test.</li>
+        <li><strong>Power Tests:</strong> No strict time limit; measure depth of understanding.</li>
+        <li><strong>Speed Tests:</strong> Strict time limit; measure quickness of response.</li>
+      </ul>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-binet">
+      <h2 class="section-title">Binet–Simon Test (1916) and 1960 Revision of Stanford–Binet Test</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">1. Introduction</h3>
+      <p>The first practical intelligence test was developed by <strong>Alfred Binet and Theodore Simon</strong> in France. Later, it was revised at Stanford University by <strong>Lewis Terman</strong>, resulting in the Stanford–Binet Intelligence Scale.</p>
+
+      <h3 class="subsection">2. Binet–Simon Intelligence Test</h3>
+      <p>Developed to identify mentally slow children and provide special educational assistance. Features: Age-graded test items, measured higher mental processes (memory, reasoning, judgment), introduced the concept of Mental Age (MA), and individual test.</p>
+      <p><strong>Mental Age:</strong> Level of intellectual development corresponding to the average ability of a particular age group. If a 10-year-old performs at the level of 8-year-olds, Mental Age = 8. Limitations: No clear IQ formula, limited standardization, cultural bias.</p>
+
+      <h3 class="subsection">3. Stanford–Binet Intelligence Scale (1916 Revision)</h3>
+      <p>In 1916, Lewis Terman revised the test at Stanford University. Major Improvements:</p>
+      <div class="formula">IQ = (Mental Age / Chronological Age) × 100</div>
+      <p>Better standardization on American children, extended age range, improved reliability and validity.</p>
+
+      <h3 class="subsection">4. 1960 Revision of Stanford–Binet Test</h3>
+      <ul>
+        <li><strong>Deviation IQ:</strong> Mean = 100, Standard Deviation = 16. More statistically meaningful than ratio IQ.</li>
+        <li><strong>Improved Norms:</strong> Re-standardized on larger population.</li>
+        <li><strong>Broader Age Range:</strong> More refined test items.</li>
+      </ul>
+
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Binet–Simon</th><th>Stanford–Binet (1916 &amp; 1960)</th></tr></thead>
+        <tbody>
+          <tr><td>Developer</td><td>Binet &amp; Simon</td><td>Lewis Terman</td></tr>
+          <tr><td>Concept</td><td>Mental Age</td><td>IQ (Ratio &amp; later Deviation IQ)</td></tr>
+          <tr><td>Standardization</td><td>Limited</td><td>Scientific &amp; extensive</td></tr>
+          <tr><td>Statistical Basis</td><td>Weak</td><td>Strong statistical norms</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u4-wechsler">
+      <h2 class="section-title">Wechsler Intelligence Scale, Age Scale and Point Scale</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Wechsler Intelligence Scales</h3>
+      <p>David Wechsler's scales measure both verbal and performance abilities, use deviation IQ, and provide separate scores for different abilities.</p>
+
+      <h3 class="subsection">3. Types of Wechsler Intelligence Scales</h3>
+      <ul>
+        <li><strong>WAIS (Wechsler Adult Intelligence Scale):</strong> For adults (16 years and above). Measures Verbal Intelligence, Performance Intelligence, and Full Scale IQ.</li>
+        <li><strong>WISC (Wechsler Intelligence Scale for Children):</strong> For children (6–16 years). Provides Verbal IQ, Performance IQ, and Full Scale IQ.</li>
+        <li><strong>WPPSI (Wechsler Preschool and Primary Scale of Intelligence):</strong> For preschool children (2½–7 years).</li>
+      </ul>
+      <p>Features of Wechsler scales: Separate tests for different age groups, divided into verbal and performance subtests, deviation IQ (Mean=100, SD=15), individually administered.</p>
+
+      <h3 class="subsection">4. Age Scale vs. Point Scale</h3>
+      <p><strong>Age Scale</strong> arranges test items according to age levels. Mental age is determined by the highest age level successfully completed. Example: Stanford–Binet Test.</p>
+      <p><strong>Point Scale</strong> assigns specific points to each test item regardless of age level. Each item carries a fixed score; total score calculated by adding points. More flexible than age scale. Example: Wechsler's scales.</p>
+
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Age Scale</th><th>Point Scale</th></tr></thead>
+        <tbody>
+          <tr><td>Arrangement</td><td>Items grouped by age</td><td>Items carry fixed points</td></tr>
+          <tr><td>Scoring</td><td>Based on mental age</td><td>Based on total score</td></tr>
+          <tr><td>Flexibility</td><td>Less flexible</td><td>More flexible</td></tr>
+          <tr><td>Example</td><td>Stanford–Binet</td><td>Wechsler Scales</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- UNIT V -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="chapter-header" id="unit5">
+      <div class="chapter-number">Unit V</div>
+      <h2 class="chapter-title">Aptitude, Attitude, and Creative Thinking</h2>
+    </div>
+
+    <section id="u5-aptitude">
+      <h2 class="section-title">Meaning and Nature of Aptitude Test</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Aptitude</h3>
+      <div class="definition">
+        "Aptitude is a condition or set of characteristics regarded as symptomatic of an individual's ability to acquire some knowledge, skill, or set of responses through training."
+        <span class="attribution">— Edwin G. Boring</span>
+      </div>
+      <p>Thus, aptitude is future-oriented, a potential ability, and specific in nature.</p>
+
+      <h3 class="subsection">3. Meaning of Aptitude Test</h3>
+      <p>An aptitude test is a standardized instrument designed to measure an individual's potential to learn certain skills or perform specific tasks in the future. Unlike achievement tests, aptitude tests measure <em>potential</em>, not past learning.</p>
+
+      <h3 class="subsection">4. Nature of Aptitude Test</h3>
+      <ul>
+        <li><strong>Predictive in Nature:</strong> Predicts future success. Engineering aptitude test predicts success in engineering studies.</li>
+        <li><strong>Specific Ability Measurement:</strong> Measures mechanical, musical, clerical, or teaching aptitude.</li>
+        <li><strong>Standardized Tests:</strong> Scientifically constructed, reliable, and valid.</li>
+        <li><strong>Objective Scoring:</strong> Uses objective-type questions with fixed scoring.</li>
+        <li><strong>Comparative Nature:</strong> Scores compared with norms.</li>
+        <li><strong>Independent of Achievement:</strong> Measures capacity to learn, not knowledge already acquired.</li>
+      </ul>
+
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>Aptitude</th><th>Intelligence</th></tr></thead>
+        <tbody>
+          <tr><td>Meaning</td><td>Specific potential ability</td><td>General mental ability</td></tr>
+          <tr><td>Scope</td><td>Narrow and specific</td><td>Broad and general</td></tr>
+          <tr><td>Purpose</td><td>Predicts future performance</td><td>Measures overall intellectual capacity</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u5-types">
+      <h2 class="section-title">Types of Aptitude Tests: General and Special</h2>
+      <div class="chapter-marks">20 Marks</div>
+
+      <h3 class="subsection">I. General Aptitude Test</h3>
+      <p>Measures a broad range of abilities required for general academic or occupational success. Covers multiple abilities, predicts general academic or job success, standardized and objective.</p>
+      <p><strong>Example:</strong> General Aptitude Test Battery (GATB) — measures Verbal ability, Numerical ability, Spatial ability, Reasoning ability, Clerical perception.</p>
+      <p><strong>Uses:</strong> Career counseling, Employment selection, Admission screening, Military recruitment.</p>
+
+      <h3 class="subsection">II. Special Aptitude Test</h3>
+      <p>Measures a specific ability related to a particular field or skill. Types: Mechanical, Musical, Teaching, Artistic, Clerical, Scientific Aptitude.</p>
+      <p><strong>Example:</strong> Differential Aptitude Tests (DAT) — measures Mechanical reasoning, Abstract reasoning, Language usage, Spatial relations.</p>
+      <p><strong>Uses:</strong> Selecting students for specialized courses, Identifying talents, Vocational training, Professional selection.</p>
+
+      <table class="textbook-table">
+        <thead><tr><th>Basis</th><th>General Aptitude Test</th><th>Special Aptitude Test</th></tr></thead>
+        <tbody>
+          <tr><td>Scope</td><td>Broad abilities</td><td>Specific ability</td></tr>
+          <tr><td>Purpose</td><td>Predict general success</td><td>Predict success in specific field</td></tr>
+          <tr><td>Coverage</td><td>Multiple skills</td><td>Single skill area</td></tr>
+          <tr><td>Example</td><td>GATB</td><td>Mechanical or Musical Aptitude Test</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u5-uses">
+      <h2 class="section-title">Uses / Educational Significance of Aptitude Tests</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <ol>
+        <li><strong>Vocational Guidance:</strong> Helps students choose suitable careers — Mechanical aptitude → Engineering; Musical aptitude → Music field.</li>
+        <li><strong>Educational Guidance:</strong> Helps in selecting appropriate academic streams (Science, Commerce, Arts, Technical courses).</li>
+        <li><strong>Identification of Special Talents:</strong> Identifies gifted students with artistic, mechanical, and linguistic talents — enables enrichment programs.</li>
+        <li><strong>Prediction of Academic Success:</strong> Engineering aptitude tests predict success in technical education.</li>
+        <li><strong>Reduction of Academic Failure:</strong> By guiding students into suitable fields, reduces dropout rates and prevents frustration.</li>
+        <li><strong>Selection and Placement:</strong> College admissions, professional courses, competitive examinations, employment selection.</li>
+        <li><strong>Planning Remedial Measures:</strong> If low aptitude detected, provide extra coaching or suggest alternative career options.</li>
+        <li><strong>Better Utilization of Human Resources:</strong> Places individuals in suitable occupations, increasing productivity and job satisfaction.</li>
+        <li><strong>Research Purposes:</strong> Used to study individual differences, occupational success, and learning patterns.</li>
+      </ol>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u5-attitude">
+      <h2 class="section-title">Concept of Attitude Test</h2>
+      <div class="chapter-marks">10 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Attitude</h3>
+      <div class="definition">
+        "An attitude is a mental and neural state of readiness, organized through experience, exerting a directive influence upon the individual's response to all objects and situations with which it is related."
+        <span class="attribution">— Gordon Allport</span>
+      </div>
+      <p>Attitude involves a Cognitive component (beliefs), Affective component (feelings), and Behavioral component (action tendency).</p>
+
+      <h3 class="subsection">3. Meaning of Attitude Test</h3>
+      <p>An attitude test is a standardized tool designed to measure an individual's feelings, beliefs, and predispositions toward a particular object or issue. It measures degree of favor or disfavor, positive or negative orientation, and intensity of opinion. Since attitudes cannot be observed directly, they are measured through responses to carefully prepared statements.</p>
+
+      <h3 class="subsection">5. Types of Attitude Scales</h3>
+      <p>Common methods: Thurstone Scale · Likert Scale · Semantic Differential Scale</p>
+
+      <h3 class="subsection">6. Educational Importance</h3>
+      <p>Attitude tests help in: Measuring students' attitudes toward subjects, Evaluating teachers' attitudes, Studying social attitudes, and Planning educational reforms.</p>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u5-creative">
+      <h2 class="section-title">Measurement of Creative Thinking</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">2. Meaning of Creativity</h3>
+      <p>According to J. P. Guilford, creativity is related to <em>divergent thinking</em>, which involves generating multiple solutions to a problem.</p>
+
+      <h3 class="subsection">3. Meaning of Creative Thinking</h3>
+      <p>Creative thinking involves thinking in novel, flexible, and original ways. It involves: Fluency (number of ideas), Flexibility (variety of ideas), Originality (uniqueness of ideas), and Elaboration (detail in ideas).</p>
+
+      <h3 class="subsection">5. Methods / Tools for Measuring Creative Thinking</h3>
+      <ul>
+        <li><strong>Divergent Thinking Tests (Guilford):</strong> Measure Fluency, Flexibility, Originality. Example tasks: "List as many uses of a brick as possible."</li>
+        <li><strong>Torrance Tests of Creative Thinking (TTCT):</strong> Developed by E. Paul Torrance. Measures Fluency, Flexibility, Originality, and Elaboration through both Verbal and Figural (drawing) tasks.</li>
+        <li><strong>Observation Method:</strong> Teachers observe student's originality, curiosity, and problem-solving ability.</li>
+        <li><strong>Rating Scales:</strong> Teachers or experts rate creativity traits such as Imagination, Risk-taking, and Innovation.</li>
+      </ul>
+
+      <h3 class="subsection">6. Criteria for Scoring Creative Thinking</h3>
+      <p>Creative responses are evaluated based on: (1) Fluency — number of ideas produced, (2) Flexibility — variety of ideas, (3) Originality — uniqueness of ideas, (4) Elaboration — amount of detail.</p>
+    </section>
+
+    <hr class="page-rule">
+
+    <section id="u5-levels">
+      <h2 class="section-title">Measurement of Creative Thinking at Different Levels of Students</h2>
+      <div class="chapter-marks">15 Marks</div>
+
+      <h3 class="subsection">4. Measurement at Different Levels</h3>
+
+      <h4 class="sub-subsection">I. Primary Level (Elementary School)</h4>
+      <p>At this stage, children think concretely and imaginatively. Methods: Picture completion tasks, Story completion, Drawing activities, Play-based creative tasks. Example: "Draw something new using circles." Measurement focuses on imagination, fluency of ideas, original drawings. The figural form of the Torrance Tests of Creative Thinking is commonly used.</p>
+
+      <h4 class="sub-subsection">II. Secondary Level (Adolescents)</h4>
+      <p>Students develop abstract thinking and reasoning ability. Methods: Open-ended questions, Brainstorming tasks, Alternative uses tasks, Problem-solving activities. Example: "List as many uses of a brick as possible." Measurement emphasizes divergent thinking, flexibility, and logical originality. Both verbal and figural creativity tests can be used.</p>
+
+      <h4 class="sub-subsection">III. Higher Secondary and College Level</h4>
+      <p>Students show advanced abstract and analytical thinking. Methods: Research projects, Essay writing, Innovation tasks, Case analysis, Creative writing. Measurement includes depth of originality, critical evaluation, and innovative solutions. Standardized tools such as Torrance Tests and divergent thinking tests are used.</p>
+
+      <h3 class="subsection">5. Methods Commonly Used at All Levels</h3>
+      <p>Divergent thinking tests (Guilford's theory) · Observation method · Rating scales · Creative performance tasks</p>
+
+      <div class="conclusion">
+        <div class="conclusion-label">Conclusion</div>
+        <p>Creative thinking develops progressively from childhood to adulthood. Therefore, its measurement must be age-appropriate and scientifically designed. By assessing creativity at primary, secondary, and higher levels, educators can nurture originality, innovation, and problem-solving skills in students.</p>
+      </div>
+    </section>
+
+    <hr class="page-rule">
+
+    <!-- CLOSING -->
+    <div style="text-align: center; padding: 40px 0; color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 3px;">
+      ❧ END OF TEXTBOOK ❧<br><br>
+      <span style="color: var(--ink-light); font-size: 11px;">M.Ed. Paper 3 · Measurement and Evaluation in Education · Units I–V</span>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

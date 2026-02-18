@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Concepts & Characteristics — A Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #f5f0e8;
+    --cream: #ede7d4;
+    --gold: #b5830a;
+    --gold-light: #d4a832;
+    --rust: #8b3a1e;
+    --forest: #2a5c3f;
+    --slate: #3d4a5c;
+    --muted: #7a6e5f;
+    --border: #c9b99a;
+    --shadow: rgba(26, 18, 8, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* ── TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── SIDEBAR TOC ── */
+  #toc {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 270px;
+    background: var(--ink);
+    color: var(--cream);
+    overflow-y: auto;
+    padding: 2rem 0;
+    z-index: 100;
+    border-right: 3px solid var(--gold);
+    transition: transform 0.3s ease;
+  }
+
+  #toc-header {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(181,131,10,0.4);
+    margin-bottom: 1rem;
+  }
+
+  #toc-header .toc-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  #toc-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+
+  #toc ul {
+    list-style: none;
+    padding: 0 0.5rem;
+  }
+
+  #toc ul li a {
+    display: block;
+    padding: 0.45rem 1rem;
+    color: #c5b89a;
+    text-decoration: none;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    border-radius: 0 4px 4px 0;
+    transition: all 0.2s;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  #toc ul li a:hover {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(181,131,10,0.1);
+    padding-left: 1.4rem;
+  }
+
+  #toc ul li a.active {
+    color: var(--gold-light);
+    border-left-color: var(--gold);
+    background: rgba(181,131,10,0.15);
+  }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: 270px;
+    min-height: 100vh;
+  }
+
+  /* ── COVER ── */
+  #cover {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 5rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  #cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    border: 60px solid rgba(181,131,10,0.08);
+    border-radius: 50%;
+  }
+
+  #cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 300px; height: 300px;
+    border: 40px solid rgba(181,131,10,0.05);
+    border-radius: 50%;
+  }
+
+  .cover-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+  }
+
+  #cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  #cover h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-desc {
+    font-size: 1.05rem;
+    color: #b5a98c;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  /* ── CHAPTERS ── */
+  .chapter {
+    padding: 4rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter:nth-child(even) {
+    background: #f0e9d8;
+  }
+
+  .chapter-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-rule {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1rem 0 2rem;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .chapter p {
+    margin-bottom: 1.1rem;
+    color: var(--ink);
+    max-width: 720px;
+  }
+
+  .chapter h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--rust);
+    margin: 2.2rem 0 0.8rem;
+  }
+
+  .chapter h4 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--forest);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── NUMBERED LIST ── */
+  .chapter ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.2rem;
+    max-width: 720px;
+  }
+
+  .chapter ol li {
+    margin-bottom: 0.8rem;
+    padding-left: 0.5rem;
+  }
+
+  .chapter ol li strong {
+    color: var(--rust);
+    font-weight: 600;
+  }
+
+  /* ── BULLET LIST ── */
+  .chapter ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.2rem;
+    max-width: 720px;
+  }
+
+  .chapter ul li {
+    margin-bottom: 0.5rem;
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .chapter ul li::before {
+    content: '◆';
+    position: absolute;
+    left: -0.5rem;
+    color: var(--gold);
+    font-size: 0.5rem;
+    top: 0.5rem;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--ink);
+    color: var(--cream);
+    border-left: 4px solid var(--gold);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    max-width: 720px;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .callout strong {
+    color: var(--gold-light);
+    font-style: normal;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 720px;
+    font-size: 0.88rem;
+  }
+
+  thead {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(181,131,10,0.05);
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+    border-right: 1px solid var(--border);
+  }
+
+  tbody td:first-child {
+    font-weight: 600;
+    color: var(--rust);
+    font-size: 0.85rem;
+  }
+
+  /* ── PHASE CARDS ── */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+    max-width: 720px;
+  }
+
+  .phase-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    padding: 1.2rem;
+  }
+
+  .phase-card .phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .phase-card h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ── LEVEL BADGE ── */
+  .level-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: var(--ink);
+    color: var(--gold-light);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── SUB-SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 1rem;
+    max-width: 720px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-divider span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── TOGGLE BUTTON (mobile) ── */
+  #toc-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--ink);
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+    padding: 0.4rem 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    #toc { transform: translateX(-100%); }
+    #toc.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #toc-toggle { display: block; }
+    .chapter { padding: 3rem 1.5rem; }
+    #cover { padding: 4rem 1.5rem 3rem; }
+  }
+
+  /* ── BACK TO TOP ── */
+  #back-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--ink);
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 50;
+  }
+
+  #back-top.visible { opacity: 1; }
+
+  /* ── PROGRESS BAR ── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--gold);
+    z-index: 999;
+    transition: width 0.1s;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button id="toc-toggle" onclick="document.getElementById('toc').classList.toggle('open')">☰ Contents</button>
+
+<!-- TABLE OF CONTENTS -->
+<nav id="toc">
+  <div id="toc-header">
+    <div class="toc-subtitle">Table of Contents</div>
+    <h2>Teaching Concepts &amp; Characteristics</h2>
+  </div>
+  <ul>
+    <li><a href="#ch1">1. Concept &amp; Characteristics of Teaching</a></li>
+    <li><a href="#ch2">2. Principles &amp; Marks of Good Teaching</a></li>
+    <li><a href="#ch3">3. Maxims of Teaching</a></li>
+    <li><a href="#ch4">4. Factors Affecting Teaching–Learning</a></li>
+    <li><a href="#ch5">5. Teaching as Science &amp; Profession</a></li>
+    <li><a href="#ch6">6. Levels of Teaching</a></li>
+    <li><a href="#ch7">7. Teaching Effectiveness &amp; Competencies</a></li>
+    <li><a href="#ch8">8. Phases of Teaching</a></li>
+    <li><a href="#ch9">9. Teaching Techniques / Skills</a></li>
+    <li><a href="#ch10">10. Teaching Strategies / Styles</a></li>
+    <li><a href="#ch11">11. Interaction Analysis – Recent Developments</a></li>
+    <li><a href="#ch12">12. Bloom's Taxonomy</a></li>
+    <li><a href="#ch13">13. Models of Teaching – Meaning &amp; Components</a></li>
+    <li><a href="#ch14">14. ITM &amp; CAM – Basic Models</a></li>
+    <li><a href="#ch15">15. Fixing Devices – Drill &amp; Review</a></li>
+    <li><a href="#ch16">16. Micro-Teaching</a></li>
+    <li><a href="#ch17">17. Steps &amp; Advantages of Micro-Teaching</a></li>
+    <li><a href="#ch18">18. Team Teaching</a></li>
+    <li><a href="#ch19">19. Teaching Aids</a></li>
+    <li><a href="#ch20">20. Lesson Plan &amp; New Trends</a></li>
+    <li><a href="#ch21">21. Meaning &amp; Importance of Lesson Planning</a></li>
+    <li><a href="#ch22">22. Criteria of a Good Lesson Plan</a></li>
+    <li><a href="#ch23">23. Types of Lesson Plan</a></li>
+    <li><a href="#ch24">24. Herbartian Approach</a></li>
+    <li><a href="#ch25">25. New Trends in Teaching</a></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- COVER -->
+  <div id="cover">
+    <div class="cover-label">Education — Paper I — Complete Notes</div>
+    <h1>Teaching Concepts &amp; <em>Characteristics</em></h1>
+    <div class="cover-divider"></div>
+    <p class="cover-desc">A comprehensive textbook covering all core topics in teaching theory, methods, models, and modern trends — prepared for B.Ed / M.Ed examinations.</p>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-number">Chapter 1</div>
+    <h2>Concept and Characteristics of Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Concept of Teaching</h3>
+    <p>Teaching is a purposeful and systematic process in which a teacher helps learners acquire knowledge, skills, attitudes, and values. It is not just the delivery of information but an interactive process aimed at bringing desirable changes in learners' behaviour.</p>
+    <p>In simple words, <strong>teaching is the art and science of guiding learning.</strong></p>
+    <p>According to modern educational views, teaching focuses on: facilitating learning, creating meaningful learning experiences, and helping learners think, understand, and apply knowledge.</p>
+
+    <h3>Characteristics of Teaching</h3>
+    <ol>
+      <li><strong>Teaching is a purposeful activity.</strong> Teaching is goal-oriented. Every teaching act is done to achieve specific educational objectives.</li>
+      <li><strong>Teaching is an interactive process.</strong> It involves active interaction between the teacher and the learner. Effective teaching requires two-way communication.</li>
+      <li><strong>Teaching is learner-centred.</strong> Modern teaching focuses on the needs, interests, abilities, and pace of learners rather than only on the teacher.</li>
+      <li><strong>Teaching is both an art and a science.</strong> As an art, it requires creativity, skills, and personal style. As a science, it is based on principles, methods, and psychological laws of learning.</li>
+      <li><strong>Teaching brings behavioural change.</strong> The main aim of teaching is to bring positive and desirable changes in the learner's behaviour.</li>
+      <li><strong>Teaching is a planned process.</strong> Teaching follows planning, such as lesson plans, teaching strategies, teaching aids, and evaluation methods.</li>
+      <li><strong>Teaching is a social process.</strong> Teaching occurs in a social setting and helps learners adjust to society and culture.</li>
+      <li><strong>Teaching is continuous and dynamic.</strong> Teaching is not limited to the classroom and continues throughout life. It changes according to time, place, and learner needs.</li>
+      <li><strong>Teaching involves evaluation.</strong> Teaching includes continuous assessment to check whether objectives are achieved and to improve the teaching process.</li>
+      <li><strong>Teaching encourages learning and thinking.</strong> Good teaching promotes critical thinking, problem-solving, creativity, and understanding.</li>
+    </ol>
+
+    <div class="callout"><strong>One-line Conclusion</strong>Teaching is a systematic, interactive, and purposeful process aimed at facilitating learning and bringing desirable behavioural changes in learners.</div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-number">Chapter 2</div>
+    <h2>Principles and Marks of Good Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Principles of Good Teaching</h3>
+    <ol>
+      <li><strong>Principle of Activity.</strong> Learners learn best by doing. Teaching should actively involve students through discussions, experiments, and activities.</li>
+      <li><strong>Principle of Motivation.</strong> Teaching should arouse interest and curiosity in learners to make learning meaningful and enjoyable.</li>
+      <li><strong>Principle of Individual Differences.</strong> Teaching should consider differences in learners' abilities, interests, and learning pace.</li>
+      <li><strong>Principle of Clear Objectives.</strong> Teaching should be based on well-defined and clearly stated objectives.</li>
+      <li><strong>Principle of Psychological Readiness.</strong> Teaching should be according to the learner's mental level, age, and readiness.</li>
+      <li><strong>Principle of Correlation.</strong> Teaching should relate new knowledge to previous knowledge and real-life situations.</li>
+      <li><strong>Principle of Proceeding from Known to Unknown.</strong> Teaching should start with familiar concepts and move gradually to unfamiliar ones.</li>
+      <li><strong>Principle of Simple to Complex.</strong> Concepts should be taught in a logical sequence from simple ideas to complex ones.</li>
+      <li><strong>Principle of Learning by Doing.</strong> Practical work and experiences help in better understanding and retention.</li>
+      <li><strong>Principle of Feedback and Reinforcement.</strong> Immediate feedback helps correct mistakes and strengthens learning.</li>
+    </ol>
+
+    <h3>Marks (Characteristics) of Good Teaching</h3>
+    <ol>
+      <li><strong>Clear and well-defined objectives.</strong> Good teaching has clearly planned and meaningful goals.</li>
+      <li><strong>Effective communication.</strong> The teacher explains concepts clearly using appropriate language and examples.</li>
+      <li><strong>Learner participation.</strong> Students are actively involved in the teaching-learning process.</li>
+      <li><strong>Use of appropriate teaching methods and aids.</strong> Good teaching uses suitable methods, tools, and technology to enhance learning.</li>
+      <li><strong>Motivating learning environment.</strong> The classroom atmosphere is encouraging, friendly, and disciplined.</li>
+      <li><strong>Individual attention.</strong> A good teacher recognizes and supports individual learner needs.</li>
+      <li><strong>Correlation with real life.</strong> Knowledge is related to practical life situations and experiences.</li>
+      <li><strong>Continuous evaluation.</strong> Regular assessment is used to measure progress and improve teaching.</li>
+      <li><strong>Flexibility in teaching.</strong> Teaching methods are adjusted according to learner response and situation.</li>
+      <li><strong>Achievement of learning outcomes.</strong> The ultimate mark of good teaching is the successful achievement of educational objectives.</li>
+    </ol>
+
+    <div class="callout"><strong>Exam-Friendly Conclusion</strong>Good teaching follows sound principles and is reflected in effective learning, active participation, and overall development of learners.</div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-number">Chapter 3</div>
+    <h2>Maxims of Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Maxims of teaching are general guidelines or rules that help a teacher organize teaching in a logical and psychological manner so that learning becomes easy, meaningful, and effective.</p>
+
+    <h3>Important Maxims of Teaching</h3>
+    <ol>
+      <li><strong>From Known to Unknown.</strong> Teaching should begin with what learners already know and then introduce new knowledge.</li>
+      <li><strong>From Simple to Complex.</strong> Simple ideas should be taught first, followed by complex concepts.</li>
+      <li><strong>From Concrete to Abstract.</strong> Teaching should start with real objects and experiences before moving to abstract ideas.</li>
+      <li><strong>From Particular to General.</strong> Specific examples should be given first, leading to general rules or principles.</li>
+      <li><strong>From Whole to Part.</strong> A complete concept should be presented before explaining its parts.</li>
+      <li><strong>From Easy to Difficult.</strong> Easy content should precede difficult content to build confidence and understanding.</li>
+      <li><strong>From Indefinite to Definite.</strong> Vague ideas should be clarified into definite and precise concepts.</li>
+      <li><strong>From Near to Far.</strong> Teaching should begin with the learner's immediate environment and then expand outward.</li>
+      <li><strong>From Analysis to Synthesis.</strong> Breaking down concepts into parts (analysis) and then combining them for full understanding (synthesis).</li>
+      <li><strong>From Psychological to Logical.</strong> Teaching should follow the learner's mental readiness first and then the logical sequence of the subject.</li>
+    </ol>
+
+    <div class="callout"><strong>One-Line Definition</strong>Maxims of teaching are practical principles that guide teachers in organizing learning from easy and familiar concepts to difficult and unfamiliar ones.</div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-number">Chapter 4</div>
+    <h2>Factors Affecting the Teaching–Learning Process</h2>
+    <div class="chapter-rule"></div>
+
+    <p>The teaching–learning process is influenced by several interrelated factors related to the teacher, learner, content, methods, and environment.</p>
+
+    <h3>1. Teacher-Related Factors</h3>
+    <ul>
+      <li>Subject knowledge of the teacher</li>
+      <li>Teaching skills and methods used</li>
+      <li>Personality, attitude, and motivation of the teacher</li>
+      <li>Experience and training</li>
+      <li>Ability to motivate and guide learners</li>
+    </ul>
+
+    <h3>2. Learner-Related Factors</h3>
+    <ul>
+      <li>Age and maturity</li>
+      <li>Intelligence and ability level</li>
+      <li>Interest, motivation, and attitude towards learning</li>
+      <li>Previous knowledge and experience</li>
+      <li>Physical and mental health</li>
+    </ul>
+
+    <h3>3. Content / Curriculum-Related Factors</h3>
+    <ul>
+      <li>Relevance of the syllabus to learner needs</li>
+      <li>Organization and sequencing of content</li>
+      <li>Difficulty level of subject matter</li>
+      <li>Availability of learning materials</li>
+    </ul>
+
+    <h3>4. Teaching Methods and Strategies</h3>
+    <ul>
+      <li>Appropriateness of teaching methods</li>
+      <li>Use of teaching aids and technology</li>
+      <li>Student participation and interaction</li>
+      <li>Activity-based and learner-centred approaches</li>
+    </ul>
+
+    <h3>5. Classroom and Physical Environment</h3>
+    <ul>
+      <li>Classroom size and seating arrangement</li>
+      <li>Lighting, ventilation, and noise level</li>
+      <li>Availability of teaching–learning resources</li>
+      <li>Time duration of teaching periods</li>
+    </ul>
+
+    <h3>6. Psychological and Emotional Factors</h3>
+    <ul>
+      <li>Teacher–student relationship</li>
+      <li>Classroom discipline and climate</li>
+      <li>Learner confidence and emotional security</li>
+      <li>Stress, anxiety, or fear of failure</li>
+    </ul>
+
+    <h3>7. Evaluation and Feedback</h3>
+    <ul>
+      <li>Continuous assessment</li>
+      <li>Timely feedback and reinforcement</li>
+      <li>Fair and objective evaluation methods</li>
+    </ul>
+
+    <h3>8. Social and Cultural Factors</h3>
+    <ul>
+      <li>Home environment and parental support</li>
+      <li>Socio-economic status</li>
+      <li>Cultural values and language background</li>
+    </ul>
+
+    <div class="callout"><strong>Conclusion</strong>The teaching–learning process is affected by a combination of teacher, learner, curriculum, environment, and social factors. Effective teaching occurs when these factors are well balanced and supportive.</div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-number">Chapter 5</div>
+    <h2>Teaching as a Science and as a Profession</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Teaching as a Science</h3>
+    <p>Teaching is considered a science because it is based on systematic knowledge, principles, and laws of learning. Teaching applies scientific principles drawn from psychology, sociology, and educational research to make learning effective.</p>
+
+    <h4>Features of Teaching as a Science</h4>
+    <ol>
+      <li><strong>Based on scientific principles.</strong> Teaching follows laws of learning, motivation, and development.</li>
+      <li><strong>Systematic and planned process.</strong> Teaching involves planning objectives, methods, activities, and evaluation.</li>
+      <li><strong>Cause-and-effect relationship.</strong> Teaching methods produce measurable learning outcomes.</li>
+      <li><strong>Use of experimentation and research.</strong> Teaching strategies are tested and improved through educational research.</li>
+      <li><strong>Objective evaluation.</strong> Learning outcomes can be measured and assessed scientifically.</li>
+    </ol>
+
+    <h3>Teaching as a Profession</h3>
+    <p>Teaching is regarded as a profession because it requires specialized knowledge, training, ethics, and social responsibility. A profession is an occupation that demands formal preparation and is guided by ethical standards. Teaching fulfills these conditions.</p>
+
+    <h4>Characteristics of Teaching as a Profession</h4>
+    <ol>
+      <li><strong>Specialized knowledge and training.</strong> Teachers require professional qualifications and training.</li>
+      <li><strong>Defined code of ethics.</strong> Teachers follow moral and ethical principles in their work.</li>
+      <li><strong>Social service orientation.</strong> Teaching serves society by shaping responsible citizens.</li>
+      <li><strong>Professional organizations.</strong> Teachers are members of professional bodies.</li>
+      <li><strong>Continuous professional development.</strong> Teachers engage in in-service training and lifelong learning.</li>
+      <li><strong>Autonomy and responsibility.</strong> Teachers have professional freedom with accountability.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching is both a science and a profession. As a science, it is based on systematic principles, and as a profession, it requires specialized training, ethics, and commitment to social service.</div>
+  </div>
+
+  <!-- CHAPTER 6 -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-number">Chapter 6</div>
+    <h2>Levels of Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Levels of teaching refer to different stages of teaching based on the mental development of learners and the depth of learning outcomes. There are three main levels:</p>
+
+    <h3>1. Memory Level of Teaching</h3>
+    <div class="level-badge">Lowest Level</div>
+    <p>The memory level is the lowest level of teaching, where emphasis is on rote learning and recall of facts.</p>
+
+    <h4>Characteristics</h4>
+    <ul>
+      <li>Focus on memorization</li>
+      <li>Learners are passive</li>
+      <li>Teacher-centred approach</li>
+      <li>Knowledge is reproduced as it is learned</li>
+      <li>Little scope for thinking or understanding</li>
+    </ul>
+
+    <h4>Methods Used</h4>
+    <ul><li>Lecture method</li><li>Drill and practice</li><li>Question–answer (recall type)</li></ul>
+
+    <p><strong>Learning Outcome:</strong> Recall of facts, definitions, dates, formulas.</p>
+
+    <h3>2. Understanding Level of Teaching</h3>
+    <div class="level-badge">Intermediate Level</div>
+    <p>The understanding level focuses on comprehension of meaning, relationships, and concepts.</p>
+
+    <h4>Characteristics</h4>
+    <ul>
+      <li>Emphasis on understanding and interpretation</li>
+      <li>Learners are active participants</li>
+      <li>Interaction between teacher and students</li>
+      <li>Application of knowledge in new situations</li>
+      <li>Logical thinking is encouraged</li>
+    </ul>
+
+    <h4>Methods Used</h4>
+    <ul><li>Discussion method</li><li>Demonstration</li><li>Problem-solving</li><li>Questioning (why, how type)</li></ul>
+
+    <p><strong>Learning Outcome:</strong> Explanation, comparison, application, interpretation.</p>
+
+    <h3>3. Reflective Level of Teaching</h3>
+    <div class="level-badge">Highest Level</div>
+    <p>The reflective level is the highest level of teaching, which emphasizes critical thinking, reasoning, and problem-solving.</p>
+
+    <h4>Characteristics</h4>
+    <ul>
+      <li>Learner-centred approach</li>
+      <li>Encourages independent and creative thinking</li>
+      <li>Focus on problem identification and solution</li>
+      <li>Emphasis on analysis, synthesis, and evaluation</li>
+      <li>Teacher acts as a guide or facilitator</li>
+    </ul>
+
+    <h4>Methods Used</h4>
+    <ul><li>Problem-solving method</li><li>Project method</li><li>Seminar and debate</li><li>Inquiry-based learning</li></ul>
+
+    <p><strong>Learning Outcome:</strong> Critical thinking, decision-making, innovation and self-directed learning.</p>
+
+    <h3>Comparative Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Focus</th><th>Thinking Level</th></tr></thead>
+        <tbody>
+          <tr><td>Memory</td><td>Recall</td><td>Low</td></tr>
+          <tr><td>Understanding</td><td>Comprehension</td><td>Moderate</td></tr>
+          <tr><td>Reflective</td><td>Critical Thinking</td><td>High</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching progresses from memory level to understanding level and finally to reflective level, leading to higher-order thinking and meaningful learning.</div>
+  </div>
+
+  <!-- CHAPTER 7 -->
+  <div class="chapter" id="ch7">
+    <div class="chapter-number">Chapter 7</div>
+    <h2>Concept of Teaching Effectiveness and Teacher Competencies</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Concept of Teaching Effectiveness</h3>
+    <p>Teaching effectiveness refers to the degree to which a teacher successfully achieves the desired learning outcomes in students. It shows how well teaching helps learners understand, apply knowledge, develop skills, and grow holistically.</p>
+
+    <h4>Key Points</h4>
+    <ul>
+      <li>Teaching effectiveness is outcome-oriented</li>
+      <li>It focuses on student learning and development</li>
+      <li>It depends on the quality of planning, delivery, and evaluation</li>
+    </ul>
+
+    <h4>Indicators of Teaching Effectiveness</h4>
+    <ol>
+      <li>Achievement of instructional objectives</li>
+      <li>Active learner participation</li>
+      <li>Clarity of explanation and communication</li>
+      <li>Use of appropriate teaching methods and aids</li>
+      <li>Positive classroom climate</li>
+      <li>Improvement in learner performance and behaviour</li>
+    </ol>
+
+    <h3>Concept of Teacher Competencies</h3>
+    <p>Teacher competencies are the knowledge, skills, attitudes, and values that enable a teacher to perform teaching duties efficiently and professionally. Teacher competency reflects a teacher's ability to plan, implement, manage, and evaluate the teaching–learning process.</p>
+
+    <h4>Types of Teacher Competencies</h4>
+    <ol>
+      <li><strong>Academic Competency:</strong> Mastery over subject matter; up-to-date knowledge of content.</li>
+      <li><strong>Professional Competency:</strong> Lesson planning skills, use of appropriate teaching methods, classroom management, assessment and evaluation skills.</li>
+      <li><strong>Pedagogical Competency:</strong> Knowledge of learning theories, understanding learner psychology, skill in using learner-centred approaches.</li>
+      <li><strong>Communication Competency:</strong> Clear verbal and non-verbal communication, questioning and feedback skills.</li>
+      <li><strong>Technological Competency:</strong> Use of ICT and educational technology, integration of digital tools in teaching.</li>
+      <li><strong>Social and Emotional Competency:</strong> Empathy and emotional intelligence, positive teacher–student relationship, ethical and value-based behaviour.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching effectiveness is the result of well-developed teacher competencies, as competent teachers are able to facilitate meaningful, learner-centred, and outcome-based education.</div>
+  </div>
+
+  <!-- CHAPTER 8 -->
+  <div class="chapter" id="ch8">
+    <div class="chapter-number">Chapter 8</div>
+    <h2>Phases of Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Teaching is a systematic process that takes place in three main phases: Pre-active, Inter-active, and Post-active phases.</p>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-label">Phase 1</div>
+        <h5>Pre-Active</h5>
+        <p>Planning and preparation before actual classroom instruction.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Phase 2</div>
+        <h5>Inter-Active</h5>
+        <p>Actual execution of teaching in the classroom.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Phase 3</div>
+        <h5>Post-Active</h5>
+        <p>Evaluation and reflection stage after teaching.</p>
+      </div>
+    </div>
+
+    <h3>1. Pre-Active Phase of Teaching</h3>
+    <p>The pre-active phase refers to the planning stage of teaching that takes place before actual classroom instruction.</p>
+
+    <h4>Activities Involved</h4>
+    <ul>
+      <li>Fixing objectives of teaching</li>
+      <li>Selecting and organizing subject matter</li>
+      <li>Choosing teaching methods and strategies</li>
+      <li>Selecting teaching aids and resources</li>
+      <li>Planning evaluation techniques</li>
+      <li>Preparing the lesson plan</li>
+    </ul>
+    <p><strong>Nature:</strong> Teacher-centred, decision-making phase, planning and preparation oriented.</p>
+
+    <h3>2. Inter-Active Phase of Teaching</h3>
+    <p>The inter-active phase is the actual execution of teaching in the classroom where interaction between teacher and students occurs.</p>
+
+    <h4>Activities Involved</h4>
+    <ul>
+      <li>Presentation and explanation of content</li>
+      <li>Question–answer and discussion</li>
+      <li>Use of teaching aids</li>
+      <li>Motivation and reinforcement</li>
+      <li>Classroom management</li>
+      <li>Guidance and supervision</li>
+    </ul>
+    <p><strong>Nature:</strong> Teacher–student interaction, action-oriented phase, learner participation is maximum.</p>
+
+    <h3>3. Post-Active Phase of Teaching</h3>
+    <p>The post-active phase refers to the evaluation and reflection stage that occurs after teaching.</p>
+
+    <h4>Activities Involved</h4>
+    <ul>
+      <li>Assessment of student learning</li>
+      <li>Testing achievement of objectives</li>
+      <li>Providing feedback</li>
+      <li>Diagnosing learning difficulties</li>
+      <li>Reflecting on teaching effectiveness</li>
+      <li>Planning remedial teaching</li>
+    </ul>
+    <p><strong>Nature:</strong> Evaluation-centred, reflective and corrective phase, improves future teaching.</p>
+
+    <h3>Comparative Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Focus</th><th>Main Activity</th></tr></thead>
+        <tbody>
+          <tr><td>Pre-active</td><td>Planning</td><td>Decision making</td></tr>
+          <tr><td>Inter-active</td><td>Execution</td><td>Teaching–learning interaction</td></tr>
+          <tr><td>Post-active</td><td>Evaluation</td><td>Feedback and improvement</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching is a continuous process consisting of pre-active, inter-active, and post-active phases, which together ensure effective planning, execution, and evaluation of learning.</div>
+  </div>
+
+  <!-- CHAPTER 9 -->
+  <div class="chapter" id="ch9">
+    <div class="chapter-number">Chapter 9</div>
+    <h2>Teaching Techniques (Skills)</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Teaching techniques or skills are specific, observable teacher behaviours used to make the teaching–learning process effective. Important teaching skills include explaining, questioning, stimulus variation, and illustration.</p>
+
+    <h3>1. Skill of Explaining</h3>
+    <p>The skill of explaining refers to the teacher's ability to present content clearly, logically, and meaningfully so that learners can understand it easily.</p>
+
+    <h4>Components</h4>
+    <ul>
+      <li>Clear and simple language</li>
+      <li>Logical sequence of ideas</li>
+      <li>Use of examples and analogies</li>
+      <li>Emphasis on important points</li>
+      <li>Checking students' understanding</li>
+    </ul>
+    <p><strong>Importance:</strong> Helps in concept clarification, reduces confusion, improves comprehension.</p>
+
+    <h3>2. Skill of Questioning</h3>
+    <p>The skill of questioning involves the teacher's ability to ask appropriate, relevant, and thought-provoking questions to stimulate thinking and learning.</p>
+
+    <h4>Types of Questions</h4>
+    <ul><li>Recall questions</li><li>Understanding questions</li><li>Application and reasoning questions</li></ul>
+
+    <h4>Characteristics of Good Questions</h4>
+    <ul>
+      <li>Clear and precise</li>
+      <li>Related to lesson objectives</li>
+      <li>Appropriate to learners' level</li>
+      <li>Encourage thinking, not guessing</li>
+    </ul>
+    <p><strong>Importance:</strong> Maintains attention, develops thinking skills, helps in evaluation.</p>
+
+    <h3>3. Skill of Stimulus Variation</h3>
+    <p>The skill of stimulus variation refers to the teacher's ability to vary teaching behaviours to sustain students' attention and avoid monotony.</p>
+
+    <h4>Techniques Used</h4>
+    <ul>
+      <li>Change in voice, pitch, and speed</li>
+      <li>Movement and gestures</li>
+      <li>Eye contact</li>
+      <li>Change in teaching aids</li>
+      <li>Change in interaction pattern</li>
+    </ul>
+    <p><strong>Importance:</strong> Keeps students attentive, increases interest and motivation, makes teaching lively.</p>
+
+    <h3>4. Skill of Illustration</h3>
+    <p>The skill of illustration is the teacher's ability to use suitable examples, diagrams, charts, stories, or real-life situations to explain concepts.</p>
+
+    <h4>Characteristics of Good Illustrations</h4>
+    <ul>
+      <li>Relevant to the topic</li>
+      <li>Simple and familiar</li>
+      <li>Appropriate to learners' age and level</li>
+      <li>Interesting and meaningful</li>
+    </ul>
+    <p><strong>Importance:</strong> Makes abstract ideas concrete, improves understanding and retention, connects learning with real life.</p>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching skills such as explaining, questioning, stimulus variation, and illustration play a vital role in making teaching effective, interesting, and learner-centred.</div>
+  </div>
+
+  <!-- CHAPTER 10 -->
+  <div class="chapter" id="ch10">
+    <div class="chapter-number">Chapter 10</div>
+    <h2>Teaching Strategies (Styles)</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Teaching strategies or styles refer to the pattern of behaviour adopted by a teacher while interacting with students during the teaching–learning process. The three main teaching styles are: Autocratic, Permissive, and Democratic.</p>
+
+    <h3>1. Autocratic Teaching Style</h3>
+    <p>In the autocratic style, the teacher is the sole authority and controls all classroom activities.</p>
+
+    <h4>Characteristics</h4>
+    <ul><li>Teacher-centred approach</li><li>Strict discipline</li><li>Students have little freedom</li><li>Teacher makes all decisions</li><li>One-way communication</li></ul>
+
+    <h4>Merits</h4>
+    <ul><li>Useful for maintaining discipline</li><li>Effective for large classes</li><li>Saves time</li></ul>
+
+    <h4>Demerits</h4>
+    <ul><li>Suppresses creativity</li><li>Learners become passive</li><li>May create fear or stress</li></ul>
+
+    <h3>2. Permissive Teaching Style</h3>
+    <p>In the permissive style, students are given maximum freedom, and the teacher plays a minimal role.</p>
+
+    <h4>Characteristics</h4>
+    <ul><li>Learner-centred approach</li><li>High student freedom</li><li>Minimal control by teacher</li><li>Informal classroom atmosphere</li></ul>
+
+    <h4>Merits</h4>
+    <ul><li>Encourages independence</li><li>Promotes creativity and self-expression</li><li>Reduces fear</li></ul>
+
+    <h4>Demerits</h4>
+    <ul><li>Lack of discipline</li><li>Learning objectives may not be achieved</li><li>Not suitable for immature learners</li></ul>
+
+    <h3>3. Democratic Teaching Style</h3>
+    <p>In the democratic style, the teacher and students share responsibility, and learning occurs through cooperation and mutual respect.</p>
+
+    <h4>Characteristics</h4>
+    <ul>
+      <li>Balanced teacher–student role</li>
+      <li>Two-way communication</li>
+      <li>Active learner participation</li>
+      <li>Decisions taken jointly</li>
+      <li>Friendly classroom environment</li>
+    </ul>
+
+    <h4>Merits</h4>
+    <ul><li>Encourages critical thinking</li><li>Develops leadership and responsibility</li><li>Enhances motivation and understanding</li></ul>
+
+    <h4>Demerits</h4>
+    <ul><li>Time-consuming</li><li>Requires skilled teacher</li></ul>
+
+    <h3>Comparative Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Style</th><th>Teacher Role</th><th>Student Role</th></tr></thead>
+        <tbody>
+          <tr><td>Autocratic</td><td>Controller</td><td>Passive</td></tr>
+          <tr><td>Permissive</td><td>Minimal guide</td><td>Highly free</td></tr>
+          <tr><td>Democratic</td><td>Facilitator</td><td>Active participant</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Among the three teaching styles, the democratic style is considered the most effective as it balances discipline with freedom and promotes active learning.</div>
+  </div>
+
+  <!-- CHAPTER 11 -->
+  <div class="chapter" id="ch11">
+    <div class="chapter-number">Chapter 11</div>
+    <h2>Recent Developments in the Field of Interaction Analysis</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Interaction analysis — originally developed to study teacher–student interactions in classrooms — is now evolving rapidly through new methodologies, technologies, and research focuses.</p>
+
+    <h3>1. Complex Interaction Patterns Beyond Traditional Models</h3>
+    <p>Recent classroom studies are identifying more intricate interaction patterns beyond simple models like IRF (Initiation–Response–Feedback). Researchers have identified patterns such as [IⁿRⁿ]F and IⁿRⁿ that show multiple rounds of interaction between teachers and students, which encourage deeper participation and knowledge construction. Such patterns go beyond one-way talk and support more active student engagement in discourse.</p>
+
+    <h3>2. Use of Improved Interaction Coding Systems</h3>
+    <p>Classic interaction tools like Flanders or FLINT systems are still used, but researchers are applying improved versions (e.g., iFIAS) and combining them with quantitative statistical methods to analyze interaction efficacy more precisely and to understand how interaction relates to learning outcomes.</p>
+
+    <h3>3. Technology and AI-Assisted Interaction Analysis</h3>
+    <p>Artificial Intelligence (AI) and computational models are increasingly applied to analyze classroom interaction:</p>
+    <ul>
+      <li>Multimodal AI models that examine nonverbal immediacy — such as gestures and facial expressions — alongside verbal behaviour to assess interaction quality.</li>
+      <li>Hybrid AI agents that combine expert rule-based systems with large language models to classify classroom dialogue more accurately and efficiently. This supports scalable and more detailed interaction analysis.</li>
+      <li>AI tools for teacher reflection: systems that automatically analyse behaviour from classroom sensors and provide objective feedback for improving teaching strategies.</li>
+    </ul>
+    <p>These technologies help move interaction analysis from manual coding to automated, scalable analytics.</p>
+
+    <h3>4. Interaction in Online and Blended Contexts</h3>
+    <p>After the COVID-19 pandemic, research on interaction has shifted toward online and blended learning environments. Studies show that in digital environments, interaction — such as learner–instructor and learner–content interactions — plays a mediating role between student satisfaction and perceived online learning effectiveness.</p>
+
+    <h3>5. Focus on Student-Centred and Collaborative Interaction</h3>
+    <p>Current research increasingly emphasizes student-student and collaborative interaction, not just teacher talk. Methods like problem-based learning or structured group activities are analysed to see how they influence interaction patterns and learning engagement.</p>
+
+    <div class="callout"><strong>Summary — Exam Friendly</strong>Recent developments in interaction analysis include: identification of complex classroom discourse patterns beyond traditional IRF; enhanced interaction coding systems and integration with statistical methods; growing use of AI and computational analysis; expanded research on interaction in online and blended learning contexts; and emphasis on student voice and collaborative interaction in classroom studies.</div>
+  </div>
+
+  <!-- CHAPTER 12 -->
+  <div class="chapter" id="ch12">
+    <div class="chapter-number">Chapter 12</div>
+    <h2>Taxonomy of Educational Objectives — B. S. Bloom</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Bloom's Taxonomy, proposed by Benjamin S. Bloom (1956), is a classification of educational objectives that helps teachers plan, teach, and evaluate learning systematically. It classifies objectives into three domains based on learning outcomes.</p>
+
+    <h3>I. Cognitive Domain (Knowledge Domain)</h3>
+    <p>This domain deals with mental abilities and intellectual skills.</p>
+
+    <h4>Levels of Cognitive Domain</h4>
+    <ol>
+      <li><strong>Knowledge</strong> – Recall of facts, terms, definitions (e.g., define, list, name)</li>
+      <li><strong>Comprehension (Understanding)</strong> – Grasping meaning (e.g., explain, summarize)</li>
+      <li><strong>Application</strong> – Using knowledge in new situations (e.g., apply, demonstrate)</li>
+      <li><strong>Analysis</strong> – Breaking ideas into parts (e.g., analyze, differentiate)</li>
+      <li><strong>Synthesis</strong> – Combining elements to form new ideas (e.g., create, design)</li>
+      <li><strong>Evaluation</strong> – Judging based on criteria (e.g., justify, evaluate)</li>
+    </ol>
+
+    <h3>II. Affective Domain (Attitude Domain)</h3>
+    <p>This domain deals with feelings, emotions, attitudes, and values.</p>
+
+    <h4>Levels of Affective Domain</h4>
+    <ol>
+      <li><strong>Receiving</strong> – Willingness to listen</li>
+      <li><strong>Responding</strong> – Active participation</li>
+      <li><strong>Valuing</strong> – Acceptance of values</li>
+      <li><strong>Organization</strong> – Integration of values</li>
+      <li><strong>Characterization</strong> – Values become part of personality</li>
+    </ol>
+
+    <h3>III. Psychomotor Domain (Skill Domain)</h3>
+    <p>This domain deals with physical skills and motor activities.</p>
+
+    <h4>Levels (Simpson's Classification)</h4>
+    <ol>
+      <li><strong>Perception</strong> – Awareness through senses</li>
+      <li><strong>Set</strong> – Readiness to act</li>
+      <li><strong>Guided Response</strong> – Imitation and practice</li>
+      <li><strong>Mechanism</strong> – Habitual performance</li>
+      <li><strong>Complex Overt Response</strong> – Skilled performance</li>
+      <li><strong>Adaptation</strong> – Modification of skills</li>
+      <li><strong>Origination</strong> – Creation of new movement patterns</li>
+    </ol>
+
+    <h3>Implications of Bloom's Taxonomy in the Teaching–Learning Process</h3>
+    <ol>
+      <li><strong>Helps in Formulating Objectives:</strong> Teachers can frame clear, measurable objectives in all three domains. Avoids overemphasis on rote learning.</li>
+      <li><strong>Guides Selection of Teaching Methods:</strong> Different levels require different methods — lecture for knowledge, discussion for understanding, projects for application and synthesis.</li>
+      <li><strong>Ensures Balanced Development:</strong> Promotes cognitive, emotional, and skill development. Supports holistic education.</li>
+      <li><strong>Helps in Evaluation and Assessment:</strong> Enables teachers to design question papers and tests covering all levels. Encourages higher-order thinking questions.</li>
+      <li><strong>Improves Teaching Effectiveness:</strong> Teaching becomes systematic and learner-centred. Lessons progress from lower to higher levels of thinking.</li>
+      <li><strong>Supports Curriculum Planning:</strong> Helps in sequencing content from simple to complex. Ensures continuity and progression in learning.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Bloom's taxonomy provides a scientific framework for organizing educational objectives and plays a crucial role in planning, teaching, and evaluating the teaching–learning process effectively.</div>
+  </div>
+
+  <!-- CHAPTER 13 -->
+  <div class="chapter" id="ch13">
+    <div class="chapter-number">Chapter 13</div>
+    <h2>Meaning and Components of a Model of Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Meaning of Model of Teaching</h3>
+    <p>A model of teaching is a systematic plan or blueprint used by a teacher to design instruction, guide classroom activities, and achieve specific educational objectives. It explains how teaching should be organized, what steps should be followed, and how teacher–student interaction should occur.</p>
+    <p>In simple words, a model of teaching provides a structured approach to teaching and learning.</p>
+
+    <h3>Components of a Model of Teaching</h3>
+    <p>Most models of teaching consist of four major components:</p>
+
+    <h4>1. Syntax</h4>
+    <p>Syntax refers to the sequence of steps or phases of the teaching model. It describes what happens first, next, and last and provides a clear procedure for classroom instruction. <em>Example: Introduction → Presentation → Practice → Evaluation.</em></p>
+
+    <h4>2. Social System</h4>
+    <p>The social system defines the nature of interaction between teacher and students — the role of teacher and learners, degree of freedom or control, and type of classroom environment. <em>Example: Teacher-centred or learner-centred interaction.</em></p>
+
+    <h4>3. Principles of Reaction</h4>
+    <p>These describe how the teacher responds to students during teaching — teacher's feedback, reinforcement of responses, and handling of errors. <em>Example: Encouraging questions, giving constructive feedback.</em></p>
+
+    <h4>4. Support System</h4>
+    <p>The support system includes all resources and materials needed to implement the model — teaching aids, learning materials, technology and equipment. <em>Example: Charts, textbooks, ICT tools, lab equipment.</em></p>
+
+    <h4>Additional Component: Instructional and Nurturant Effects</h4>
+    <ul>
+      <li><strong>Instructional effects:</strong> Direct learning outcomes intended by the model.</li>
+      <li><strong>Nurturant effects:</strong> Indirect outcomes like creativity, cooperation, values.</li>
+    </ul>
+
+    <div class="callout"><strong>Conclusion</strong>A model of teaching is a structured plan of instruction consisting of syntax, social system, principles of reaction, and support system, which together guide effective teaching–learning processes.</div>
+  </div>
+
+  <!-- CHAPTER 14 -->
+  <div class="chapter" id="ch14">
+    <div class="chapter-number">Chapter 14</div>
+    <h2>Basic Models of Teaching: ITM and CAM</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Basic models of teaching are systematic instructional designs that help teachers organize learning experiences and develop specific abilities like inquiry, reasoning, and concept formation.</p>
+
+    <h3>I. Inquiry Training Model (ITM)</h3>
+    <p><strong>Origin:</strong> Developed by Richard Suchman. <strong>Aim:</strong> To develop scientific thinking, logical reasoning, and inquiry skills among learners.</p>
+
+    <h4>Basic Assumptions</h4>
+    <ul><li>Learners are curious by nature</li><li>Knowledge is best learned through active inquiry</li><li>Learning occurs through questioning and problem-solving</li></ul>
+
+    <h4>Phases (Syntax) of ITM</h4>
+    <ol>
+      <li><strong>Presentation of the Problem:</strong> Teacher presents a puzzling situation; students feel curiosity.</li>
+      <li><strong>Data Collection – Verification:</strong> Learners ask yes/no questions; teacher confirms or denies.</li>
+      <li><strong>Data Collection – Experimentation:</strong> Learners propose and test hypotheses; collect additional information.</li>
+      <li><strong>Formulating Explanation:</strong> Students explain the phenomenon logically.</li>
+      <li><strong>Analysis of Inquiry Process:</strong> Reflection on thinking strategies used.</li>
+    </ol>
+
+    <p><strong>Role of Teacher:</strong> Organizer and facilitator; encourages questioning; provides guidance, not answers.</p>
+    <p><strong>Instructional Effects:</strong> Development of inquiry skills, logical and critical thinking. <strong>Nurturant Effects:</strong> Curiosity, independent learning, scientific attitude.</p>
+
+    <h3>II. Concept Attainment Model (CAM)</h3>
+    <p><strong>Origin:</strong> Developed by Jerome S. Bruner. <strong>Aim:</strong> To help learners form and understand concepts by identifying essential attributes.</p>
+
+    <h4>Basic Assumptions</h4>
+    <ul><li>Concepts can be learned by comparing examples</li><li>Learners actively classify information</li><li>Thinking improves through concept formation</li></ul>
+
+    <h4>Phases (Syntax) of CAM</h4>
+    <ol>
+      <li><strong>Presentation of Data and Identification of Concept:</strong> Teacher presents positive and negative examples; learners compare and analyze attributes.</li>
+      <li><strong>Testing Attainment of Concept:</strong> Learners classify new examples; verify understanding of the concept.</li>
+      <li><strong>Analysis of Thinking Strategies:</strong> Learners reflect on how the concept was formed.</li>
+    </ol>
+
+    <p><strong>Role of Teacher:</strong> Presents examples systematically; guides learners' thinking; confirms hypotheses.</p>
+    <p><strong>Instructional Effects:</strong> Concept formation, analytical thinking, logical reasoning. <strong>Nurturant Effects:</strong> Curiosity, confidence, independent thinking.</p>
+
+    <h3>Comparison Table: ITM vs CAM</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Basis</th><th>Inquiry Training Model (ITM)</th><th>Concept Attainment Model (CAM)</th></tr></thead>
+        <tbody>
+          <tr><td>Developer</td><td>Richard Suchman</td><td>Jerome S. Bruner</td></tr>
+          <tr><td>Nature of Model</td><td>Inquiry-based</td><td>Concept-based</td></tr>
+          <tr><td>Main Aim</td><td>Development of inquiry and problem-solving skills</td><td>Formation and understanding of concepts</td></tr>
+          <tr><td>Focus</td><td>Scientific thinking and investigation</td><td>Identification of essential attributes</td></tr>
+          <tr><td>Learning Process</td><td>Questioning, hypothesis formation, experimentation</td><td>Comparison, classification of examples</td></tr>
+          <tr><td>Type of Thinking</td><td>Reflective and critical thinking</td><td>Analytical and logical thinking</td></tr>
+          <tr><td>Role of Teacher</td><td>Facilitator and guide</td><td>Presenter and guide</td></tr>
+          <tr><td>Role of Learner</td><td>Active investigator</td><td>Active classifier and thinker</td></tr>
+          <tr><td>Teaching Strategy</td><td>Problem situation followed by inquiry</td><td>Positive and negative examples</td></tr>
+          <tr><td>Syntax (Steps)</td><td>Five phases</td><td>Three phases</td></tr>
+          <tr><td>Suitable For</td><td>Teaching scientific phenomena and problems</td><td>Teaching concepts and definitions</td></tr>
+          <tr><td>Instructional Effects</td><td>Inquiry skills, reasoning ability</td><td>Concept formation, classification</td></tr>
+          <tr><td>Nurturant Effects</td><td>Curiosity, independence</td><td>Confidence, self-directed learning</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Inquiry Training Model and Concept Attainment Model are learner-centred teaching models that promote inquiry, reasoning, and meaningful understanding of concepts.</div>
+  </div>
+
+  <!-- CHAPTER 15 -->
+  <div class="chapter" id="ch15">
+    <div class="chapter-number">Chapter 15</div>
+    <h2>Fixing Devices: Drill and Review</h2>
+    <div class="chapter-rule"></div>
+
+    <p>Fixing devices are instructional techniques used to reinforce, strengthen, and fix learning permanently in the minds of learners. They help in retention and recall of learned material.</p>
+
+    <h3>1. Drill</h3>
+    <p>Drill is a technique in which learners are given repeated practice of the same content to achieve accuracy, speed, and mastery.</p>
+
+    <h4>Characteristics</h4>
+    <ul><li>Repetition of learning material</li><li>Practice-based learning</li><li>Teacher-directed</li><li>Focus on habit formation</li></ul>
+
+    <h4>Purpose</h4>
+    <ul><li>To fix facts, skills, and information</li><li>To develop fluency and accuracy</li></ul>
+
+    <h4>Examples</h4>
+    <ul><li>Repeated solving of math problems</li><li>Practice of spelling or tables</li><li>Language pronunciation practice</li></ul>
+
+    <h4>Merits</h4>
+    <ul><li>Improves retention</li><li>Develops confidence</li><li>Useful for skill learning</li></ul>
+
+    <h4>Limitations</h4>
+    <ul><li>May cause boredom</li><li>Encourages rote learning if overused</li></ul>
+
+    <h3>2. Review</h3>
+    <p>Review is the process of revisiting learned material to reinforce understanding and correct errors.</p>
+
+    <h4>Characteristics</h4>
+    <ul><li>Done after teaching</li><li>Helps in consolidation of learning</li><li>Involves discussion and questioning</li></ul>
+
+    <h4>Purpose</h4>
+    <ul><li>To refresh memory</li><li>To clarify doubts</li><li>To connect old and new knowledge</li></ul>
+
+    <h4>Forms of Review</h4>
+    <ul><li>Oral review</li><li>Written review</li><li>Question–answer session</li><li>Summary by teacher or students</li></ul>
+
+    <h4>Merits</h4>
+    <ul><li>Strengthens understanding</li><li>Helps in evaluation</li><li>Improves long-term retention</li></ul>
+
+    <h3>Difference between Drill and Review</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Basis</th><th>Drill</th><th>Review</th></tr></thead>
+        <tbody>
+          <tr><td>Nature</td><td>Practice-oriented</td><td>Revision-oriented</td></tr>
+          <tr><td>Focus</td><td>Skill mastery</td><td>Understanding and recall</td></tr>
+          <tr><td>Method</td><td>Repetition</td><td>Discussion and recall</td></tr>
+          <tr><td>Outcome</td><td>Habit formation</td><td>Concept clarity</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Drill and review are important fixing devices that help in reinforcing learning, improving retention, and achieving mastery of knowledge and skills.</div>
+  </div>
+
+  <!-- CHAPTER 16 -->
+  <div class="chapter" id="ch16">
+    <div class="chapter-number">Chapter 16</div>
+    <h2>Micro-Teaching: Concept, Characteristics and Objectives</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Concept of Micro-Teaching</h3>
+    <p>Micro-teaching is a teacher training technique in which a student-teacher practices a single teaching skill in a scaled-down teaching situation. The lesson is short, the class size is small, and the focus is on improving specific teaching skills through feedback and re-teaching.</p>
+    <p><strong>Definition:</strong> Micro-teaching is a technique for training teachers by reducing the complexity of teaching.</p>
+
+    <h3>Characteristics of Micro-Teaching</h3>
+    <ol>
+      <li><strong>Small class size:</strong> Usually 5–10 students.</li>
+      <li><strong>Short duration:</strong> Lesson duration is about 5–10 minutes.</li>
+      <li><strong>Focus on one teaching skill:</strong> Such as explaining, questioning, or stimulus variation.</li>
+      <li><strong>Controlled teaching situation:</strong> Teaching is done under supervision in a simulated environment.</li>
+      <li><strong>Immediate feedback:</strong> Feedback is given by supervisors, peers, or through video recording.</li>
+      <li><strong>Re-teaching and re-planning:</strong> The teacher improves the skill after feedback.</li>
+      <li><strong>Skill-based training:</strong> Emphasis is on mastery of teaching skills, not subject content.</li>
+      <li><strong>Use of observation and analysis:</strong> Teaching behaviour is observed, analyzed, and improved.</li>
+    </ol>
+
+    <h3>Objectives of Micro-Teaching</h3>
+    <ol>
+      <li><strong>To develop specific teaching skills:</strong> Helps student-teachers master individual teaching skills.</li>
+      <li><strong>To improve teaching behaviour:</strong> Makes teaching more effective and systematic.</li>
+      <li><strong>To provide confidence to teachers:</strong> Reduces fear and anxiety of classroom teaching.</li>
+      <li><strong>To receive constructive feedback:</strong> Enables self-evaluation and correction.</li>
+      <li><strong>To link theory with practice:</strong> Applies educational theory in real teaching situations.</li>
+      <li><strong>To prepare effective teachers:</strong> Helps in professional growth and competence.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Micro-teaching is an effective teacher-training technique that helps in developing teaching skills through practice, feedback, and re-teaching in a controlled environment.</div>
+  </div>
+
+  <!-- CHAPTER 17 -->
+  <div class="chapter" id="ch17">
+    <div class="chapter-number">Chapter 17</div>
+    <h2>Steps and Advantages of Micro-Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Steps of Micro-Teaching</h3>
+    <p>Micro-teaching follows a systematic cycle to improve specific teaching skills.</p>
+    <ol>
+      <li><strong>Planning:</strong> Selection of one teaching skill; preparation of a short lesson plan; fixing objectives and teaching aids.</li>
+      <li><strong>Teaching:</strong> Teaching the lesson for 5–10 minutes; small group of 5–10 students; focus only on the selected skill.</li>
+      <li><strong>Feedback:</strong> Feedback given by supervisor, peers, or video recording; strengths and weaknesses are identified.</li>
+      <li><strong>Re-Planning:</strong> Lesson is modified based on feedback; weak areas are corrected.</li>
+      <li><strong>Re-Teaching:</strong> Improved lesson is taught again; same skill is practiced with corrections.</li>
+      <li><strong>Re-Feedback:</strong> Feedback is given again to assess improvement. This cycle may be repeated until mastery of the skill is achieved.</li>
+    </ol>
+
+    <h3>Advantages of Micro-Teaching</h3>
+    <ol>
+      <li><strong>Develops specific teaching skills:</strong> Focuses on one skill at a time for mastery.</li>
+      <li><strong>Provides immediate feedback:</strong> Helps in quick correction and improvement.</li>
+      <li><strong>Reduces complexity of teaching:</strong> Teaching is simplified by reducing class size and time.</li>
+      <li><strong>Builds confidence in teachers:</strong> Removes fear and anxiety of classroom teaching.</li>
+      <li><strong>Encourages self-evaluation:</strong> Teachers reflect on their own teaching behaviour.</li>
+      <li><strong>Links theory with practice:</strong> Helps apply educational theories in real situations.</li>
+      <li><strong>Promotes professional growth:</strong> Improves overall teaching competence.</li>
+      <li><strong>Safe and controlled environment:</strong> Mistakes can be corrected without pressure.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Micro-teaching is an effective training technique that improves teaching skills through systematic practice, feedback, and re-teaching.</div>
+  </div>
+
+  <!-- CHAPTER 18 -->
+  <div class="chapter" id="ch18">
+    <div class="chapter-number">Chapter 18</div>
+    <h2>Team Teaching: Concept, Steps and Advantages</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Concept of Team Teaching</h3>
+    <p>Team teaching is an instructional approach in which two or more teachers work together to plan, teach, and evaluate the same group of students. Each teacher contributes according to their expertise and experience, making teaching more effective and comprehensive.</p>
+    <p>In simple words, team teaching means teaching by a group of teachers as a team.</p>
+
+    <h3>Steps of Team Teaching</h3>
+    <ol>
+      <li><strong>Planning:</strong> Teachers jointly plan the lesson; fixing objectives and content; distribution of roles among team members; selection of teaching methods and aids.</li>
+      <li><strong>Organizing:</strong> Arranging time, classroom, and resources; deciding sequence of teaching; organizing students into groups, if needed.</li>
+      <li><strong>Teaching (Implementation):</strong> Actual classroom teaching by team members; teachers may teach alternately or together; interaction among teachers and students.</li>
+      <li><strong>Observation:</strong> Team members observe each other's teaching; focus on learner response and participation.</li>
+      <li><strong>Evaluation:</strong> Assessment of student learning; evaluation of teaching effectiveness.</li>
+      <li><strong>Feedback and Improvement:</strong> Discussion among team members; identifying strengths and weaknesses; planning remedial measures.</li>
+    </ol>
+
+    <h3>Advantages of Team Teaching</h3>
+    <ol>
+      <li><strong>Better use of teacher expertise:</strong> Each teacher contributes according to their specialization, leading to more effective teaching.</li>
+      <li><strong>Improved quality of instruction:</strong> Joint planning and teaching result in well-organized and enriched learning experiences.</li>
+      <li><strong>Variety in teaching methods:</strong> Different teachers use different methods, reducing monotony and increasing student interest.</li>
+      <li><strong>Individual attention to students:</strong> Teachers can divide responsibilities and provide better guidance to learners.</li>
+      <li><strong>Professional growth of teachers:</strong> Teachers learn from each other through observation, discussion, and feedback.</li>
+      <li><strong>Better classroom management:</strong> Multiple teachers help in maintaining discipline and managing large classes.</li>
+      <li><strong>Encourages collaborative learning:</strong> Promotes cooperation among teachers and students.</li>
+      <li><strong>Effective evaluation:</strong> Assessment becomes more objective and comprehensive due to shared responsibility.</li>
+      <li><strong>Flexibility in teaching:</strong> Teaching plans can be easily modified based on student needs and feedback.</li>
+      <li><strong>Enhances student achievement:</strong> Students benefit from diverse perspectives and teaching styles.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Team teaching improves instructional quality, promotes teacher cooperation, and enhances student learning by combining the strengths of multiple teachers.</div>
+  </div>
+
+  <!-- CHAPTER 19 -->
+  <div class="chapter" id="ch19">
+    <div class="chapter-number">Chapter 19</div>
+    <h2>Teaching Aids: Meaning, Types, Principles, Importance and Uses</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Meaning of Teaching Aids</h3>
+    <p>Teaching aids are tools, materials, or resources used by teachers to support, supplement, and reinforce teaching so that learning becomes easy, effective, and interesting. In simple words, teaching aids help learners see, hear, touch, and understand what is being taught.</p>
+
+    <h3>Types of Teaching Aids</h3>
+    <ol>
+      <li><strong>Audio Aids:</strong> Appeal to the sense of hearing. Examples: Radio, tape recorder, podcasts.</li>
+      <li><strong>Visual Aids:</strong> Appeal to the sense of sight. Examples: Charts, maps, diagrams, pictures, models.</li>
+      <li><strong>Audio-Visual Aids:</strong> Appeal to both sight and hearing. Examples: Television, videos, films, smart boards.</li>
+      <li><strong>Projected Aids:</strong> Require projection devices. Examples: PowerPoint, OHP, LCD projector.</li>
+      <li><strong>Non-Projected Aids:</strong> Do not require machines. Examples: Blackboard, charts, flashcards.</li>
+      <li><strong>Activity-Based Aids:</strong> Involve learner participation. Examples: Experiments, role-play, models, games.</li>
+    </ol>
+
+    <h3>Principles of Using Teaching Aids</h3>
+    <ol>
+      <li><strong>Principle of purpose</strong> – Aid should serve a clear teaching objective.</li>
+      <li><strong>Principle of suitability</strong> – Appropriate to age and level of learners.</li>
+      <li><strong>Principle of simplicity</strong> – Easy to understand and use.</li>
+      <li><strong>Principle of accuracy</strong> – Correct and up-to-date information.</li>
+      <li><strong>Principle of visibility</strong> – Clearly visible to all students.</li>
+      <li><strong>Principle of integration</strong> – Integrated with the lesson, not separate.</li>
+      <li><strong>Principle of economy</strong> – Cost-effective and easily available.</li>
+      <li><strong>Principle of motivation</strong> – Should arouse interest and curiosity.</li>
+    </ol>
+
+    <h3>Importance of Teaching Aids</h3>
+    <ol>
+      <li>Make learning interesting and enjoyable</li>
+      <li>Improve attention and concentration</li>
+      <li>Help in better understanding of concepts</li>
+      <li>Increase retention and recall</li>
+      <li>Make abstract ideas concrete</li>
+      <li>Encourage active participation</li>
+      <li>Support individual differences</li>
+      <li>Save time and effort of the teacher</li>
+    </ol>
+
+    <h3>Uses of Teaching Aids</h3>
+    <ul>
+      <li>To introduce a lesson effectively</li>
+      <li>To explain difficult concepts</li>
+      <li>To motivate learners</li>
+      <li>To reinforce learning</li>
+      <li>To review and revise content</li>
+      <li>To evaluate learning outcomes</li>
+      <li>To promote experiential learning</li>
+    </ul>
+
+    <div class="callout"><strong>Conclusion</strong>Teaching aids play a vital role in making the teaching–learning process effective by enhancing understanding, interest, and retention among learners.</div>
+  </div>
+
+  <!-- CHAPTER 20 -->
+  <div class="chapter" id="ch20">
+    <div class="chapter-number">Chapter 20</div>
+    <h2>Lesson Plan and New Trends in Teaching–Learning</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Meaning of Lesson Plan</h3>
+    <p>A lesson plan is a systematic written plan prepared by a teacher to organize objectives, content, methods, teaching aids, and evaluation for teaching a particular lesson within a fixed time. In simple words, a lesson plan is a roadmap for teaching.</p>
+
+    <h3>Importance of a Lesson Plan</h3>
+    <ul>
+      <li>Gives direction and confidence to the teacher</li>
+      <li>Ensures systematic and effective teaching</li>
+      <li>Helps in time management</li>
+      <li>Makes teaching goal-oriented</li>
+      <li>Facilitates evaluation of learning</li>
+    </ul>
+
+    <h3>Components of a Lesson Plan</h3>
+    <ol>
+      <li><strong>General Information:</strong> Class, subject, topic, date, duration.</li>
+      <li><strong>Objectives:</strong> Knowledge, understanding, application, skills, attitudes.</li>
+      <li><strong>Previous Knowledge:</strong> What students already know related to the topic.</li>
+      <li><strong>Introduction:</strong> Motivation and linking previous knowledge with new lesson.</li>
+      <li><strong>Presentation of Content:</strong> Teaching steps, methods, activities, examples.</li>
+      <li><strong>Teaching Aids:</strong> Charts, models, ICT tools, blackboard.</li>
+      <li><strong>Blackboard Work:</strong> Key points, diagrams, summaries.</li>
+      <li><strong>Evaluation:</strong> Oral or written questions to assess learning.</li>
+      <li><strong>Recapitulation:</strong> Short revision of the lesson.</li>
+      <li><strong>Home Assignment:</strong> Follow-up work for students.</li>
+    </ol>
+
+    <h3>New Trends in Teaching–Learning</h3>
+    <p>Modern education has shifted from teacher-centred to learner-centred approaches. Some important new trends are:</p>
+
+    <ol>
+      <li><strong>Learner-Centred Teaching:</strong> Focus on learner needs, interests, and abilities; teacher acts as a facilitator.</li>
+      <li><strong>Activity-Based Learning:</strong> Learning through doing and experiencing — projects, experiments, role-play.</li>
+      <li><strong>ICT-Based Teaching:</strong> Use of computers, smart boards, internet, multimedia, online resources and digital classrooms.</li>
+      <li><strong>Blended Learning:</strong> Combination of online and face-to-face teaching.</li>
+      <li><strong>Experiential Learning:</strong> Learning through real-life experiences — field visits, internships, simulations.</li>
+      <li><strong>Collaborative Learning:</strong> Learning in groups and teams — discussion, peer learning, cooperative activities.</li>
+      <li><strong>Inclusive Education:</strong> Teaching that includes diverse learners; focus on equality and accessibility.</li>
+      <li><strong>Continuous and Comprehensive Evaluation (CCE):</strong> Ongoing assessment instead of one-time exams; focus on overall development.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>A lesson plan ensures systematic and effective classroom teaching, while new trends in teaching–learning promote learner-centred, activity-based, and technology-supported education for holistic development.</div>
+  </div>
+
+  <!-- CHAPTER 21 -->
+  <div class="chapter" id="ch21">
+    <div class="chapter-number">Chapter 21</div>
+    <h2>Meaning and Importance of Lesson Planning</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Meaning of Lesson Planning</h3>
+    <p>A lesson plan is a systematic, written plan prepared by a teacher for teaching a particular topic within a fixed time period. It includes the objectives, content, methods, teaching aids, learning activities, and evaluation to make teaching effective.</p>
+    <p><strong>In short:</strong> Lesson planning is the blueprint of teaching that guides the teacher step by step during classroom instruction.</p>
+
+    <h3>Importance of Lesson Planning</h3>
+    <ol>
+      <li><strong>Gives Clear Objectives:</strong> Helps the teacher decide what students should learn; teaching becomes goal-oriented.</li>
+      <li><strong>Systematic Teaching:</strong> Content is presented in a logical and sequential order; avoids confusion and repetition.</li>
+      <li><strong>Effective Use of Time:</strong> Time is properly distributed for introduction, explanation, and evaluation; prevents wastage of class time.</li>
+      <li><strong>Boosts Teacher's Confidence:</strong> Teacher enters the class well-prepared; reduces anxiety and hesitation.</li>
+      <li><strong>Selection of Proper Methods:</strong> Helps in choosing suitable teaching methods, strategies, and techniques; teaching becomes interesting and learner-centered.</li>
+      <li><strong>Proper Use of Teaching Aids:</strong> Ensures effective use of charts, models, ICT, blackboard, etc.; enhances students' understanding.</li>
+      <li><strong>Improves Classroom Management:</strong> Class activities are pre-planned; better discipline and student participation.</li>
+      <li><strong>Continuous Evaluation:</strong> Helps the teacher evaluate students through questions, tests, and assignments; identifies learning difficulties.</li>
+      <li><strong>Ensures Learning Outcomes:</strong> Helps in achieving cognitive, affective, and psychomotor objectives; leads to effective teaching–learning process.</li>
+      <li><strong>Professional Growth of Teacher:</strong> Develops planning, organizing, and reflective skills; makes teaching more scientific and professional.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>Lesson planning is an essential part of effective teaching. It makes teaching purposeful, organized, and learner-friendly, ensuring better learning outcomes.</div>
+  </div>
+
+  <!-- CHAPTER 22 -->
+  <div class="chapter" id="ch22">
+    <div class="chapter-number">Chapter 22</div>
+    <h2>Criteria / Essentials of a Good Lesson Plan</h2>
+    <div class="chapter-rule"></div>
+
+    <p>A good lesson plan should have the following essential qualities:</p>
+
+    <ol>
+      <li><strong>Clear Objectives:</strong> Objectives must be specific, clear, and measurable. Should cover cognitive, affective, and psychomotor domains (Bloom's taxonomy).</li>
+      <li><strong>Logical Organization of Content:</strong> Content should be arranged in a systematic and sequential order. Ideas should move from simple to complex, known to unknown, and concrete to abstract.</li>
+      <li><strong>Learner-Centered:</strong> Should consider students' age, interest, ability, and prior knowledge. Encourages active participation.</li>
+      <li><strong>Suitable Teaching Methods:</strong> Appropriate methods and strategies must be selected (discussion, demonstration, activity method, etc.). Methods should match the objectives.</li>
+      <li><strong>Use of Teaching Aids:</strong> Proper use of charts, models, blackboard, ICT tools, etc. Aids should make learning more effective and interesting.</li>
+      <li><strong>Motivation and Introduction:</strong> Lesson should begin with a proper introduction to attract students' attention. Should connect new knowledge with previous knowledge.</li>
+      <li><strong>Time Management:</strong> Proper distribution of time for introduction, presentation, practice, and evaluation. Should be completed within the allotted time.</li>
+      <li><strong>Provision for Interaction:</strong> Includes questioning, discussion, and activities. Promotes teacher–student and student–student interaction.</li>
+      <li><strong>Evaluation:</strong> Should include questions or activities to check understanding. Ensures achievement of learning objectives.</li>
+      <li><strong>Flexibility:</strong> Should be adaptable according to classroom situations. Teacher can modify it if needed.</li>
+      <li><strong>Simplicity and Clarity:</strong> Language should be simple and clear. Should not be too lengthy or complicated.</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>A good lesson plan is clear, systematic, learner-centered, flexible, and evaluation-oriented. It ensures effective teaching-learning and better achievement of objectives.</div>
+  </div>
+
+  <!-- CHAPTER 23 -->
+  <div class="chapter" id="ch23">
+    <div class="chapter-number">Chapter 23</div>
+    <h2>Types of Lesson Plan</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>1. Skill Lesson</h3>
+    <p>A skill lesson aims at developing practical skills or abilities in students. It focuses on the psychomotor domain of learning.</p>
+
+    <h4>Objectives</h4>
+    <ul><li>To develop specific skills (writing, drawing, experimenting, speaking, etc.)</li><li>To improve speed, accuracy, and coordination</li><li>To provide practice and drill</li></ul>
+
+    <h4>Features</h4>
+    <ul><li>More practice-oriented</li><li>Demonstration by teacher</li><li>Student participation and repetition</li><li>Immediate feedback and correction</li></ul>
+
+    <h4>Examples</h4>
+    <ul><li>Writing an essay</li><li>Solving mathematical problems</li><li>Conducting a science experiment</li><li>Drawing a diagram</li></ul>
+
+    <h3>2. Knowledge Lesson</h3>
+    <p>A knowledge lesson focuses on the acquisition of information and understanding of facts, concepts, and principles. It mainly deals with the cognitive domain.</p>
+
+    <h4>Objectives</h4>
+    <ul><li>To develop understanding of new concepts</li><li>To increase factual knowledge</li><li>To clarify ideas and principles</li></ul>
+
+    <h4>Features</h4>
+    <ul><li>Logical and systematic presentation</li><li>Use of examples and explanations</li><li>Questioning and discussion</li><li>Emphasis on understanding rather than practice</li></ul>
+
+    <h4>Examples</h4>
+    <ul><li>Teaching causes of World War I</li><li>Explaining laws of motion</li><li>Teaching grammar rules</li></ul>
+
+    <h3>3. Appreciation Lesson</h3>
+    <p>An appreciation lesson aims at developing aesthetic sense, values, and emotional response in students. It mainly deals with the affective domain.</p>
+
+    <h4>Objectives</h4>
+    <ul><li>To develop interest and taste</li><li>To cultivate values and feelings</li><li>To encourage emotional involvement</li></ul>
+
+    <h4>Features</h4>
+    <ul><li>Focus on beauty, feelings, and imagination</li><li>Expressive reading or presentation</li><li>Discussion of moral or artistic value</li><li>Encourages personal response</li></ul>
+
+    <h4>Examples</h4>
+    <ul><li>Appreciation of a poem</li><li>Understanding a story</li><li>Appreciating a painting or music</li></ul>
+
+    <h3>Difference Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Basis</th><th>Skill Lesson</th><th>Knowledge Lesson</th><th>Appreciation Lesson</th></tr></thead>
+        <tbody>
+          <tr><td>Main Focus</td><td>Development of skills</td><td>Acquisition of knowledge</td><td>Development of feelings &amp; values</td></tr>
+          <tr><td>Domain</td><td>Psychomotor</td><td>Cognitive</td><td>Affective</td></tr>
+          <tr><td>Method</td><td>Demonstration &amp; Practice</td><td>Explanation &amp; Discussion</td><td>Expressive &amp; Reflective</td></tr>
+          <tr><td>Example</td><td>Writing, Experiment</td><td>History, Science theory</td><td>Poem, Story, Art</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><strong>Conclusion</strong>Skill lessons develop abilities, knowledge lessons build understanding, and appreciation lessons cultivate emotions and values. Together, they ensure holistic development of learners.</div>
+  </div>
+
+  <!-- CHAPTER 24 -->
+  <div class="chapter" id="ch24">
+    <div class="chapter-number">Chapter 24</div>
+    <h2>Herbartian Approach of Lesson Plan</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>Meaning</h3>
+    <p>The Herbartian approach is a traditional and systematic method of lesson planning based on the ideas of Johann Friedrich Herbart. It emphasizes structured teaching, correlation of knowledge, and moral development. It is mainly used for knowledge lessons.</p>
+
+    <h3>Five Formal Steps of Herbartian Approach</h3>
+    <ol>
+      <li><strong>Preparation (Introduction):</strong> The teacher prepares students for new learning; connects previous knowledge with the new topic; arouses curiosity and interest. <em>Based on the maxim: "From known to unknown."</em></li>
+      <li><strong>Presentation:</strong> New content is presented in a clear and systematic manner; use of examples, teaching aids, explanation, and questioning; students receive new knowledge.</li>
+      <li><strong>Association (Comparison):</strong> New ideas are compared with previously learned ideas; similarities and differences are discussed; helps in better understanding. Encourages deeper thinking.</li>
+      <li><strong>Generalization:</strong> Students derive general rules, principles, or conclusions; teacher guides them to form clear concepts.</li>
+      <li><strong>Application:</strong> Students apply the learned principles in new situations; evaluation of learning takes place. Ensures learning is meaningful and permanent.</li>
+    </ol>
+
+    <h3>Features of Herbartian Approach</h3>
+    <ul><li>Teacher-centered</li><li>Logical and systematic</li><li>Emphasizes moral development</li><li>Follows psychological principles</li><li>Suitable mainly for theory subjects</li></ul>
+
+    <h3>Merits</h3>
+    <ol>
+      <li>Well-structured and organized</li>
+      <li>Ensures clarity of concepts</li>
+      <li>Encourages logical thinking</li>
+      <li>Useful for beginners and student teachers</li>
+    </ol>
+
+    <h3>Demerits</h3>
+    <ol>
+      <li>Teacher-centered approach</li>
+      <li>Less scope for creativity</li>
+      <li>Not suitable for skill-based subjects</li>
+      <li>Rigid and mechanical in nature</li>
+    </ol>
+
+    <div class="callout"><strong>Conclusion</strong>The Herbartian approach provides a systematic and organized framework for teaching, especially for knowledge lessons. However, modern education prefers more child-centered and flexible approaches.</div>
+  </div>
+
+  <!-- CHAPTER 25 -->
+  <div class="chapter" id="ch25">
+    <div class="chapter-number">Chapter 25</div>
+    <h2>New Trends in Teaching</h2>
+    <div class="chapter-rule"></div>
+
+    <h3>1. Mobile Learning (M-Learning)</h3>
+    <p>Mobile learning refers to learning through mobile devices such as smartphones, tablets, and laptops using internet connectivity.</p>
+
+    <h4>Features</h4>
+    <ul><li>Learning anytime and anywhere</li><li>Use of educational apps and e-books</li><li>Video lectures and online quizzes</li><li>Instant communication</li></ul>
+
+    <h4>Advantages</h4>
+    <ul><li>Flexible and convenient</li><li>Promotes self-learning</li><li>Easy access to digital resources</li><li>Cost-effective</li></ul>
+
+    <h4>Limitations</h4>
+    <ul><li>Distraction due to social media</li><li>Requires internet access</li><li>Health concerns (excess screen time)</li></ul>
+
+    <h3>2. Blended Learning</h3>
+    <p>Blended learning is a combination of traditional face-to-face teaching and online learning.</p>
+
+    <h4>Features</h4>
+    <ul><li>Mix of classroom instruction and digital tools</li><li>Online assignments and offline discussions</li><li>Student-centered approach</li></ul>
+
+    <h4>Advantages</h4>
+    <ul><li>Enhances learning experience</li><li>Flexible pace</li><li>Encourages active participation</li><li>Better understanding through multimedia</li></ul>
+
+    <p><strong>Example:</strong> Students attend class lectures and also complete online quizzes or watch recorded videos at home.</p>
+
+    <h3>3. Flipped Learning (Flipped Classroom)</h3>
+    <p>In flipped learning, the traditional teaching process is reversed. Students study the lesson at home (through videos, materials), and classroom time is used for discussion and activities.</p>
+
+    <h4>Features</h4>
+    <ul><li>Homework becomes lecture</li><li>Classroom becomes discussion space</li><li>Focus on problem-solving and interaction</li></ul>
+
+    <h4>Advantages</h4>
+    <ul><li>More active learning</li><li>Better teacher-student interaction</li><li>Encourages critical thinking</li><li>Students learn at their own pace</li></ul>
+
+    <h3>4. Google Classroom</h3>
+    <p>Google Classroom is a free online platform developed by Google that helps teachers create, distribute, and manage assignments digitally.</p>
+
+    <h4>Features</h4>
+    <ul><li>Paperless assignment submission</li><li>Announcements and feedback</li><li>Integration with Google Docs, Drive, Meet</li><li>Easy grading system</li></ul>
+
+    <h4>Advantages</h4>
+    <ul><li>Organized and time-saving</li><li>Improves communication</li><li>Accessible from anywhere</li><li>Promotes digital literacy</li></ul>
+
+    <div class="callout"><strong>Conclusion</strong>These new trends make teaching more technology-based, flexible, interactive, and learner-centered. They enhance access to education and improve the overall teaching-learning process in modern classrooms.</div>
+  </div>
+
+</div><!-- /main -->
+
+<a href="#" id="back-top" title="Back to top">↑</a>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    document.getElementById('progress').style.width = pct + '%';
+
+    // Back to top visibility
+    const btn = document.getElementById('back-top');
+    if (scrolled > 400) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+
+  // Active TOC highlight
+  const chapters = document.querySelectorAll('.chapter');
+  const tocLinks = document.querySelectorAll('#toc a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(l => {
+          l.classList.remove('active');
+          if (l.getAttribute('href') === '#' + id) l.classList.add('active');
+        });
+      }
+    });
+  }, { threshold: 0.25 });
+
+  chapters.forEach(c => observer.observe(c));
+
+  // Close TOC on mobile link click
+  tocLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('toc').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

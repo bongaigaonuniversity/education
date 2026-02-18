@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educational Research — A Comprehensive Textbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --ink-soft: #3d3028;
+    --ink-muted: #7a6a5a;
+    --paper: #faf7f2;
+    --paper-warm: #f5f0e8;
+    --paper-tinted: #ede8de;
+    --accent: #8b3a1c;
+    --accent-light: #c4622d;
+    --accent-pale: #f0e0d6;
+    --rule: #c8bfb0;
+    --rule-light: #e2ddd5;
+    --chapter-bg: #2a1f14;
+    --toc-bg: #f0ece4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--chapter-bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.03) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.03) 60px);
+  }
+
+  .cover-ornament {
+    width: 60px;
+    height: 2px;
+    background: var(--accent-light);
+    margin: 0 auto 32px;
+  }
+
+  .cover-ornament::before, .cover-ornament::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    position: absolute;
+    top: -2px;
+  }
+
+  .cover-series {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 700;
+    color: #f5f0e8;
+    line-height: 1.15;
+    max-width: 700px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .cover h1 em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+
+  .cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: #b0a090;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .cover-rule {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--accent-light), transparent);
+    margin: 0 auto 32px;
+    position: relative;
+  }
+
+  .cover-footer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: #6a5a4a;
+    position: relative;
+  }
+
+  .cover-chapter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto 48px;
+    position: relative;
+  }
+
+  .cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8a7a6a;
+    border: 1px solid #3a2a1a;
+    padding: 5px 12px;
+    border-radius: 2px;
+  }
+
+  /* ── TABLE OF CONTENTS ── */
+  .toc-page {
+    background: var(--toc-bg);
+    border-bottom: 3px solid var(--rule);
+    padding: 80px 0;
+  }
+
+  .toc-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .toc-heading {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+  }
+
+  .toc-list {
+    list-style: none;
+  }
+
+  .toc-list li {
+    border-bottom: 1px dotted var(--rule);
+    padding: 10px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    min-width: 28px;
+    font-weight: 500;
+  }
+
+  .toc-title {
+    font-size: 15px;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+
+  .toc-list li a {
+    display: contents;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .toc-list li:hover .toc-title {
+    color: var(--accent);
+  }
+
+  /* ── BOOK LAYOUT ── */
+  .book {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 40px 100px;
+  }
+
+  /* ── CHAPTER HEADER ── */
+  .chapter {
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 3px double var(--rule);
+  }
+
+  .chapter:first-child {
+    border-top: none;
+  }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chapter-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule-light);
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 28px;
+  }
+
+  .chapter-intro {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    background: var(--accent-pale);
+    margin-bottom: 36px;
+    line-height: 1.65;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2.section-title .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  h3.subsection-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 28px 0 12px;
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: var(--ink-soft);
+  }
+
+  /* ── NUMBERED LIST (textbook style) ── */
+  ol.textbook-list {
+    list-style: none;
+    counter-reset: textbook-counter;
+    margin: 16px 0 24px;
+  }
+
+  ol.textbook-list li {
+    counter-increment: textbook-counter;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+
+  ol.textbook-list li::before {
+    content: counter(textbook-counter);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--accent);
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  ol.textbook-list li .item-text {
+    flex: 1;
+  }
+
+  ol.textbook-list li .item-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  ol.textbook-list li .item-body {
+    font-size: 15px;
+    color: var(--ink-muted);
+  }
+
+  /* ── SIMPLE BULLET LIST ── */
+  ul.text-list {
+    list-style: none;
+    margin: 12px 0 20px;
+    padding-left: 4px;
+  }
+
+  ul.text-list li {
+    padding: 5px 0 5px 22px;
+    position: relative;
+    font-size: 16px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  ul.text-list li:last-child { border-bottom: none; }
+
+  ul.text-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+  }
+
+  table.textbook-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  table.textbook-table thead tr {
+    background: var(--chapter-bg);
+    color: #f5f0e8;
+  }
+
+  table.textbook-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  table.textbook-table tbody tr:nth-child(even) {
+    background: var(--paper-tinted);
+  }
+
+  table.textbook-table tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--rule-light);
+    vertical-align: top;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  table.textbook-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* ── CONCLUSION BOX ── */
+  .conclusion-box {
+    background: var(--chapter-bg);
+    color: #e8e0d5;
+    padding: 28px 32px;
+    margin-top: 36px;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .conclusion-box::before {
+    content: 'Conclusion';
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 12px;
+  }
+
+  .conclusion-box p {
+    color: #d5cdc2;
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+
+  /* ── DEFINITION BOX ── */
+  .definition-box {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .definition-box .def-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .definition-box p {
+    margin-bottom: 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* ── EXAMPLE BOX ── */
+  .example-box {
+    background: #eef4ee;
+    border: 1px solid #c0d4c0;
+    border-left: 4px solid #4a7a4a;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 15px;
+    color: #2a4a2a;
+  }
+
+  .example-box .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #4a7a4a;
+    margin-bottom: 6px;
+    font-style: normal;
+  }
+
+  /* ── CHAPTER DIVIDER ── */
+  .chapter-end {
+    text-align: center;
+    margin: 60px 0 0;
+    color: var(--rule);
+    font-size: 28px;
+    letter-spacing: 12px;
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--chapter-bg);
+    color: #f5f0e8;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: background 0.2s;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  .back-to-top:hover { background: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .book { padding: 0 20px 60px; }
+    .toc-inner { padding: 0 20px; }
+    .cover { padding: 40px 20px; }
+    table.textbook-table { font-size: 13px; }
+    table.textbook-table thead th, table.textbook-table tbody td { padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover" id="top">
+  <div class="cover-series">Master of Education Series · Educational Research</div>
+  <h1>Educational<br><em>Research</em></h1>
+  <div class="cover-subtitle">A Comprehensive Study Guide for M.Ed. Students</div>
+  <div class="cover-rule"></div>
+  <div class="cover-chapter-list">
+    <span class="cover-tag">Meaning & Scope</span>
+    <span class="cover-tag">Types of Research</span>
+    <span class="cover-tag">Research Methods</span>
+    <span class="cover-tag">Qualitative & Quantitative</span>
+    <span class="cover-tag">Research Problem</span>
+    <span class="cover-tag">Review of Literature</span>
+    <span class="cover-tag">Hypothesis</span>
+    <span class="cover-tag">Research Design</span>
+    <span class="cover-tag">Sampling</span>
+    <span class="cover-tag">Tools of Research</span>
+    <span class="cover-tag">Data Analysis</span>
+    <span class="cover-tag">Research Report</span>
+  </div>
+  <div class="cover-footer">Structured for 5-mark, 10-mark, and 20-mark exam answers</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-page">
+  <div class="toc-inner">
+    <div class="toc-heading">Table of Contents</div>
+    <ul class="toc-list">
+      <li><a href="#ch1"><span class="toc-num">01</span><span class="toc-title">Meaning, Characteristics, Objectives and Scope of Educational Research</span></a></li>
+      <li><a href="#ch2"><span class="toc-num">02</span><span class="toc-title">Types of Educational Research: Fundamental, Applied and Action Research</span></a></li>
+      <li><a href="#ch3"><span class="toc-num">03</span><span class="toc-title">Methods of Educational Research</span></a></li>
+      <li><a href="#ch4"><span class="toc-num">04</span><span class="toc-title">Qualitative and Quantitative Research in Education</span></a></li>
+      <li><a href="#ch5"><span class="toc-num">05</span><span class="toc-title">Formulation of Research Problem</span></a></li>
+      <li><a href="#ch6"><span class="toc-num">06</span><span class="toc-title">Research Question and Objectives</span></a></li>
+      <li><a href="#ch7"><span class="toc-num">07</span><span class="toc-title">Review of Related Literature</span></a></li>
+      <li><a href="#ch8"><span class="toc-num">08</span><span class="toc-title">Hypothesis: Meaning, Importance, Sources and Characteristics</span></a></li>
+      <li><a href="#ch9"><span class="toc-num">09</span><span class="toc-title">Preparation of Research Proposal</span></a></li>
+      <li><a href="#ch10"><span class="toc-num">10</span><span class="toc-title">Research Design</span></a></li>
+      <li><a href="#ch11"><span class="toc-num">11</span><span class="toc-title">Concept of Population and Sample; Methods of Sampling</span></a></li>
+      <li><a href="#ch12"><span class="toc-num">12</span><span class="toc-title">Tools of Educational Research</span></a></li>
+      <li><a href="#ch13"><span class="toc-num">13</span><span class="toc-title">Meaning of Data and Its Types</span></a></li>
+      <li><a href="#ch14"><span class="toc-num">14</span><span class="toc-title">Collection and Organization of Data</span></a></li>
+      <li><a href="#ch15"><span class="toc-num">15</span><span class="toc-title">Analysis and Interpretation of Data</span></a></li>
+      <li><a href="#ch16"><span class="toc-num">16</span><span class="toc-title">Concept of Research Report</span></a></li>
+      <li><a href="#ch17"><span class="toc-num">17</span><span class="toc-title">Major Components of the Research Report</span></a></li>
+      <li><a href="#ch18"><span class="toc-num">18</span><span class="toc-title">Needs and Importance of Research Report</span></a></li>
+      <li><a href="#ch19"><span class="toc-num">19</span><span class="toc-title">Format / Structure of the Research Report</span></a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- BOOK CONTENT -->
+<div class="book">
+
+  <!-- ══════════════════════════════════════ CHAPTER 1 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-label">Chapter 01</div>
+    <h1 class="chapter-title">Meaning, Characteristics, Objectives and Scope of Educational Research</h1>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">1.1</span> Meaning of Educational Research</h2>
+      <p>Educational research is a systematic, scientific and objective investigation conducted to discover facts, verify knowledge, and solve problems related to education. It studies teaching methods, learning processes, curriculum, evaluation, educational technology, administration, and psychological aspects of learners.</p>
+      <div class="definition-box">
+        <div class="def-label">In Simple Words</div>
+        <p>Educational research is the scientific study of educational problems to improve teaching–learning and educational practices.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">1.2</span> Characteristics of Educational Research</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Systematic</span><span class="item-body">It follows a planned and organized procedure.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Scientific</span><span class="item-body">It uses scientific methods like observation, experimentation, surveys, and statistical analysis.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Objective</span><span class="item-body">It avoids personal bias and is based on facts and evidence.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Logical</span><span class="item-body">Conclusions are drawn through reasoning and analysis.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Empirical</span><span class="item-body">It is based on real data and observation.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Replicable</span><span class="item-body">The study can be repeated by others to verify results.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Problem-Oriented</span><span class="item-body">It focuses on solving educational problems.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Purposeful</span><span class="item-body">It aims at improvement of educational practices.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">1.3</span> Objectives of Educational Research</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To discover new facts and principles in education.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To verify and test existing educational theories.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To identify problems in teaching–learning processes.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To improve curriculum, methods of teaching, and evaluation systems.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To study learner behavior and psychological factors.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To provide solutions for educational administration and planning.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To improve the quality of education.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To develop innovative instructional strategies and technologies.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">1.4</span> Scope of Educational Research</h2>
+      <p>The scope of educational research is very wide and includes the following areas:</p>
+
+      <h3 class="subsection-title">A. Teaching–Learning Process</h3>
+      <ul class="text-list">
+        <li>Methods of teaching</li>
+        <li>Learning strategies</li>
+        <li>Classroom management</li>
+      </ul>
+
+      <h3 class="subsection-title">B. Curriculum Development</h3>
+      <ul class="text-list">
+        <li>Designing curriculum</li>
+        <li>Evaluating curriculum</li>
+        <li>Updating syllabus</li>
+      </ul>
+
+      <h3 class="subsection-title">C. Educational Psychology</h3>
+      <ul class="text-list">
+        <li>Intelligence</li>
+        <li>Motivation</li>
+        <li>Personality</li>
+        <li>Mental health</li>
+      </ul>
+
+      <h3 class="subsection-title">D. Educational Technology</h3>
+      <ul class="text-list">
+        <li>Use of ICT</li>
+        <li>Online learning</li>
+        <li>Smart classrooms</li>
+        <li>Instructional design</li>
+      </ul>
+
+      <h3 class="subsection-title">E. Evaluation and Assessment</h3>
+      <ul class="text-list">
+        <li>Examination system</li>
+        <li>Measurement techniques</li>
+        <li>Test construction</li>
+      </ul>
+
+      <h3 class="subsection-title">F. Educational Administration</h3>
+      <ul class="text-list">
+        <li>School management</li>
+        <li>Leadership</li>
+        <li>Policy implementation</li>
+      </ul>
+
+      <h3 class="subsection-title">G. Inclusive and Special Education</h3>
+      <ul class="text-list">
+        <li>Special needs education</li>
+        <li>Guidance and counselling</li>
+      </ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Educational research plays a vital role in improving the quality, effectiveness, and efficiency of education. It provides a scientific basis for solving educational problems and developing better teaching–learning practices.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 2 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-label">Chapter 02</div>
+    <h1 class="chapter-title">Types of Educational Research: Fundamental, Applied and Action Research</h1>
+    <p class="chapter-intro">Educational research is broadly classified into three major types: Fundamental (Basic) Research, Applied Research, and Action Research.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">2.1</span> Fundamental (Basic) Research</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Fundamental research is conducted to develop new theories, principles, or knowledge in education. It is concerned with advancing knowledge, not immediate practical use.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list">
+        <li>Theory-oriented</li>
+        <li>Conducted in controlled conditions</li>
+        <li>Aims at generalization</li>
+        <li>Expands existing knowledge</li>
+        <li>Not immediately concerned with solving classroom problems</li>
+      </ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list">
+        <li>To test existing theories</li>
+        <li>To develop new educational principles</li>
+        <li>To explain educational phenomena</li>
+      </ul>
+      <div class="example-box">
+        <div class="ex-label">Examples</div>
+        Study of the relationship between intelligence and academic achievement.<br>Research on cognitive development theories.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">2.2</span> Applied Research</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Applied research is conducted to solve specific practical problems in education using scientific methods. It applies the findings of fundamental research to real-life situations.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list">
+        <li>Problem-oriented</li>
+        <li>Practical in nature</li>
+        <li>Conducted in real educational settings</li>
+        <li>Seeks immediate application</li>
+        <li>Limited generalization</li>
+      </ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list">
+        <li>To improve teaching methods</li>
+        <li>To develop effective curriculum</li>
+        <li>To improve evaluation techniques</li>
+      </ul>
+      <div class="example-box">
+        <div class="ex-label">Examples</div>
+        Studying the effectiveness of mobile learning in higher secondary schools.<br>Comparing two teaching methods to improve mathematics achievement.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">2.3</span> Action Research</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Action research is a small-scale research conducted by teachers to solve immediate classroom problems. It is focused on improving one's own teaching practices.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list">
+        <li>Conducted by teachers</li>
+        <li>Small scale</li>
+        <li>Immediate solution-oriented</li>
+        <li>Cyclical process (Plan → Act → Observe → Reflect)</li>
+        <li>Local in nature</li>
+      </ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list">
+        <li>To improve classroom teaching</li>
+        <li>To solve specific student problems</li>
+        <li>To enhance teaching effectiveness</li>
+      </ul>
+      <div class="example-box">
+        <div class="ex-label">Examples</div>
+        A teacher testing a new method to reduce student absenteeism.<br>Trying a new strategy to improve reading skills.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">2.4</span> Comparison of the Three Types</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Fundamental</th><th>Applied</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Aim</td><td>Develop theory</td><td>Solve practical problems</td><td>Solve classroom problems</td></tr>
+            <tr><td>Nature</td><td>Theoretical</td><td>Practical</td><td>Immediate &amp; local</td></tr>
+            <tr><td>Scale</td><td>Large scale</td><td>Medium/Large</td><td>Small scale</td></tr>
+            <tr><td>Conducted by</td><td>Researchers</td><td>Researchers/Institutions</td><td>Teachers</td></tr>
+            <tr><td>Generalization</td><td>High</td><td>Limited</td><td>Very limited</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Fundamental research builds knowledge, applied research uses that knowledge to solve practical problems, and action research improves classroom practices directly.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 3 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-label">Chapter 03</div>
+    <h1 class="chapter-title">Methods of Educational Research</h1>
+    <p class="chapter-intro">Educational research uses different methods to study problems scientifically. The important methods are: Survey Method, Experimental Method, Descriptive Method, and Historical Method.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">3.1</span> Survey Method</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>The survey method is used to collect data from a large group of people to study their opinions, attitudes, behaviors, or characteristics.</p>
+      </div>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To gather information about present conditions</li><li>To study trends and patterns</li><li>To analyze attitudes and opinions</li></ul>
+      <h3 class="subsection-title">Tools Used</h3>
+      <ul class="text-list"><li>Questionnaires</li><li>Interviews</li><li>Rating scales</li><li>Checklists</li></ul>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Large sample size</li><li>Data collected at one point of time</li><li>Mostly quantitative</li><li>Cost-effective</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Survey on students' attitude toward online learning. Survey on use of educational technology in schools.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">3.2</span> Experimental Method</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>The experimental method studies the effect of one variable on another under controlled conditions. It establishes a cause-and-effect relationship.</p>
+      </div>
+      <h3 class="subsection-title">Key Elements</h3>
+      <ul class="text-list"><li>Independent variable (manipulated)</li><li>Dependent variable (measured)</li><li>Control group and experimental group</li></ul>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Controlled conditions</li><li>Scientific and systematic</li><li>Objective measurement</li><li>Valid and reliable results</li></ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To test hypotheses</li><li>To determine effectiveness of teaching methods</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Comparing traditional teaching with smart classroom teaching to measure achievement.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">3.3</span> Descriptive Method</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>The descriptive method describes and interprets the existing conditions, practices, and relationships. It focuses on "what exists" rather than cause and effect.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Non-experimental</li><li>Studies present conditions</li><li>Uses surveys, observations, case studies</li></ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To describe behavior, trends, or characteristics</li><li>To find relationships between variables</li></ul>
+      <h3 class="subsection-title">Types</h3>
+      <ul class="text-list"><li>Survey studies</li><li>Case studies</li><li>Correlational studies</li><li>Developmental studies</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Study of learning styles of higher secondary students. Study of classroom management practices.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">3.4</span> Historical Method</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>The historical method studies past events, developments, and experiences in education to understand present conditions and predict future trends.</p>
+      </div>
+      <h3 class="subsection-title">Sources of Data</h3>
+      <ul class="text-list"><li>Primary sources (letters, government records, diaries)</li><li>Secondary sources (books, journals, reports)</li></ul>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Systematic collection of past records</li><li>Critical evaluation of documents</li><li>Interpretation of historical facts</li></ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To understand educational development</li><li>To trace evolution of educational policies</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Study of the development of education policy in India. Analysis of past curriculum reforms.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">3.5</span> Comparison of Methods</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Survey</th><th>Experimental</th><th>Descriptive</th><th>Historical</th></tr></thead>
+          <tbody>
+            <tr><td>Focus</td><td>Present opinions</td><td>Cause-effect</td><td>Existing conditions</td><td>Past events</td></tr>
+            <tr><td>Control</td><td>No control</td><td>High control</td><td>No manipulation</td><td>No manipulation</td></tr>
+            <tr><td>Time</td><td>Present</td><td>Present/Future</td><td>Present</td><td>Past</td></tr>
+            <tr><td>Nature</td><td>Data collection</td><td>Scientific testing</td><td>Describing facts</td><td>Document analysis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Survey collects broad information, Experimental establishes cause-effect, Descriptive explains current conditions, and Historical studies past developments. Together, they strengthen educational research and improve educational practices.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 4 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-label">Chapter 04</div>
+    <h1 class="chapter-title">Qualitative and Quantitative Research in Education</h1>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">4.1</span> Qualitative Research in Education</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Qualitative research focuses on understanding human behavior, experiences, meanings, and social contexts in education. It answers questions like "why" and "how."</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Deals with non-numerical data (words, descriptions, observations)</li><li>Small sample size</li><li>In-depth and detailed study</li><li>Flexible research design</li><li>Subjective interpretation</li></ul>
+      <h3 class="subsection-title">Methods Used</h3>
+      <ul class="text-list"><li>Interviews</li><li>Observations</li><li>Case studies</li><li>Focus group discussions</li><li>Document analysis</li></ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To understand students' experiences</li><li>To explore attitudes, beliefs, and perceptions</li><li>To study classroom interactions</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>A case study on the emotional adjustment of adolescents.<br>Interview-based study on teachers' perception of inclusive education.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">4.2</span> Quantitative Research in Education</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Quantitative research focuses on collecting numerical data and analyzing it statistically to test hypotheses and measure relationships. It answers questions like "how much" or "to what extent."</p>
+      </div>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Uses numerical data</li><li>Large sample size</li><li>Structured tools</li><li>Statistical analysis</li><li>Objective and measurable</li></ul>
+      <h3 class="subsection-title">Methods Used</h3>
+      <ul class="text-list"><li>Surveys with structured questionnaires</li><li>Experiments</li><li>Standardized tests</li><li>Correlational studies</li></ul>
+      <h3 class="subsection-title">Purpose</h3>
+      <ul class="text-list"><li>To measure academic achievement</li><li>To test effectiveness of teaching methods</li><li>To examine relationships between variables</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Experimental study comparing two teaching methods.<br>Survey measuring students' achievement scores.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">4.3</span> Comparison and Similarities</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Qualitative</th><th>Quantitative</th></tr></thead>
+          <tbody>
+            <tr><td>Nature of Data</td><td>Words, descriptions</td><td>Numbers, statistics</td></tr>
+            <tr><td>Sample Size</td><td>Small</td><td>Large</td></tr>
+            <tr><td>Purpose</td><td>Understanding</td><td>Measurement &amp; testing</td></tr>
+            <tr><td>Approach</td><td>Subjective</td><td>Objective</td></tr>
+            <tr><td>Analysis</td><td>Thematic</td><td>Statistical</td></tr>
+            <tr><td>Research Design</td><td>Flexible</td><td>Structured</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="subsection-title">Similarities</h3>
+      <ul class="text-list"><li>Both are systematic and scientific.</li><li>Both aim to solve educational problems.</li><li>Both follow research steps (problem, data collection, analysis, conclusion).</li></ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Qualitative research provides deep understanding of educational situations, while quantitative research provides measurable and generalizable results. Both approaches are complementary and together strengthen educational research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 5 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-label">Chapter 05</div>
+    <h1 class="chapter-title">Formulation of Research Problem</h1>
+    <p class="chapter-intro">Formulation of a research problem is the first and most important step in educational research. A research problem is a clear, specific and researchable statement about an issue that the researcher wants to investigate. Without a properly defined problem, research cannot proceed systematically.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">5.1</span> Meaning of Research Problem</h2>
+      <p>A research problem is a statement that identifies: what is to be studied, why it is to be studied, and for whom it is relevant. It should clearly state the variables and the population involved.</p>
+      <div class="example-box"><div class="ex-label">Example</div>"Effect of blended learning on academic achievement of higher secondary students."</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">5.2</span> Criteria for Selecting a Good Research Problem</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Clarity</span><span class="item-body">Clearly stated and specific; free from ambiguity.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Researchability</span><span class="item-body">Can be studied scientifically; data can be collected and measured.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Feasibility</span><span class="item-body">Within time, cost, and resource limits; suitable to researcher's ability.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Significance</span><span class="item-body">Contributes to knowledge; useful for educational improvement.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Ethical Acceptability</span><span class="item-body">Does not harm participants; follows ethical standards.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Availability of Data</span><span class="item-body">Required data and tools should be accessible.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">5.3</span> Sources for Identifying Research Problems</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Classroom Experience</span><span class="item-body">Problems faced in teaching-learning; student behavior issues.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Review of Related Literature</span><span class="item-body">Gaps in previous research; recommendations of earlier studies.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Educational Policies and Reports</span><span class="item-body">Government education policies; curriculum reforms.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Personal Interest and Experience</span><span class="item-body">Researcher's specialization; practical difficulties observed.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Social Issues</span><span class="item-body">Inclusive education; mental health of students; technology integration.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Discussion with Experts</span><span class="item-body">Guidance from supervisors; academic seminars.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">5.4</span> Steps in Formulating a Research Problem</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Identify a broad area of interest.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Review related literature.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Identify gaps or issues.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Narrow down to a specific problem.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Define variables clearly.</span></div></li>
+        <li><div class="item-text"><span class="item-body">State the problem in clear terms.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">5.5</span> Defining the Research Problem</h2>
+      <p>Defining the problem means explaining it clearly and precisely. It includes the following components:</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Conceptual Definition</span><span class="item-body">Explaining key concepts in general terms. Example: "Blended learning refers to the combination of online and face-to-face instruction."</span></div></li>
+        <li><div class="item-text"><span class="item-label">Operational Definition</span><span class="item-body">Defining how variables will be measured. Example: "Academic achievement refers to marks obtained in the final examination."</span></div></li>
+        <li><div class="item-text"><span class="item-label">Delimitation</span><span class="item-body">Specifying the population, area, and time period.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Statement of the Problem</span><span class="item-body">It should be written in clear sentence form. Example: "A study of the effectiveness of blended learning on academic achievement of higher secondary students of Bongaigaon district."</span></div></li>
+      </ol>
+
+      <h3 class="subsection-title">Characteristics of a Well-Defined Research Problem</h3>
+      <ul class="text-list"><li>Specific</li><li>Measurable</li><li>Limited in scope</li><li>Clearly identifies variables</li><li>Indicates population</li></ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>The formulation and proper definition of a research problem is the foundation of successful educational research. A clearly defined problem guides the researcher in selecting methodology, tools, and analysis procedures.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 6 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-label">Chapter 06</div>
+    <h1 class="chapter-title">Research Question and Objectives</h1>
+    <p class="chapter-intro">After defining the research problem, the researcher formulates research questions and objectives to guide the study.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">6.1</span> Research Question</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>A research question is a clear, focused, and specific question that the researcher intends to answer through the study. It guides data collection, research design, and analysis and interpretation.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics of a Good Research Question</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Clear and specific</span></div></li>
+        <li><div class="item-text"><span class="item-body">Researchable (data can be collected)</span></div></li>
+        <li><div class="item-text"><span class="item-body">Focused (not too broad)</span></div></li>
+        <li><div class="item-text"><span class="item-body">Relevant to the problem</span></div></li>
+        <li><div class="item-text"><span class="item-body">Ethically acceptable</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Types of Research Questions</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Descriptive Research Question</span><span class="item-body">Seeks to describe a condition or situation. Example: What is the level of academic stress among higher secondary students?</span></div></li>
+        <li><div class="item-text"><span class="item-label">Comparative Research Question</span><span class="item-body">Compares two or more groups. Example: Is there a difference in achievement between boys and girls?</span></div></li>
+        <li><div class="item-text"><span class="item-label">Relationship (Correlational) Research Question</span><span class="item-body">Examines relationship between variables. Example: Is there a relationship between study habits and academic achievement?</span></div></li>
+        <li><div class="item-text"><span class="item-label">Causal Research Question</span><span class="item-body">Studies cause-effect relationship. Example: Does blended learning improve students' academic achievement?</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">6.2</span> Research Objectives</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Research objectives are clear statements describing what the researcher intends to achieve in the study. They are derived from the research problem and questions. Objectives state the specific goals of the research.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics of Good Research Objectives</h3>
+      <ul class="text-list"><li>Clearly stated</li><li>Specific and measurable</li><li>Achievable</li><li>Relevant to the problem</li><li>Time-bound (if applicable)</li></ul>
+      <h3 class="subsection-title">Types of Objectives</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">General Objective</span><span class="item-body">Broad aim of the study. Example: To study the effectiveness of blended learning on academic achievement.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Specific Objectives</span><span class="item-body">Detailed and precise goals. Example: To compare academic achievement of students taught through traditional and blended methods; To find out the relationship between ICT usage and academic performance.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">6.3</span> Comparison: Research Question vs. Objectives</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Research Question</th><th>Research Objectives</th></tr></thead>
+          <tbody>
+            <tr><td>Form</td><td>Question form</td><td>Statement form</td></tr>
+            <tr><td>Purpose</td><td>What to find out</td><td>What to achieve</td></tr>
+            <tr><td>Nature</td><td>Inquiry-based</td><td>Goal-oriented</td></tr>
+            <tr><td>Example</td><td>Does ICT improve achievement?</td><td>To examine the effect of ICT on achievement</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="subsection-title">Importance</h3>
+      <ul class="text-list"><li>Provide direction to research</li><li>Help in selecting research design</li><li>Guide tool construction</li><li>Ensure focus and clarity</li></ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Research questions define what the study seeks to answer, while objectives state what the researcher aims to achieve. Together, they provide a clear roadmap for conducting systematic educational research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 7 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch7">
+    <div class="chapter-label">Chapter 07</div>
+    <h1 class="chapter-title">Review of Related Literature</h1>
+    <p class="chapter-intro">Review of related literature (RRL) refers to a systematic examination, analysis, and interpretation of previous studies, books, journals, reports, and other relevant materials related to the research problem. It helps the researcher understand what has already been studied and what remains to be explored.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">7.1</span> Purposes of Review of Related Literature</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">To Understand the Research Problem</span><span class="item-body">Clarifies concepts and helps define variables.</span></div></li>
+        <li><div class="item-text"><span class="item-label">To Identify Research Gaps</span><span class="item-body">Shows what has not been studied; avoids duplication of research.</span></div></li>
+        <li><div class="item-text"><span class="item-label">To Develop Hypotheses</span><span class="item-body">Provides theoretical base and suggests relationships between variables.</span></div></li>
+        <li><div class="item-text"><span class="item-label">To Select Research Methodology</span><span class="item-body">Guides selection of tools and design; suggests appropriate methods.</span></div></li>
+        <li><div class="item-text"><span class="item-label">To Provide Theoretical Framework</span><span class="item-body">Connects study with established theories.</span></div></li>
+        <li><div class="item-text"><span class="item-label">To Interpret Findings</span><span class="item-body">Helps compare results with previous studies.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">7.2</span> Significance of Review of Literature</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">It strengthens the foundation of research.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It ensures scientific credibility.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It prevents repetition of already completed work.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It improves clarity and focus of the study.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It helps in operational definition of variables.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It enhances researcher's knowledge and understanding.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">7.3</span> Sources of Review of Related Literature</h2>
+      <h3 class="subsection-title">A. Primary Sources</h3>
+      <p>Original and first-hand information. Examples: research articles, doctoral dissertations, conference papers, government reports, original documents.</p>
+      <h3 class="subsection-title">B. Secondary Sources</h3>
+      <p>Interpretation or analysis of primary sources. Examples: textbooks, review articles, encyclopedias, educational magazines.</p>
+      <h3 class="subsection-title">C. Online Sources</h3>
+      <p>Research databases, e-journals, educational websites. At Master's level, peer-reviewed journals are preferred.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">7.4</span> Identification of Related Literature</h2>
+      <p>Identification means locating relevant studies related to the research topic. The steps involved are:</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Define key concepts and keywords.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Search library catalogues and databases.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Use references from previous studies.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Consult supervisors and experts.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Select studies relevant to objectives and variables.</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Criteria for Selection</h3>
+      <ul class="text-list"><li>Relevance to topic</li><li>Authenticity of source</li><li>Recent and updated studies</li><li>Methodological quality</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">7.5</span> Organization of Review of Literature</h2>
+      <p>After collecting materials, the researcher must organize them systematically. The methods of organization are:</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Chronological Organization</span><span class="item-body">Arranged according to year of publication. Shows development over time.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Thematic Organization</span><span class="item-body">Grouped according to themes or variables. Most commonly used. Example groupings: studies related to academic achievement, studies related to ICT usage, studies related to mental health.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Methodological Organization</span><span class="item-body">Arranged based on research methods used.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Geographical Organization</span><span class="item-body">Based on location (International, National, Regional studies).</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Steps in Writing Review of Literature</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Introduction to the section.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Present related studies under subheadings.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Compare and analyze findings.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Identify gaps.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Summarize key insights.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Review of related literature is a crucial step in educational research. It provides direction, clarity, theoretical foundation, and scientific support to the study. A well-organized review ensures that research is meaningful, relevant, and original.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 8 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch8">
+    <div class="chapter-label">Chapter 08</div>
+    <h1 class="chapter-title">Hypothesis: Meaning, Importance, Sources and Characteristics</h1>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">8.1</span> Meaning of Hypothesis</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>A hypothesis is a tentative statement or assumption about the relationship between two or more variables, which can be tested through research. It predicts the possible outcome of a study.</p>
+      </div>
+      <div class="example-box"><div class="ex-label">Examples</div>There is a significant relationship between study habits and academic achievement.<br>Blended learning is more effective than traditional teaching.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">8.2</span> Importance of Hypothesis</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Provides Direction to Research</span><span class="item-body">It guides the researcher in data collection and analysis.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Defines Variables Clearly</span><span class="item-body">It identifies independent and dependent variables.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Helps in Selecting Research Design</span><span class="item-body">Different hypotheses require different research methods.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Guides Data Analysis</span><span class="item-body">Helps in selecting statistical tools for testing.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Prevents Blind Research</span><span class="item-body">Research becomes focused and purposeful.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Forms Basis for Conclusion</span><span class="item-body">Results are accepted or rejected based on hypothesis testing.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">8.3</span> Sources of Hypothesis</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Review of Related Literature</span><span class="item-body">Previous studies suggest possible relationships.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Existing Theories</span><span class="item-body">Educational and psychological theories provide foundation.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Personal Observation</span><span class="item-body">Classroom experiences and practical problems.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Discussions with Experts</span><span class="item-body">Guidance from supervisors or specialists.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Social and Educational Issues</span><span class="item-body">Current educational trends (e.g., ICT use, inclusive education).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Intuition and Logical Thinking</span><span class="item-body">Researcher's insight and reasoning.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">8.4</span> Characteristics of a Good Hypothesis</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Clear and Precise</span><span class="item-body">Free from ambiguity.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Testable</span><span class="item-body">Must be capable of being verified through data.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Specific</span><span class="item-body">Clearly mentions variables and population.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Based on Existing Knowledge</span><span class="item-body">Supported by theory or prior research.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Simple and Concise</span><span class="item-body">Avoid unnecessary complexity.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Objective</span><span class="item-body">Free from personal bias or value judgment.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Limited in Scope</span><span class="item-body">Focused on specific variables and conditions.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">8.5</span> Types of Hypothesis</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Null Hypothesis (H₀)</span><span class="item-body">States no significant relationship or difference. Example: There is no significant difference between the achievement of students taught through traditional and blended methods.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Alternative Hypothesis (H₁)</span><span class="item-body">States there is a significant relationship or difference.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Directional Hypothesis</span><span class="item-body">Specifies direction of relationship.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Non-Directional Hypothesis</span><span class="item-body">Does not specify direction.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>A hypothesis is a crucial element in educational research. It provides focus, direction, and scientific basis for investigation. A well-formulated hypothesis ensures systematic and meaningful research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 9 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch9">
+    <div class="chapter-label">Chapter 09</div>
+    <h1 class="chapter-title">Preparation of Research Proposal</h1>
+    <p class="chapter-intro">A research proposal is a formal written plan of the proposed research study. It outlines what the researcher intends to study, why it is important, and how it will be conducted. It is the blueprint or roadmap of the research work and is submitted for approval before starting a dissertation or thesis.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">9.1</span> Objectives of a Research Proposal</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To present the research problem clearly.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To justify the need and significance of the study.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To explain the research methodology.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To obtain approval from supervisor or institution.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To plan the research in a systematic manner.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">9.2</span> Major Components of a Research Proposal</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Title of the Study</span><span class="item-body">Clear, concise, and specific; reflects variables and population. Example: "A Study on the Use of Educational Technology in Higher Secondary Schools."</span></div></li>
+        <li><div class="item-text"><span class="item-label">Introduction / Background of the Study</span><span class="item-body">Brief explanation of the topic, context of the problem, and importance of the issue. It sets the stage for the research.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Statement of the Problem</span><span class="item-body">Clear and specific statement that identifies variables and population. Example: "The problem of the study is to examine the effectiveness of blended learning on academic achievement of higher secondary students."</span></div></li>
+        <li><div class="item-text"><span class="item-label">Objectives of the Study</span><span class="item-body">General objective and specific objectives. Example: To study the level of ICT usage among students; To compare academic achievement of boys and girls.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Research Questions / Hypotheses</span><span class="item-body">Research questions in interrogative form or hypotheses in statement form (Null/Alternative).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Review of Related Literature</span><span class="item-body">Summary of previous studies, identification of research gap, and theoretical foundation.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Operational Definitions of Terms</span><span class="item-body">Defines key terms as used in the study. Example: Academic Achievement = marks obtained in final examination; Blended Learning = combination of online and face-to-face instruction.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Delimitations of the Study</span><span class="item-body">Scope limitations including area, population, and time period.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Research Methodology</span><span class="item-body">The most important part. Includes: research method (Survey, Experimental, etc.); population and sample; tools for data collection; procedure of data collection; statistical techniques (Mean, SD, t-test, Correlation).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Time Schedule</span><span class="item-body">Tentative plan of work (month-wise or phase-wise).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Budget (if required)</span><span class="item-body">Estimated expenses.</span></div></li>
+        <li><div class="item-text"><span class="item-label">References / Bibliography</span><span class="item-body">Books, journals, online sources in proper citation style.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">9.3</span> Characteristics of a Good Research Proposal</h2>
+      <ul class="text-list"><li>Clear and well-structured</li><li>Feasible and realistic</li><li>Scientifically sound</li><li>Logically organized</li><li>Free from ambiguity</li><li>Academically formal</li></ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>A research proposal is the foundation of a successful research study. Proper preparation ensures clarity, feasibility, and scientific accuracy in conducting educational research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 10 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch10">
+    <div class="chapter-label">Chapter 10</div>
+    <h1 class="chapter-title">Research Design</h1>
+    <p class="chapter-intro">Research design is the overall plan, structure, and strategy of a research study conceived to obtain answers to research questions or to test hypotheses. It is the blueprint or framework that guides the researcher in collection of data, measurement of variables, analysis and interpretation, and drawing conclusions.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">10.1</span> Need for Research Design</h2>
+      <p>A research design is necessary because:</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">It provides direction and focus.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It reduces chances of bias and errors.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It ensures systematic data collection.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It helps in proper testing of hypothesis.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It increases validity and reliability of research.</span></div></li>
+        <li><div class="item-text"><span class="item-body">It saves time, cost, and effort.</span></div></li>
+      </ol>
+      <p>Without a research design, research becomes unorganized and unreliable.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">10.2</span> Objectives of Research Design</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To answer research questions clearly.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To test hypotheses accurately.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To control extraneous variables.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To ensure accurate measurement of variables.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To plan analysis procedures.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">10.3</span> Important Components of Research Design</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Statement of the Problem</span><span class="item-body">Clearly defines the research issue; identifies variables and population.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Objectives and Hypotheses</span><span class="item-body">Specifies what the researcher intends to achieve; provides direction for data collection.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Selection of Research Method</span><span class="item-body">Survey method, Experimental method, Descriptive method, Historical method. The choice depends on the nature of the problem.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Variables</span><span class="item-body">Independent variable, Dependent variable, Control variables. Proper identification of variables is essential.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Population and Sample</span><span class="item-body">Defines target population, specifies sampling technique, and determines sample size.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Tools and Techniques</span><span class="item-body">Questionnaire, Achievement test, Interview schedule, Observation. Tools must be valid and reliable.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Procedure of Data Collection</span><span class="item-body">Step-by-step process and ethical considerations.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Statistical Techniques</span><span class="item-body">Mean, Standard deviation, t-test, ANOVA, Correlation. Chosen according to hypothesis.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Delimitations and Limitations</span><span class="item-body">Scope of study, boundaries and constraints.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">10.4</span> Characteristics of a Good Research Design</h2>
+      <ul class="text-list"><li>Clear and logical</li><li>Flexible (if necessary)</li><li>Efficient and economical</li><li>Minimizes bias</li><li>Ensures validity and reliability</li><li>Suitable to research objectives</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">10.5</span> Types of Research Design</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Experimental Design</span><span class="item-body">True experimental; Quasi-experimental.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Non-Experimental Design</span><span class="item-body">Survey design; Descriptive design; Correlational design.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Qualitative Design</span><span class="item-body">Case study; Ethnographic; Phenomenological.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Mixed Method Design</span><span class="item-body">Combination of qualitative and quantitative approaches.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Research design is the backbone of any research study. It provides a systematic and scientific framework for conducting research. A well-prepared research design ensures that the study is reliable, valid, and capable of achieving its objectives effectively.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 11 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch11">
+    <div class="chapter-label">Chapter 11</div>
+    <h1 class="chapter-title">Concept of Population and Sample; Methods of Sampling</h1>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">11.1</span> Concept of Population</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>In research, population refers to the entire group of individuals, objects, or events that the researcher wants to study. It is the total collection of elements that share certain characteristics relevant to the study.</p>
+      </div>
+      <h3 class="subsection-title">Types of Population</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Target Population</span><span class="item-body">The entire group to which the researcher wants to generalize the results. Example: All higher secondary students of Bongaigaon district.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Accessible Population</span><span class="item-body">The portion of the target population that the researcher can actually reach. Example: Higher secondary students of selected schools in Bongaigaon.</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Characteristics of Population</h3>
+      <ul class="text-list"><li>Large in size</li><li>Defined by specific characteristics</li><li>May be finite or infinite</li><li>Forms the basis for sampling</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">11.2</span> Concept of Sample</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>A sample is a small representative portion selected from the population for the purpose of study. Since studying the entire population is often impractical due to time, cost, and effort, researchers select a sample.</p>
+      </div>
+      <h3 class="subsection-title">Characteristics of a Good Sample</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Representative of the population</span></div></li>
+        <li><div class="item-text"><span class="item-body">Adequate in size</span></div></li>
+        <li><div class="item-text"><span class="item-body">Free from bias</span></div></li>
+        <li><div class="item-text"><span class="item-body">Selected scientifically</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Importance of Sampling</h3>
+      <ul class="text-list"><li>Saves time and cost</li><li>Makes research manageable</li><li>Allows detailed study</li><li>Enables statistical analysis</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">11.3</span> Methods of Sampling — A. Probability Sampling</h2>
+      <p>In probability sampling, each member of the population has an equal and known chance of being selected.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Simple Random Sampling</span><span class="item-body">Every individual has equal chance; lottery method or random number table used. Example: Selecting 50 students randomly from a list of 500 students.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Stratified Random Sampling</span><span class="item-body">Population divided into subgroups (strata); sample drawn from each group. Example: Dividing students into boys and girls and selecting randomly from each group.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Systematic Sampling</span><span class="item-body">Selecting every nth individual. Example: Selecting every 10th student from a list.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Cluster Sampling</span><span class="item-body">Population divided into clusters (e.g., schools); entire clusters selected randomly. Example: Selecting 5 schools randomly and studying all students in those schools.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">11.4</span> Methods of Sampling — B. Non-Probability Sampling</h2>
+      <p>In non-probability sampling, not every individual has an equal chance of selection.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Convenience Sampling</span><span class="item-body">Selecting easily available subjects. Example: Surveying students present in one class.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Purposive Sampling</span><span class="item-body">Selection based on specific purpose or criteria. Example: Selecting only science stream students for study.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Quota Sampling</span><span class="item-body">Sample selected according to fixed proportions.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Snowball Sampling</span><span class="item-body">Participants refer other participants; used in special cases.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">11.5</span> Comparison of Sampling Methods</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Probability Sampling</th><th>Non-Probability Sampling</th></tr></thead>
+          <tbody>
+            <tr><td>Chance of Selection</td><td>Equal and known</td><td>Not equal</td></tr>
+            <tr><td>Bias</td><td>Less bias</td><td>More bias</td></tr>
+            <tr><td>Generalization</td><td>Possible</td><td>Limited</td></tr>
+            <tr><td>Method</td><td>Scientific</td><td>Subjective</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Population refers to the entire group under study, while a sample is a representative part of that population. Proper selection of sampling method ensures reliability, validity, and accuracy in educational research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 12 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch12">
+    <div class="chapter-label">Chapter 12</div>
+    <h1 class="chapter-title">Tools of Educational Research</h1>
+    <p class="chapter-intro">Tools of educational research are instruments used for collecting data systematically and objectively. Proper tools help ensure validity, reliability, and accuracy of research findings. Important tools include the Observation Schedule, Questionnaire, and Interview Schedule.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">12.1</span> Observation Schedule</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Observation schedule is a structured tool used to observe and record behavior, events, or situations systematically according to predetermined categories. It helps collect first-hand information by directly observing subjects.</p>
+      </div>
+      <h3 class="subsection-title">Types of Observation</h3>
+      <ul class="text-list"><li>Structured observation</li><li>Unstructured observation</li><li>Participant observation</li><li>Non-participant observation</li></ul>
+      <h3 class="subsection-title">Features of Observation Schedule</h3>
+      <ul class="text-list"><li>Pre-determined checklist or categories</li><li>Objective recording</li><li>Focused on specific behaviors</li><li>Used in natural settings</li></ul>
+      <h3 class="subsection-title">Advantages</h3>
+      <ul class="text-list"><li>Provides real-time data</li><li>Useful for studying classroom behavior</li><li>Does not depend on respondent's memory</li></ul>
+      <h3 class="subsection-title">Limitations</h3>
+      <ul class="text-list"><li>Observer bias possible</li><li>Time-consuming</li><li>Some behaviors cannot be observed directly</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Observing teacher-student interaction in a classroom using a prepared checklist.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">12.2</span> Questionnaire</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>A questionnaire is a written list of questions used to collect information from respondents. It is widely used in survey research.</p>
+      </div>
+      <h3 class="subsection-title">Types of Questionnaire</h3>
+      <ul class="text-list"><li>Structured (close-ended questions)</li><li>Unstructured (open-ended questions)</li><li>Mixed questionnaire</li></ul>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Written format</li><li>Standardized questions</li><li>Suitable for large samples</li><li>Can be self-administered</li></ul>
+      <h3 class="subsection-title">Advantages</h3>
+      <ul class="text-list"><li>Economical</li><li>Covers large population</li><li>Easy to analyze statistically</li><li>Ensures anonymity</li></ul>
+      <h3 class="subsection-title">Limitations</h3>
+      <ul class="text-list"><li>Low response rate</li><li>Misinterpretation of questions</li><li>No opportunity for clarification</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Questionnaire on students' attitude towards online learning.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">12.3</span> Interview Schedule</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>An interview schedule is a structured list of questions used by the researcher during a face-to-face or telephonic interview. Unlike a questionnaire, the interviewer asks the questions and records responses.</p>
+      </div>
+      <h3 class="subsection-title">Types of Interview</h3>
+      <ul class="text-list"><li>Structured interview</li><li>Semi-structured interview</li><li>Unstructured interview</li></ul>
+      <h3 class="subsection-title">Characteristics</h3>
+      <ul class="text-list"><li>Direct interaction</li><li>Flexible</li><li>Allows probing</li><li>Detailed responses</li></ul>
+      <h3 class="subsection-title">Advantages</h3>
+      <ul class="text-list"><li>High response rate</li><li>Clarification possible</li><li>Rich and in-depth data</li></ul>
+      <h3 class="subsection-title">Limitations</h3>
+      <ul class="text-list"><li>Time-consuming</li><li>Expensive</li><li>Interviewer bias possible</li></ul>
+      <div class="example-box"><div class="ex-label">Example</div>Interviewing teachers about challenges in implementing ICT in classroom.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">12.4</span> Comparison: Questionnaire vs. Interview Schedule</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Questionnaire</th><th>Interview Schedule</th></tr></thead>
+          <tbody>
+            <tr><td>Mode</td><td>Written</td><td>Oral</td></tr>
+            <tr><td>Interaction</td><td>No direct interaction</td><td>Direct interaction</td></tr>
+            <tr><td>Cost</td><td>Low</td><td>High</td></tr>
+            <tr><td>Response rate</td><td>Sometimes low</td><td>Usually high</td></tr>
+            <tr><td>Clarification</td><td>Not possible</td><td>Possible</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Observation schedule, questionnaire, and interview schedule are important tools of educational research. Selection of the appropriate tool depends on the nature of the research problem, objectives, and type of data required. Proper construction and use of these tools ensure valid and reliable results.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 13 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch13">
+    <div class="chapter-label">Chapter 13</div>
+    <h1 class="chapter-title">Meaning of Data and Its Types</h1>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">13.1</span> Meaning of Data</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Data refers to the facts, figures, observations, responses, or information collected for the purpose of research. In educational research, data are collected to answer research questions or test hypotheses. Data are raw information collected from respondents for analysis and interpretation. Data may be numerical (marks, scores, percentages) or descriptive (opinions, attitudes, behaviors).</p>
+      </div>
+      <h3 class="subsection-title">Characteristics of Data</h3>
+      <ul class="text-list"><li>Collected systematically</li><li>Relevant to research objectives</li><li>Accurate and reliable</li><li>Capable of analysis</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">13.2</span> Types of Data — A. Based on Nature</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Quantitative Data</span><span class="item-body">Data expressed in numbers and measurable form. Examples: marks obtained by students, attendance percentage, age of students. Features: statistical analysis possible, objective and precise, used in experimental and survey research.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Qualitative Data</span><span class="item-body">Data expressed in words, descriptions, and opinions. Examples: students' opinions about teaching methods, teachers' perception of classroom environment. Features: in-depth understanding, thematic analysis, used in case studies and interviews.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">13.3</span> Types of Data — B. Based on Source</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Primary Data</span><span class="item-body">Data collected directly by the researcher for the first time. Sources: observation, interview, questionnaire, tests. Advantage: more reliable and specific to research problem.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Secondary Data</span><span class="item-body">Data already collected by someone else and used by the researcher. Sources: books, journals, government reports, previous research studies. Advantage: saves time and cost.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">13.4</span> Types of Data — C. Based on Measurement Level</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Nominal Data</span><span class="item-body">Categorized without order. Example: Gender (Male/Female).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Ordinal Data</span><span class="item-body">Ranked or ordered. Example: 1st, 2nd, 3rd position.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Interval Data</span><span class="item-body">Equal intervals, no true zero. Example: Temperature scale.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Ratio Data</span><span class="item-body">Equal intervals with true zero. Example: Marks, height, weight.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">13.5</span> Importance of Data in Educational Research</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Helps in testing hypothesis.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Supports objective conclusions.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Provides evidence-based findings.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Improves educational planning and policy.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Data are the foundation of research. They provide the necessary information for analysis, interpretation, and conclusion. Proper classification of data ensures accurate and meaningful research findings in education.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 14 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch14">
+    <div class="chapter-label">Chapter 14</div>
+    <h1 class="chapter-title">Collection and Organization of Data</h1>
+    <p class="chapter-intro">Data collection and organization are essential steps in educational research. Accurate collection and systematic organization of data ensure valid, reliable, and meaningful research findings.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">14.1</span> Collection of Data — Meaning and Sources</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Data collection refers to the systematic gathering of information relevant to the research problem. It is done after defining the research problem, formulating objectives/hypotheses, selecting research design, and choosing tools.</p>
+      </div>
+      <h3 class="subsection-title">Sources of Data Collection</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Primary Data</span><span class="item-body">Collected directly by the researcher. Methods: observation, questionnaire, interview, tests and scales.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Secondary Data</span><span class="item-body">Collected from already available sources. Sources: books, journals, government reports, previous research studies.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">14.2</span> Steps in Data Collection</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Selection of appropriate tools.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Pilot testing of tools.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Obtaining permission from authorities.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Administering tools to sample.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Recording responses accurately.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Ensuring ethical considerations.</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Precautions in Data Collection</h3>
+      <ul class="text-list"><li>Ensure validity and reliability of tools</li><li>Avoid bias</li><li>Maintain confidentiality</li><li>Provide clear instructions</li><li>Follow uniform procedure</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">14.3</span> Organization of Data — Meaning and Steps</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Organization of data refers to arranging, classifying, and presenting collected data in a logical and systematic manner. Organization means converting raw data into meaningful form.</p>
+      </div>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Editing</span><span class="item-body">Checking errors and incomplete responses; removing irrelevant information.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Coding</span><span class="item-body">Assigning numerical values to responses. Example: Male = 1, Female = 2.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Classification</span><span class="item-body">Grouping data into categories. Types: qualitative, quantitative, chronological, geographical classification.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Tabulation</span><span class="item-body">Arranging data in tables for easy understanding. Types of tables: simple table, complex table, frequency table.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Graphical Representation</span><span class="item-body">Bar diagram, pie chart, histogram, frequency polygon.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">14.4</span> Importance of Organization of Data</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Makes data understandable.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Simplifies analysis.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Reduces complexity.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Helps in interpretation.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Facilitates statistical calculations.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">14.5</span> Comparison</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Collection of Data</th><th>Organization of Data</th></tr></thead>
+          <tbody>
+            <tr><td>Meaning</td><td>Gathering information</td><td>Arranging information</td></tr>
+            <tr><td>Stage</td><td>Before analysis</td><td>Before statistical analysis</td></tr>
+            <tr><td>Nature</td><td>Raw data collection</td><td>Systematic arrangement</td></tr>
+            <tr><td>Purpose</td><td>To obtain data</td><td>To prepare for analysis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Collection and organization of data are fundamental steps in educational research. Proper data collection ensures accuracy, while systematic organization ensures meaningful analysis and valid conclusions. Together, they form the backbone of scientific research.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 15 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch15">
+    <div class="chapter-label">Chapter 15</div>
+    <h1 class="chapter-title">Analysis and Interpretation of Data</h1>
+    <p class="chapter-intro">Analysis and interpretation are crucial steps in educational research. After collecting and organizing data, the researcher must analyze and interpret them to draw meaningful conclusions.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">15.1</span> Meaning of Data Analysis</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Data analysis is the process of examining, classifying, tabulating, and statistically processing the collected data to discover patterns, relationships, or trends. Data analysis means converting raw data into meaningful information.</p>
+      </div>
+      <h3 class="subsection-title">Objectives of Data Analysis</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To summarize large data into simple form.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To test hypotheses.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To identify relationships between variables.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To compare groups.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To draw valid conclusions.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">15.2</span> Types of Data Analysis</h2>
+      <h3 class="subsection-title">1. Quantitative Data Analysis</h3>
+      <p>Used when data are numerical.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Descriptive Statistics</span><span class="item-body">Describes basic features of data. Includes: Mean, Median, Mode, Standard deviation, Percentage. Purpose: To summarize and describe data.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Inferential Statistics</span><span class="item-body">Used to make generalizations about population. Includes: t-test, ANOVA, Correlation, Chi-square. Purpose: To test hypotheses; to determine significance.</span></div></li>
+      </ol>
+      <h3 class="subsection-title">2. Qualitative Data Analysis</h3>
+      <p>Used when data are non-numerical (interviews, observations). Methods: thematic analysis, content analysis, coding and categorization. Purpose: to identify themes and patterns; to understand meanings and experiences.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">15.3</span> Steps in Data Analysis</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Editing of data</span></div></li>
+        <li><div class="item-text"><span class="item-body">Coding</span></div></li>
+        <li><div class="item-text"><span class="item-body">Classification</span></div></li>
+        <li><div class="item-text"><span class="item-body">Tabulation</span></div></li>
+        <li><div class="item-text"><span class="item-body">Selection of statistical tools</span></div></li>
+        <li><div class="item-text"><span class="item-body">Calculation</span></div></li>
+        <li><div class="item-text"><span class="item-body">Presentation (tables, graphs)</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">15.4</span> Meaning of Interpretation of Data</h2>
+      <div class="definition-box">
+        <div class="def-label">Meaning</div>
+        <p>Interpretation is the process of explaining the meaning and significance of analyzed data. Interpretation means explaining what the results show. It connects findings with research objectives, hypotheses, and previous studies.</p>
+      </div>
+      <h3 class="subsection-title">Steps in Interpretation</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Examine results carefully.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Compare with objectives/hypothesis.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Relate findings with previous research.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Explain possible reasons.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Draw conclusions.</span></div></li>
+      </ol>
+      <h3 class="subsection-title">Precautions in Interpretation</h3>
+      <ul class="text-list"><li>Avoid personal bias</li><li>Do not exaggerate findings</li><li>Interpret within scope of study</li><li>Consider limitations</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">15.5</span> Comparison and Importance</h2>
+      <div class="table-wrap">
+        <table class="textbook-table">
+          <thead><tr><th>Basis</th><th>Analysis</th><th>Interpretation</th></tr></thead>
+          <tbody>
+            <tr><td>Meaning</td><td>Processing data statistically</td><td>Explaining results</td></tr>
+            <tr><td>Nature</td><td>Technical and mathematical</td><td>Logical and analytical</td></tr>
+            <tr><td>Stage</td><td>Before interpretation</td><td>After analysis</td></tr>
+            <tr><td>Purpose</td><td>Summarize and test</td><td>Give meaning and conclusion</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="subsection-title">Importance in Educational Research</h3>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Helps in testing educational hypotheses.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Guides policy and decision making.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Improves teaching-learning practices.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Ensures scientific accuracy.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Provides evidence-based conclusions.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>Analysis and interpretation are the heart of research. Analysis transforms raw data into organized results, while interpretation explains their meaning. Proper analysis and careful interpretation ensure that educational research is valid, reliable, and meaningful.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 16 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch16">
+    <div class="chapter-label">Chapter 16</div>
+    <h1 class="chapter-title">Concept of Research Report</h1>
+    <p class="chapter-intro">A research report is a systematic written document that presents the findings of a research study in a clear, organized, and scientific manner. It is the final written presentation of the entire research work, usually prepared after completing data analysis and interpretation.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.1</span> Purpose of Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To communicate research findings.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To record the research process.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To provide evidence for conclusions.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To contribute to academic knowledge.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To help in policy-making and decision-making.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.2</span> Objectives of Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">To present findings logically and systematically.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To make research understandable to readers.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To provide authentic documentation.</span></div></li>
+        <li><div class="item-text"><span class="item-body">To allow verification and replication.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.3</span> Characteristics of a Good Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Clear and simple language.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Logical organization.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Scientific and objective presentation.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Accurate data presentation.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Proper referencing.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Free from bias.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Concise but comprehensive.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.4</span> Types of Research Reports</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Technical Report</span><span class="item-body">Detailed; for experts and researchers.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Popular Report</span><span class="item-body">Simple language; for general public.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Thesis/Dissertation</span><span class="item-body">Academic purpose.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Research Article</span><span class="item-body">Published in journals.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.5</span> Importance of Research Report in Education</h2>
+      <ul class="text-list"><li>Helps improve educational practices</li><li>Guides future research</li><li>Contributes to educational policy</li><li>Provides evidence-based recommendations</li></ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">16.6</span> Precautions in Writing Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-body">Avoid plagiarism.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Use proper citation style.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Maintain objectivity.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Present data accurately.</span></div></li>
+        <li><div class="item-text"><span class="item-body">Ensure coherence and clarity.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>The research report is the final and most important stage of research. It systematically presents the entire research work from problem formulation to conclusions. A well-written research report ensures effective communication of research findings and contributes to the advancement of educational knowledge.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 17 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch17">
+    <div class="chapter-label">Chapter 17</div>
+    <h1 class="chapter-title">Major Components of the Research Report</h1>
+    <p class="chapter-intro">A research report is the final written document that presents the entire research study in a systematic and scientific manner. It generally consists of three major parts: the Preliminary Section, the Main Body of the Report, and End Matter.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">17.1</span> I. Preliminary Section</h2>
+      <p>This section introduces the research work.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Title Page</span><span class="item-body">Title of the study, name of researcher, degree and institution, year of submission.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Certificate / Declaration</span><span class="item-body">Approval by supervisor; declaration of originality.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Acknowledgement</span><span class="item-body">Expression of gratitude to those who helped.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Abstract</span><span class="item-body">Brief summary of the entire study; includes problem, objectives, method, findings.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Table of Contents</span><span class="item-body">List of chapters and page numbers.</span></div></li>
+        <li><div class="item-text"><span class="item-label">List of Tables / Figures</span><span class="item-body">If any.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">17.2</span> II. Main Body of the Report</h2>
+      <p>This is the most important part of the research report. It usually consists of five chapters.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Chapter I — Introduction</span><span class="item-body">Background of the study; statement of the problem; objectives of the study; hypotheses / research questions; operational definitions; delimitations of the study.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter II — Review of Related Literature</span><span class="item-body">Theoretical framework; review of previous studies; identification of research gap.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter III — Methodology</span><span class="item-body">Describes how the study was conducted. Includes: research design; population and sample; sampling technique; tools used; procedure of data collection; statistical techniques used.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter IV — Analysis and Interpretation of Data</span><span class="item-body">Presentation of data in tables and graphs; statistical analysis; interpretation of results; testing of hypotheses.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter V — Findings, Conclusions and Suggestions</span><span class="item-body">Major findings; conclusions; educational implications; recommendations; suggestions for further research.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">17.3</span> III. End Matter</h2>
+      <p>This section completes the report.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Bibliography / References</span><span class="item-body">List of books, journals, websites used.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Appendices</span><span class="item-body">Questionnaire, interview schedule, raw data, permission letters.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Index</span><span class="item-body">If required.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>The major components of a research report ensure systematic presentation of research work. Each section has a specific function, and together they provide a complete and scientific account of the study.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 18 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch18">
+    <div class="chapter-label">Chapter 18</div>
+    <h1 class="chapter-title">Needs and Importance of Research Report</h1>
+    <p class="chapter-intro">A research report is the final written presentation of a research study. Without a research report, research work remains incomplete and inaccessible to others.</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">18.1</span> Need of Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Communication of Findings</span><span class="item-body">Research findings must be shared with teachers, policymakers, researchers, and society. The report serves as a medium of communication.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Documentation of Research Work</span><span class="item-body">It provides a permanent written record of the entire research process.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Academic Requirement</span><span class="item-body">For degrees like B.Ed., M.Ed., M.Phil., and Ph.D., submission of a research report (dissertation/thesis) is compulsory.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Reference for Future Research</span><span class="item-body">Other researchers use previous research reports for literature review and further studies.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Verification and Replication</span><span class="item-body">A written report allows others to verify results and replicate the study.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Basis for Policy and Decision Making</span><span class="item-body">Educational administrators and policymakers depend on research reports for evidence-based decisions.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">18.2</span> Importance of Research Report</h2>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Contribution to Knowledge</span><span class="item-body">It adds new knowledge to the existing body of educational research.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Improvement of Educational Practices</span><span class="item-body">Research findings help improve teaching methods, curriculum, and evaluation systems.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Development of Scientific Attitude</span><span class="item-body">It promotes systematic and objective thinking.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Accountability and Transparency</span><span class="item-body">The report clearly explains how the study was conducted, ensuring transparency.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Guidance for Implementation</span><span class="item-body">Recommendations given in the report help in practical application.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Professional Recognition</span><span class="item-body">Publication of research reports enhances the credibility and professional status of researchers.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">18.3</span> Educational Importance</h2>
+      <p>In the field of education, research reports:</p>
+      <ul class="text-list"><li>Identify classroom problems</li><li>Suggest improvements in teaching-learning process</li><li>Help in curriculum reform</li><li>Support student development</li><li>Guide educational planning</li></ul>
+    </div>
+
+    <div class="conclusion-box">
+      <p>The research report is essential because it transforms research into usable knowledge. It documents the study systematically, communicates findings effectively, and contributes to academic growth and educational development. Without a research report, research has little practical value.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CHAPTER 19 ══════════════════════════════════════ -->
+  <div class="chapter" id="ch19">
+    <div class="chapter-label">Chapter 19</div>
+    <h1 class="chapter-title">Format / Structure of the Research Report</h1>
+    <p class="chapter-intro">A research report follows a systematic format to present the study in a logical and scientific manner. It is generally divided into three major sections: the Preliminary Section, the Main Body of the Report, and the Reference Section (End Matter).</p>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">19.1</span> I. Preliminary Section</h2>
+      <p>This section appears at the beginning of the research report and provides introductory and identification details of the study.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Title Page</span><span class="item-body">Title of the research study; name of the researcher; degree for which the report is submitted; name of the institution; year of submission.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Certificate / Approval Page</span><span class="item-body">Certification by the research guide/supervisor.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Declaration</span><span class="item-body">Statement of originality by the researcher.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Acknowledgement</span><span class="item-body">Expression of gratitude to individuals/institutions.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Abstract</span><span class="item-body">Brief summary of the entire study, including problem, objectives, methodology, findings, and conclusions.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Table of Contents</span><span class="item-body">List of chapters and page numbers.</span></div></li>
+        <li><div class="item-text"><span class="item-label">List of Tables / Figures</span><span class="item-body">If any.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">19.2</span> II. Main Body of the Report</h2>
+      <p>This is the core part of the research report. It presents the complete research work, usually in five chapters.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">Chapter I — Introduction</span><span class="item-body">Background of the study; statement of the problem; objectives of the study; hypotheses/research questions; operational definitions; delimitations and limitations.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter II — Review of Related Literature</span><span class="item-body">Theoretical framework; review of previous studies; identification of research gap.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter III — Research Methodology</span><span class="item-body">Research design; population and sample; sampling techniques; tools used for data collection; procedure of data collection; statistical techniques used.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter IV — Analysis and Interpretation of Data</span><span class="item-body">Tabulation and graphical presentation; statistical analysis; interpretation of results; testing of hypotheses.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Chapter V — Findings, Conclusions and Suggestions</span><span class="item-body">Major findings; conclusions; educational implications; recommendations; suggestions for further research.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><span class="sec-num">19.3</span> III. Reference Section (End Matter)</h2>
+      <p>This section provides supporting and supplementary materials.</p>
+      <ol class="textbook-list">
+        <li><div class="item-text"><span class="item-label">References / Bibliography</span><span class="item-body">List of books, journals, articles, and other sources; written in a specific citation style (APA, MLA, etc.).</span></div></li>
+        <li><div class="item-text"><span class="item-label">Appendices</span><span class="item-body">Questionnaire; interview schedule; raw data; permission letters.</span></div></li>
+        <li><div class="item-text"><span class="item-label">Index</span><span class="item-body">If required.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="conclusion-box">
+      <p>The format or structure of a research report ensures systematic presentation of research findings. Dividing it into preliminary, main body, and reference sections helps in clarity, organization, and scientific reporting. A properly structured research report enhances readability, credibility, and academic value.</p>
+    </div>
+    <div class="chapter-end">· · ·</div>
+  </div>
+
+</div><!-- end .book -->
+
+<!-- BACK TO TOP -->
+<a href="#top" class="back-to-top" title="Back to top">↑</a>
+
+</body>
+</html>
