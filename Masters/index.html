@@ -126,13 +126,20 @@
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
-        .semester-card.coming-soon {
-            opacity: 0.7;
+        .semester-card.disabled {
+            opacity: 0.5;
             cursor: not-allowed;
+            filter: grayscale(50%);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .semester-card.coming-soon:hover {
+        .semester-card.disabled:hover {
             transform: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .semester-card.disabled:before {
+            background: #999;
         }
 
         .semester-number {
@@ -142,16 +149,14 @@
             margin-bottom: 10px;
         }
 
+        .semester-card.disabled .semester-number {
+            color: #999;
+        }
+
         .semester-title {
             font-size: 1.5em;
             font-weight: 600;
             color: #333;
-            margin-bottom: 15px;
-        }
-
-        .semester-info {
-            color: #666;
-            font-size: 0.95em;
             margin-bottom: 20px;
         }
 
@@ -188,9 +193,14 @@
             color: #155724;
         }
 
-        .status-coming {
+        .status-partial {
             background: #fff3cd;
             color: #856404;
+        }
+
+        .status-unavailable {
+            background: #f8d7da;
+            color: #721c24;
         }
 
         .view-btn {
@@ -208,8 +218,24 @@
             transform: translateX(5px);
         }
 
-        .semester-card.coming-soon .view-btn {
+        .view-btn.papers-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .view-btn.disabled {
             background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .view-btn.disabled:hover {
+            transform: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         /* Info Section */
@@ -271,6 +297,11 @@
             text-align: center;
         }
 
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .structure-table {
             width: 100%;
             border-collapse: collapse;
@@ -323,22 +354,111 @@
             text-decoration: underline;
         }
 
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                padding: 25px 20px;
+            }
+
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .header-icon {
+                font-size: 3em;
+            }
+
+            .course-info {
+                padding: 8px 20px;
+                font-size: 0.9em;
             }
 
             .semester-grid {
                 grid-template-columns: 1fr;
             }
 
-            .structure-table {
+            .semester-card {
+                padding: 25px;
+            }
+
+            .semester-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .semester-number {
+                font-size: 2.5em;
+            }
+
+            .semester-title {
+                font-size: 1.3em;
+            }
+
+            .view-btn {
+                padding: 10px 20px;
                 font-size: 0.9em;
+            }
+
+            .view-btn:hover {
+                transform: translateX(3px);
+            }
+
+            .info-section,
+            .structure-section {
+                padding: 20px;
+            }
+
+            .info-section h2 {
+                font-size: 1.3em;
+                flex-wrap: wrap;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .structure-table {
+                font-size: 0.85em;
             }
 
             .structure-table th,
             .structure-table td {
-                padding: 10px;
+                padding: 10px 8px;
+            }
+
+            footer {
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .semester-number {
+                font-size: 2em;
+            }
+
+            .semester-title {
+                font-size: 1.1em;
+            }
+
+            .structure-table {
+                font-size: 0.75em;
+            }
+
+            .structure-table th,
+            .structure-table td {
+                padding: 8px 5px;
             }
         }
     </style>
@@ -379,147 +499,28 @@
 
         <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2em;">📚 Choose Your Semester</h2>
 
-        <div class="semester-grid">
-            <!-- Semester 1 -->
-            <a href="#" class="semester-card coming-soon" onclick="alert('Semester 1 syllabus will be available soon')">
-                <div class="semester-number">1st</div>
-                <h3 class="semester-title">First Semester</h3>
-                <p class="semester-info">Foundation courses in educational theory and research methodology</p>
-                <div class="semester-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">📖</span>
-                        <span>4 Core Papers</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">⭐</span>
-                        <span>20 Credits</span>
-                    </div>
-                </div>
-                <span class="status-badge status-coming">Coming Soon</span>
-                <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-                    <div class="view-btn">View Syllabus →</div>
-                    <div class="view-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="event.preventDefault(); alert('Semester 1 papers will be available soon')">View Papers 📚</div>
-                </div>
-            </a>
-
-            <!-- Semester 2 -->
-            <a class="semester-card active">
-                <div class="semester-number">2nd</div>
-                <h3 class="semester-title">Second Semester</h3>
-                <p class="semester-info">Advanced teaching methods, research, evaluation and psychological practicals</p>
-                <div class="semester-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">📖</span>
-                        <span>4 Core Papers</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">⭐</span>
-                        <span>20 Credits</span>
-                    </div>
-                </div>
-                <span class="status-badge status-available">✓ Available Now</span>
-                <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-                    <div class="view-btn" onclick="window.location.href='./Semester2/syllabus.html';">View Syllabus →</div>
-                    <div class="view-btn" 
-                    onclick="window.location.href='./Semester2/paper.html';"
-                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="event.preventDefault(); alert('Browse Semester 2 notes')">View Papers 📚</div>
-                </div>
-            </a>
-
-            <!-- Semester 3 -->
-            <a href="#" class="semester-card coming-soon" onclick="alert('Semester 3 syllabus will be available soon')">
-                <div class="semester-number">3rd</div>
-                <h3 class="semester-title">Third Semester</h3>
-                <p class="semester-info">Specialized topics in education and elective courses</p>
-                <div class="semester-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">📖</span>
-                        <span>4 Papers</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">⭐</span>
-                        <span>20 Credits</span>
-                    </div>
-                </div>
-                <span class="status-badge status-coming">Coming Soon</span>
-                <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-                    <div class="view-btn">View Syllabus →</div>
-                    <div class="view-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="event.preventDefault(); alert('Semester 3 notes will be available soon')">View Papers 📚</div>
-                </div>
-            </a>
-
-            <!-- Semester 4 -->
-            <a href="#" class="semester-card coming-soon" onclick="alert('Semester 4 syllabus will be available soon')">
-                <div class="semester-number">4th</div>
-                <h3 class="semester-title">Fourth Semester</h3>
-                <p class="semester-info">Dissertation, internship and comprehensive examination</p>
-                <div class="semester-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">📖</span>
-                        <span>Dissertation</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">⭐</span>
-                        <span>20 Credits</span>
-                    </div>
-                </div>
-                <span class="status-badge status-coming">Coming Soon</span>
-                <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-                    <div class="view-btn">View Syllabus →</div>
-                    <div class="view-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="event.preventDefault(); alert('Semester 4 papers will be available soon')">View Papers 📚</div>
-                </div>
-            </a>
+        <div class="semester-grid" id="semesterGrid">
+            <!-- Semesters will be dynamically generated here -->
         </div>
 
         <div class="structure-section">
             <h2>📊 Complete Course Structure</h2>
-            <table class="structure-table">
-                <thead>
-                    <tr>
-                        <th>Semester</th>
-                        <th>Core Papers</th>
-                        <th>Elective Papers</th>
-                        <th>Credits</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Semester 1</strong></td>
-                        <td>4 Papers</td>
-                        <td>-</td>
-                        <td>20</td>
-                        <td><span class="status-badge status-coming">Coming Soon</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Semester 2</strong></td>
-                        <td>4 Papers (Including 1 Practical)</td>
-                        <td>-</td>
-                        <td>20</td>
-                        <td><span class="status-badge status-available">Available</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Semester 3</strong></td>
-                        <td>3 Papers</td>
-                        <td>1 Paper</td>
-                        <td>20</td>
-                        <td><span class="status-badge status-coming">Coming Soon</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Semester 4</strong></td>
-                        <td>Unknown</td>
-                        <td>Unknown</td>
-                        <td>20</td>
-                        <td><span class="status-badge status-coming">Coming Soon</span></td>
-                    </tr>
-                    <tr style="background: #f8f9fa; font-weight: 600;">
-                        <td><strong>Total</strong></td>
-                        <td colspan="2">Complete Program</td>
-                        <td><strong>80 Credits</strong></td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <table class="structure-table">
+                    <thead>
+                        <tr>
+                            <th>Semester</th>
+                            <th>Core Papers</th>
+                            <th>Elective Papers</th>
+                            <th>Credits</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Table rows will be dynamically generated -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="info-section">
@@ -553,5 +554,190 @@
             </p>
         </footer>
     </div>
+
+    <script>
+        // Semester data configuration
+        const semesters = [
+            {
+                number: 1,
+                title: "First Semester",
+                papers: "4 Core Papers",
+                credits: "20 Credits",
+                coreInfo: "4 Papers",
+                electiveInfo: "-",
+                syllabusPath: "./Semester1/syllabus.html",
+                papersPath: "./Semester1/paper.html"
+            },
+            {
+                number: 2,
+                title: "Second Semester",
+                papers: "4 Core Papers",
+                credits: "20 Credits",
+                coreInfo: "4 Papers (Including 1 Practical)",
+                electiveInfo: "-",
+                syllabusPath: "./Semester2/syllabus.html",
+                papersPath: "./Semester2/paper.html"
+            },
+            {
+                number: 3,
+                title: "Third Semester",
+                papers: "4 Papers",
+                credits: "20 Credits",
+                coreInfo: "3 Papers",
+                electiveInfo: "1 Paper",
+                syllabusPath: "./Semester3/syllabus.html",
+                papersPath: "./Semester3/paper.html"
+            },
+            {
+                number: 4,
+                title: "Fourth Semester",
+                papers: "Dissertation",
+                credits: "20 Credits",
+                coreInfo: "Dissertation",
+                electiveInfo: "-",
+                syllabusPath: "./Semester4/syllabus.html",
+                papersPath: "./Semester4/paper.html"
+            }
+        ];
+
+        // Function to check if a file exists
+        async function fileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Function to get ordinal suffix
+        function getOrdinal(n) {
+            const suffixes = ["th", "st", "nd", "rd"];
+            const value = n % 100;
+            return n + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+        }
+
+        // Function to create semester card
+        async function createSemesterCard(semester) {
+            const hasSyllabus = await fileExists(semester.syllabusPath);
+            const hasPapers = await fileExists(semester.papersPath);
+            const isDisabled = !hasSyllabus && !hasPapers;
+
+            let statusClass = 'status-unavailable';
+            let statusText = 'Not Available';
+            let cardClass = 'semester-card';
+
+            if (hasSyllabus && hasPapers) {
+                statusClass = 'status-available';
+                statusText = '✓ Available Now';
+                cardClass += ' active';
+            } else if (hasSyllabus || hasPapers) {
+                statusClass = 'status-partial';
+                statusText = 'Partially Available';
+                cardClass += ' active';
+            } else {
+                cardClass += ' disabled';
+            }
+
+            const card = document.createElement('div');
+            card.className = cardClass;
+            
+            card.innerHTML = `
+                <div class="semester-number">${getOrdinal(semester.number)}</div>
+                <h3 class="semester-title">${semester.title}</h3>
+                <div class="semester-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📖</span>
+                        <span>${semester.papers}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">⭐</span>
+                        <span>${semester.credits}</span>
+                    </div>
+                </div>
+                <span class="status-badge ${statusClass}">${statusText}</span>
+                <div class="button-group">
+                    ${hasSyllabus ? `
+                        <div class="view-btn" onclick="window.location.href='${semester.syllabusPath}';">
+                            View Syllabus →
+                        </div>
+                    ` : ''}
+                    ${hasPapers ? `
+                        <div class="view-btn papers-btn" onclick="window.location.href='${semester.papersPath}';">
+                            View Papers 📚
+                        </div>
+                    ` : ''}
+                    ${isDisabled ? `
+                        <div class="view-btn disabled">
+                            Coming Soon
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Function to create table row
+        async function createTableRow(semester) {
+            const hasSyllabus = await fileExists(semester.syllabusPath);
+            const hasPapers = await fileExists(semester.papersPath);
+
+            let statusClass = 'status-unavailable';
+            let statusText = 'Not Available';
+
+            if (hasSyllabus && hasPapers) {
+                statusClass = 'status-available';
+                statusText = 'Available';
+            } else if (hasSyllabus || hasPapers) {
+                statusClass = 'status-partial';
+                statusText = 'Partial';
+            }
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>Semester ${semester.number}</strong></td>
+                <td>${semester.coreInfo}</td>
+                <td>${semester.electiveInfo}</td>
+                <td>${semester.credits.split(' ')[0]}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            `;
+
+            return row;
+        }
+
+        // Initialize the page
+        async function initializePage() {
+            const grid = document.getElementById('semesterGrid');
+            const tableBody = document.getElementById('tableBody');
+
+            // Create semester cards
+            for (const semester of semesters) {
+                const card = await createSemesterCard(semester);
+                grid.appendChild(card);
+            }
+
+            // Create table rows
+            for (const semester of semesters) {
+                const row = await createTableRow(semester);
+                tableBody.appendChild(row);
+            }
+
+            // Add total row
+            const totalRow = document.createElement('tr');
+            totalRow.style.background = '#f8f9fa';
+            totalRow.style.fontWeight = '600';
+            totalRow.innerHTML = `
+                <td><strong>Total</strong></td>
+                <td colspan="2">Complete Program</td>
+                <td><strong>80</strong></td>
+                <td>-</td>
+            `;
+            tableBody.appendChild(totalRow);
+        }
+
+        // Run initialization when page loads
+        window.addEventListener('DOMContentLoaded', initializePage);
+    </script>
 </body>
 </html>

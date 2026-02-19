@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.A. Education 1st Semester Syllabus - Bongaigaon University</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .syllabus-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .semester-info {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .breadcrumb {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Course Card */
+        .course-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .course-code {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .course-title {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .meta-icon {
+            font-size: 1.2em;
+        }
+
+        /* Units Section */
+        .units-section {
+            margin-top: 30px;
+        }
+
+        .unit {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .unit-title {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .unit-content {
+            color: #555;
+        }
+
+        .unit-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .unit-content li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .unit-content li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .unit-content ul ul {
+            margin-top: 8px;
+            margin-left: 20px;
+        }
+
+        .unit-content ul ul li:before {
+            content: "•";
+        }
+
+        /* Objectives/Outcomes Section */
+        .objectives-section,
+        .outcomes-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .objectives-section h3,
+        .outcomes-section h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .objectives-section ul,
+        .outcomes-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-section li,
+        .outcomes-section li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .objectives-section li:before,
+        .outcomes-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Assessment Section */
+        .assessment-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .assessment-section h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .assessment-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .assessment-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Teaching Process Section */
+        .teaching-section {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .teaching-section h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            color: #666;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .course-card {
+                padding: 25px;
+            }
+
+            .course-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="syllabus-icon">📚</div>
+            <h1>M.A. Education Syllabus</h1>
+            <p class="subtitle">Department of Education - Bongaigaon University</p>
+            <div class="semester-info">1st Semester - CBCS 2025</div>
+            <p class="breadcrumb">
+                <a href="/index.html">Home</a> / <a href="/education/index.html">Education</a> 
+                / <a href="/education/Masters/index.html">Master</a> / 1st Semester Syllabus
+            </p>
+        </header>
+
+        <!-- Course 1: Philosophical Foundation of Education -->
+        <div class="course-card">
+            <div class="course-header">
+                <span class="course-code">EDN010105</span>
+                <h2 class="course-title">Philosophical Foundation of Education</h2>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📖</span>
+                        <span><strong>Nature:</strong> Core</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⭐</span>
+                        <span><strong>Credits:</strong> 5 (L: 4, T: 1, P: 0)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">💯</span>
+                        <span><strong>Total Marks:</strong> 100 (External: 70, Internal: 30)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="units-section">
+                <div class="unit">
+                    <h3 class="unit-title">Unit 1: Philosophy and Education</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept, Nature and Scope of Philosophy</li>
+                            <li>Branches of Philosophy
+                                <ul>
+                                    <li>Epistemology</li>
+                                    <li>Metaphysics</li>
+                                    <li>Axiology</li>
+                                </ul>
+                            </li>
+                            <li>Needs and Importance of Philosophy</li>
+                            <li>Relationship between Philosophy and Education, Philosophy and Science</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 2: Education and Philosophy (Philosophy of Education)</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, Nature and Objectives of Educational Philosophy</li>
+                            <li>Scope of Educational Philosophy</li>
+                            <li>Functions of Educational Philosophy</li>
+                            <li>Need and Importance of Educational Philosophy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 3: Contribution of Indian Schools of Philosophy</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Vedic, Buddhist and Islamic Schools of Philosophy</li>
+                            <li>Sankhya Philosophy: Concept, Features and Educational Implications</li>
+                            <li>Yoga Philosophy: Concept, Features and Educational Implications, Five states of Mind</li>
+                            <li>Jainism: Concept, Features and Educational Implications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 4: Contribution of Western Schools of Philosophy</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Idealism and Educational Implication</li>
+                            <li>Naturalism and Educational Implication</li>
+                            <li>Pragmatism and Educational Implication</li>
+                            <li>Realism and Educational Implication</li>
+                            <li>Existentialism and Educational Implication</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 5: Western and Indian Educational Thinkers</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Rousseau and his Educational Philosophy</li>
+                            <li>John Dewey and his Educational Philosophy</li>
+                            <li>Frobel and his Educational Philosophy</li>
+                            <li>Rabindranath Tagore and his Educational Philosophy</li>
+                            <li>Swami Vivekananda and his Educational Philosophy</li>
+                            <li>Mahatma Gandhi and his Educational Philosophy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teaching-section">
+                <h3>👨‍🏫 Teaching-Learning Process</h3>
+                <p>The course will be taught through interactive Pedagogic method such as classroom discussion, debate and collaborative learning tasks which enhance critical thinking. Reflective expression and learning will be encouraged.</p>
+            </div>
+
+            <div class="assessment-section">
+                <h3>📊 Assessment Method</h3>
+                <div class="assessment-grid">
+                    <div class="assessment-box">
+                        <h4>In-Semester (30 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Sessional Test: 10 marks</li>
+                            <li>• Home Assignment: 10 marks</li>
+                            <li>• Activity (Group Discussion/Seminar/Debate/Project/Quiz/Book Review): 10 marks</li>
+                        </ul>
+                    </div>
+                    <div class="assessment-box">
+                        <h4>End-Semester (70 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Essay Type: 10 marks</li>
+                            <li>• Short Type: 5 marks</li>
+                            <li>• Other question patterns as per university norms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 2: Psychological Foundation of Education -->
+        <div class="course-card">
+            <div class="course-header">
+                <span class="course-code">EDN010205</span>
+                <h2 class="course-title">Psychological Foundation of Education</h2>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📖</span>
+                        <span><strong>Nature:</strong> Core</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⭐</span>
+                        <span><strong>Credits:</strong> 5 (L: 4, T: 1, P: 0)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">💯</span>
+                        <span><strong>Total Marks:</strong> 100 (External: 70, Internal: 30)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="units-section">
+                <div class="unit">
+                    <h3 class="unit-title">Unit 1: Psychology and Educational Psychology</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept and Development of Psychology</li>
+                            <li>Educational Psychology: Meaning, definition, Nature and Scope</li>
+                            <li>Methods of Educational Psychology
+                                <ul>
+                                    <li>Introspection Method</li>
+                                    <li>Observation Method</li>
+                                    <li>Experimental Method</li>
+                                    <li>Case Study Method</li>
+                                    <li>Clinical Method</li>
+                                </ul>
+                            </li>
+                            <li>Relationship between Education and Psychology</li>
+                            <li>Application of Educational Psychology in Teaching Learning</li>
+                            <li>Different Schools of Psychology
+                                <ul>
+                                    <li>Behaviourism</li>
+                                    <li>Gestalt</li>
+                                    <li>Psychoanalysis</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 2: Learning and Motivation</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, Definition and Nature of Learning</li>
+                            <li>Factors affecting Learning</li>
+                            <li>Theories of Learning
+                                <ul>
+                                    <li>Pavlov Classical Conditioning Learning</li>
+                                    <li>Skinners Operant Conditioning</li>
+                                    <li>Gestalt Theory</li>
+                                    <li>Connectionism Theory</li>
+                                    <li>Constructivism</li>
+                                </ul>
+                            </li>
+                            <li>Meaning of Motivation</li>
+                            <li>Role of Motivation</li>
+                            <li>Theories of Motivation
+                                <ul>
+                                    <li>MASLOW's Self Actualization Theory</li>
+                                    <li>McClellan Achievement Motivation Theory</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 3: Intelligence</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, Definition and Nature of Intelligence</li>
+                            <li>Types of Intelligence
+                                <ul>
+                                    <li>Emotional Intelligence</li>
+                                    <li>Spiritual Intelligence</li>
+                                    <li>Artificial Intelligence</li>
+                                    <li>Social Intelligence</li>
+                                </ul>
+                            </li>
+                            <li>Theories of Intelligence
+                                <ul>
+                                    <li>Piaget's Theory of Cognitive Development</li>
+                                    <li>Multifactor Theory</li>
+                                    <li>Guilford Model of Intellect Theory</li>
+                                </ul>
+                            </li>
+                            <li>Determinants of Intelligence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 4: Reasoning, Problem Solving and Creative Thinking</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning and Nature of Reasoning</li>
+                            <li>Types of Reasoning</li>
+                            <li>Meaning and Nature of Problem Solving</li>
+                            <li>Factors affecting Problem Solving</li>
+                            <li>Strategies for effective problem Solving</li>
+                            <li>Meaning, Nature and Development of Creativity</li>
+                            <li>Sign of a Creative Person</li>
+                            <li>Role of Education and Teacher in nurturing creativity</li>
+                            <li>Relationship between creativity and Intelligence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 5: Personality</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, Definition and Nature of Personality</li>
+                            <li>Determinants of Personality</li>
+                            <li>Types of Personality</li>
+                            <li>Theories of Personality
+                                <ul>
+                                    <li>Freud's Psychoanalytic Theory</li>
+                                    <li>Carl Rogers's Humanistic Theory</li>
+                                    <li>Type theory of Jung</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teaching-section">
+                <h3>👨‍🏫 Teaching-Learning Process</h3>
+                <p>The course will be taught through interactive Pedagogic method such as classroom discussion, debate and collaborative learning tasks which enhance critical thinking. Reflective expression and learning will be encouraged.</p>
+            </div>
+
+            <div class="assessment-section">
+                <h3>📊 Assessment Method</h3>
+                <div class="assessment-grid">
+                    <div class="assessment-box">
+                        <h4>In-Semester (30 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Sessional Test: 10 marks</li>
+                            <li>• Home Assignment: 10 marks</li>
+                            <li>• Activity (Group Discussion/Seminar/Debate/Project/Quiz/Book Review): 10 marks</li>
+                        </ul>
+                    </div>
+                    <div class="assessment-box">
+                        <h4>End-Semester (70 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Essay Type: 10 marks</li>
+                            <li>• Short Type: 5 marks</li>
+                            <li>• Other question patterns as per university norms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 3: Sociological Foundation of Education -->
+        <div class="course-card">
+            <div class="course-header">
+                <span class="course-code">EDN010305</span>
+                <h2 class="course-title">Sociological Foundation of Education</h2>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📖</span>
+                        <span><strong>Nature:</strong> Core</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⭐</span>
+                        <span><strong>Credits:</strong> 5 (L: 4, T: 1, P: 0)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">💯</span>
+                        <span><strong>Total Marks:</strong> 100 (External: 70, Internal: 30)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="units-section">
+                <div class="unit">
+                    <h3 class="unit-title">Unit 1: Sociology and Educational Sociology</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Developmental Concept of Sociology, Meaning, Nature, Scope</li>
+                            <li>Educational Sociology: Meaning, Definition, Nature and Scope</li>
+                            <li>Functional Importance of Educational Sociology</li>
+                            <li>Relationship between Sociology and Education</li>
+                            <li>Theories of Sociology of Education
+                                <ul>
+                                    <li>Conflict Theory</li>
+                                    <li>Functionalist Theory</li>
+                                    <li>Cultural Reproduction Theory</li>
+                                    <li>Feminist Theory</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 2: Education and Social Process</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept of Process of Socialization</li>
+                            <li>Agencies of Socialization</li>
+                            <li>Educational Social Stratification</li>
+                            <li>Education and Social Mobility</li>
+                            <li>Educational Modernization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 3: Culture and Social Change</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, Characteristics and Function of Culture</li>
+                            <li>Types of Culture</li>
+                            <li>Cultural Lag, Cultural diffusion, Multi-culturalism, Composite culture, Enculturation, Acculturation, Cultural Change</li>
+                            <li>Concept, Nature and Factors of Social Change</li>
+                            <li>Theories of Social Change
+                                <ul>
+                                    <li>Evolutionary Theory</li>
+                                    <li>Conflict Theory</li>
+                                </ul>
+                            </li>
+                            <li>Role of Education in Social Change</li>
+                            <li>Role of Technology and Mass Media in Socio-cultural Change</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 4: Social Group, Social Control and Leadership</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept, Nature and Types of Social Group</li>
+                            <li>Group Dynamics</li>
+                            <li>Meaning, Types and Agencies of Social Control</li>
+                            <li>Role of Education in Social Control</li>
+                            <li>Meaning, Characteristics and Types of Leadership</li>
+                            <li>Function of a leader</li>
+                            <li>Criteria of a Good Leadership</li>
+                            <li>Role of Education in Leadership Training</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 5: Social Organization, Disorganization and Social Problems</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept, Nature and Factors of Social Organization</li>
+                            <li>Types of Social Organization</li>
+                            <li>Concept and Nature of Social Disorganization</li>
+                            <li>Factors and Types of Social Disorganization</li>
+                            <li>Education as a media in prevention of Social Disorganization</li>
+                            <li>Social problem relating to education in India
+                                <ul>
+                                    <li>Delinquency</li>
+                                    <li>Child Labor</li>
+                                    <li>Drug Abuse</li>
+                                    <li>Un-Employment</li>
+                                    <li>Cyber crime</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teaching-section">
+                <h3>👨‍🏫 Teaching-Learning Process</h3>
+                <p>The course will be taught through interactive Pedagogic method such as classroom discussion, debate and collaborative learning tasks which enhance critical thinking. Reflective expression and learning will be encouraged.</p>
+            </div>
+
+            <div class="assessment-section">
+                <h3>📊 Assessment Method</h3>
+                <div class="assessment-grid">
+                    <div class="assessment-box">
+                        <h4>In-Semester (30 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Sessional Test: 10 marks</li>
+                            <li>• Home Assignment: 10 marks</li>
+                            <li>• Activity (Group Discussion/Seminar/Debate/Project/Quiz/Book Review): 10 marks</li>
+                        </ul>
+                    </div>
+                    <div class="assessment-box">
+                        <h4>End-Semester (70 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Essay Type: 10 marks</li>
+                            <li>• Short Type: 5 marks</li>
+                            <li>• Other question patterns as per university norms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 4: Educational Technology -->
+        <div class="course-card">
+            <div class="course-header">
+                <span class="course-code">EDN010405</span>
+                <h2 class="course-title">Educational Technology</h2>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📖</span>
+                        <span><strong>Nature:</strong> Core</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⭐</span>
+                        <span><strong>Credits:</strong> 5 (L: 4, T: 1, P: 0)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">💯</span>
+                        <span><strong>Total Marks:</strong> 100 (External: 70, Internal: 30)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="units-section">
+                <div class="unit">
+                    <h3 class="unit-title">Unit 1: Educational Technology</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept, Nature, Objectives, scope and significance of Educational Technology</li>
+                            <li>Development of Educational Technology</li>
+                            <li>Forms of Educational Technology
+                                <ul>
+                                    <li>Instructional Technology</li>
+                                    <li>Teaching Technology</li>
+                                    <li>Behavioural Technology</li>
+                                </ul>
+                            </li>
+                            <li>Role of Educational Technology in Distance Education</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 2: Approaches to Educational Technology</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Hardware and Software Approach</li>
+                            <li>System Approach</li>
+                            <li>Instructional Design</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 3: Information and Communication Technology (ICT)</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Concept, Nature and Components of Communication Technology</li>
+                            <li>Marks of Effective classroom communication</li>
+                            <li>Barriers of effective classroom communication</li>
+                            <li>Types of Communication</li>
+                            <li>ICT in Teaching Learning</li>
+                            <li>Advantages and Disadvantages of ICT</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 4: Instructional Technology and Programmed Instruction</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Meaning, scope, importance of programmed instruction/learning</li>
+                            <li>Fundamental principles of Programmed Instruction</li>
+                            <li>Style of Programming
+                                <ul>
+                                    <li>Linear Programming</li>
+                                    <li>Branching Programming</li>
+                                    <li>Mathetics Programming</li>
+                                </ul>
+                            </li>
+                            <li>Development of Programmed instructional Material</li>
+                            <li>Concept, Importance and Methods of Instructional Technology</li>
+                            <li>Designing Instructional Strategies
+                                <ul>
+                                    <li>Team teaching</li>
+                                    <li>Micro-teaching</li>
+                                    <li>Simulated Teaching</li>
+                                    <li>Levels of Teaching</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit">
+                    <h3 class="unit-title">Unit 5: Emerging Trends in Educational Technology</h3>
+                    <div class="unit-content">
+                        <ul>
+                            <li>Learner control Instruction</li>
+                            <li>Personalized system of instruction</li>
+                            <li>Multi-media approaches to teaching learning
+                                <ul>
+                                    <li>E-learning</li>
+                                    <li>Blended Learning</li>
+                                    <li>Mobile Learning</li>
+                                    <li>Tele-conferencing</li>
+                                    <li>Virtual classroom</li>
+                                </ul>
+                            </li>
+                            <li>Open educational resources
+                                <ul>
+                                    <li>MOOC</li>
+                                    <li>SWAYAM</li>
+                                    <li>E-pathshala</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teaching-section">
+                <h3>👨‍🏫 Teaching-Learning Process</h3>
+                <p>The course will be taught through interactive Pedagogic method such as classroom discussion, debate and collaborative learning tasks which enhance critical thinking. Reflective expression and learning will be encouraged.</p>
+            </div>
+
+            <div class="assessment-section">
+                <h3>📊 Assessment Method</h3>
+                <div class="assessment-grid">
+                    <div class="assessment-box">
+                        <h4>In-Semester (30 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Sessional Test: 10 marks</li>
+                            <li>• Home Assignment: 10 marks</li>
+                            <li>• Activity (Group Discussion/Seminar/Debate/Project/Quiz/Book Review): 10 marks</li>
+                        </ul>
+                    </div>
+                    <div class="assessment-box">
+                        <h4>End-Semester (70 marks)</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Essay Type: 10 marks</li>
+                            <li>• Short Type: 5 marks</li>
+                            <li>• Other question patterns as per university norms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Department of Education - Bongaigaon University</strong></p>
+            <p style="margin-top: 10px;">CBCS 2025 Syllabus</p>
+            <p style="margin-top: 15px;">
+                <a href="index.html">← Back to Home</a> • 
+                <a href="../index.html">Education Department</a> 
+            </p>
+            <p style="margin-top: 15px; font-size: 0.85em; color: #999;">
+                Not officially affiliated with Bongaigaon University
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
